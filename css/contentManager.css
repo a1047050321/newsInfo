@@ -1,0 +1,1696 @@
+#contentWraper {
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+ * 视频上传左导航栏
+ */
+.sideBar {
+    position: absolute;
+    display:block;
+    width: 240px;
+    height: 100%;
+    border-right: 1px solid #DCDCDC;
+    background-color: #F0F0F0;
+}
+
+.sideBar.ui-resizable {
+    position: absolute;
+}
+
+.sideBar ul li span {
+    color: #000;
+    font-size: 12px;
+    line-height: 30px;
+    padding-left: 67px;
+}
+
+.sideBar ul li span {
+    cursor: pointer;
+    background: url(../images/navicon.png) no-repeat -9999px -9999px;
+}
+
+.sideBar ul span:hover {
+    background-color: #DDDDDD;
+}
+
+.sideBar ul span:active,
+.sideBar ul span.current {
+    background-color: #CBE3EE;
+}
+
+.sideBar ul span.current {
+    font-weight: bold;
+}
+
+.sideBar > ul > li {
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.sideBar > ul li ul {
+    display: none;
+}
+
+.sideBar > ul > li > span {
+    font-size: 14px;
+    padding-left: 53px;
+}
+
+.sideBar ul > li > span {
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    overflow: hidden;
+}
+
+.sideBar ul li span.showed {
+    background-position: 40px 13px;
+}
+
+.sideBar ul li span.showed + ul {
+    display: block;
+}
+
+.sideBar ul li span.hidden {
+    background-position: 40px -40px;
+}
+
+/* 工具条 开始 */
+
+.workBar-tools {
+    height: auto;
+    border-bottom: 1px solid #DCDCDC;
+	overflow:hidden;
+}
+
+.workBar-tools-left {
+    float: left;
+}
+
+.workBar-tools-left .appedit-tool-button {
+    margin-left: 10px;
+}
+
+.workBar-tools-right {
+    position: absolute;
+  	right: 0;
+}
+
+.workBar-tools-filter {
+    background:#F8F8F8;
+    width:100%;
+    float:left;
+    border-top:1px solid #DEDEDE;
+    font-size:12px;
+    /*height:0;*/
+    max-height:250px;
+    display:none;
+    overflow:auto;
+}
+
+.workBar-tools-left .tool-icon {
+    background-image: url(../images/mtools.png);
+    background-repeat: no-repeat;
+}
+
+/* 新建按钮 开始 */
+
+.addNormal {
+    background-position:6px -57px;
+}
+
+.addHover {
+    background-position:6px -92px;
+}
+
+.addDisabled {
+    background-position:6px -126px;
+}
+
+/* 新建按钮 结束 */
+
+/* 编辑按钮 开始 */
+
+.editNormal {
+    background-position:6px -161px;
+}
+
+.editHover {
+    background-position:6px -196px;
+}
+
+.editDisabled {
+    background-position:6px -235px;
+}
+
+/* 编辑按钮 结束 */
+
+/* 详情按钮 开始 */
+
+.detailNormal {
+	background-position:-228px -56px;
+}
+
+.detailHover {
+	background-position:-228px -91px;
+}
+
+.detailDisabled {
+	background-position:-228px -125px;
+}
+
+/* 详情按钮 结束 */
+
+/* 删除按钮 开始 */
+
+.deleteNormal {
+	background-position:-127px -57px;
+}
+
+.deleteHover {
+	background-position:-127px -92px;
+}
+
+.deleteDisabled {
+	background-position:-127px -126px;
+}
+
+/* 删除按钮 结束 */
+
+/* 提交按钮 开始 */
+
+.submitNormal {
+    background-position:-177px -58px;
+}
+
+.submitHover {
+    background-position:-176px -93px;
+}
+
+.submitDisabled {
+    background-position:-177px -127px;
+}
+
+/* 提交按钮 结束 */
+
+/* 下架/驳回按钮 开始 */
+
+.removeNormal, 
+.rejectNormal {
+    background-position:-330px -159px;
+}
+
+.removeHover, 
+.rejectHover {
+    background-position:-330px -194px;
+}
+
+.removeDisabled, 
+.rejectDisabled {
+    background-position:-330px -233px;
+}
+
+/* 下架/驳回按钮 结束 */
+
+/* 发布按钮 开始 */
+
+.releaseNormal {
+    background-position:-330px -57px;
+}
+
+.releaseHover {
+    background-position:-330px -92px;
+}
+
+.releaseDisabled {
+    background-position:-330px -126px;
+}
+
+/* 发布按钮 结束 */
+
+/* 筛选按钮 开始 */
+
+.filterNormal {
+    background-position:-483px -160px;
+}
+
+.filterHover {
+    background-position:-483px -195px;
+}
+
+.filterDisabled {
+    background-position:-483px -229px;
+}
+
+#tool-filter, #tool-filter .tool-icon {
+    width: 60px;
+}
+
+#tool-filter.active {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+#tool-filter.active .tool-icon {
+    background-position: -483px -195px;
+}
+
+/* 筛选按钮 结束 */
+
+/* 栏目按钮 开始 */
+
+.labelNormal {
+    background-position: -433px -57px;
+}
+
+.labelHover {
+    background-position: -433px -92px;
+}
+
+.labelDisabled {
+    background-position: -433px -126px;
+}
+
+/* 栏目按钮 结束 */
+
+/* 按钮 开始 */
+
+.Normal {
+    background-position:-127px -57px;
+}
+
+.Hover {
+    background-position:-127px -92px;
+}
+
+.Disabled {
+    background-position:-127px -126px;
+}
+
+#tool- .tool-icon {
+    height:70%;
+    top:4px;
+}
+
+/* 按钮 结束 */
+
+/* 右侧工具栏菜单栏 开始 */ 
+
+.workBar-content-type {
+	display:inline-block;
+	position:relative;
+	margin: 3px 10px 0 0;
+	color:#666;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.workBar-content-type .type-wraper {
+	padding:5px;
+	border:1px solid #C8C8C8;
+}
+
+.workBar-content-type span {
+	width:14px;
+	height:14px;
+	background: url(../images/upload_view_icon.png) no-repeat;
+	display: inline-block;
+ 	vertical-align: middle;
+ 	margin: 0 3px 0 1px;
+}
+
+.workBar-content-type .type-drop {
+	width:7px;
+	height:4px;
+	background-image: url(../images/drop-down.png);
+	background-position:0 -16px;
+	display: inline-block;
+ 	vertical-align: middle;
+ 	margin: 0 1px 0 3px;
+}
+
+.workBar-content-type:hover .type-wraper {
+	border:1px solid #008FD0;
+}
+
+.workBar-content-type:hover .type-drop {
+	background-position:0 0;
+}
+
+.workBar-content-type > ul {
+	display:none;
+	position:absolute;
+	right:0;
+	width:100px;
+	z-index:101;
+	background:#FFF;	
+	border:1px solid #C8C8C8;
+}
+
+.workBar-content-type > ul li {
+	padding:5px;
+	color:#323232;
+	font-size:12px;
+}
+
+.workBar-content-type > ul li:hover {
+	background:#CBE3EF;
+}
+
+.workBar-content-type > ul li.active {
+	background:#F0F0F0;
+}
+
+.workBar-content-type:hover > ul {
+	display:block;
+}
+
+.workBar-content-type span.type-list {
+	background-position: 2px -24px;
+}
+
+.workBar-content-type span.type-grid {
+	background-position: 2px 1px;
+}
+
+/* 右侧工具栏菜单栏 结束 */ 
+
+/* 分类筛选栏 开始 */ 
+
+.workBar-tools-filter > div {
+    line-height:30px;
+    border-bottom:1px solid #DEDEDE;
+}
+
+.workBar-tools-filter label {
+    display:inline-block;
+    width:40px;
+    text-align:right;
+    margin:0 5px 0 5px;
+    vertical-align:top;
+}
+
+.workBar-tools-filter div span {
+    width:14px;
+    height:14px;
+    background-image: url(../images/checkbox.png);
+    background-position:0 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 1px;
+}
+
+.workBar-tools-filter div span.active {
+    background-position: 0 -27px;
+}
+
+.workBar-tools-filter div font {
+    margin-right:10px;
+}
+
+.condition div {
+    border:0;
+}
+
+/* 条件菜单栏 开始 */ 
+.sortlist .sortchild {
+    display:inline-block;
+     margin: 0 5px 0 3px;
+}
+
+.sortlist .sortchild.active,.sortlist .sortchild:hover {
+    color:#09F;
+}
+
+.sortlist .sortchild input {
+    vertical-align:middle;
+}
+
+.sortlist .sortchild label {
+    vertical-align:middle;
+    margin:1px;
+    padding:0;
+    width: auto;
+}
+
+.filterlist .filterchild {
+    display:inline-block;
+    cursor:pointer;
+    width:70%;
+}
+
+.filterlist .filterchild li {
+    padding:1px;
+    font-size:12px;
+    display:inline-block;
+}
+
+.filterlist .filterchild li span {
+    width:14px;
+    height:14px;
+    background-image: url(../images/checkbox.png);
+    background-position:0 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 1px;
+}
+
+.filterlist .filterchild li:hover {
+    background:#CBE3EF;
+}
+
+.filterlist .filterchild li span.active {
+    background-position: 0 -27px;
+}
+
+/* 条件菜单栏2 结束 */ 
+
+/* 分类筛选栏 结束 */
+
+/* 工具条 结束 */
+
+/**
+ * 右内容区域
+ */
+.workBar {
+    position: relative;
+    margin-left: 240px;
+    height: 100%;
+    width: 240px;
+}
+
+/* 列表样式 开始 */
+
+.workBar-items {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    overflow-y: hidden;
+	overflow-x: auto;
+}
+
+.workBar-items-loading {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+     opacity: 0.5;
+    filter: alpha(opacity=50); 
+}
+
+/* 表格样式 开始 */
+
+.workBar-table {
+	position: relative;
+  	/*height: 650px;
+  	font-size: 12px;*/
+  	border-bottom: #dfdddd solid 1px;
+	font-size:12px;
+	height:100%;
+	overflow:hidden;
+	min-width:1024px;
+	display:none;
+}
+
+.workBar-table .workBar-table-content ul {
+	margin: 0;
+	display:block;
+    cursor: pointer;
+}
+
+.workBar-table .workBar-table-content ul:hover {
+	background-color: #F0FAFF;
+}
+
+.workBar-table .workBar-table-content ul.active {
+    background-color: #CBE3EF;
+}
+
+.workBar-table li {
+	position: relative;
+	float: left;
+	/*font-size: 12px;*/
+	color: #636363;
+	min-height: 30px;
+	text-indent: 5px;
+	height: 30px;
+	overflow: hidden;
+	width:100px; 
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	-o-text-overflow:ellipsis; 
+}
+
+.workBar-table li.short {
+    width: 95px!important;
+}
+
+/* 标题行样式 开始 */
+
+.workBar-table-title {
+	background-color: #ebebeb;
+  	width: 100%;
+  	height: 30px;
+  	font-size: 12px;
+  	margin-left: 0px;
+ 	line-height: 30px;
+  	border-bottom: 1px solid #cecece;
+}
+
+/* 标题行样式 结束 */
+
+/* 提示样式 开始 */
+
+.workBar-table-tips {
+	display:none;
+	text-align:center;
+	width:auto;
+	padding:100px 0 50px 0;
+	margin:auto;
+}
+
+.workBar-table-tips div {
+	min-height:87px;
+	background:url(../images/folder.png) center bottom no-repeat;
+	margin-bottom:30px;
+}
+
+.workBar-table-tips span {
+	color:#CBD4DC;
+	font-weight:bold;
+}
+
+.workBar-table-tips:hover div {
+	background:url(../images/folder.png) center top no-repeat;
+}
+
+.workBar-table-tips:hover span {
+	color:#A7BED2;	
+}
+
+/* 提示样式 结束 */
+
+/* 浮动工具栏 开始 */
+
+.workBar-table-float {
+	position:absolute;
+	display:none;
+	top:200px;
+	left:200px;
+	z-index:1000;
+	background:#FFF;
+	border:1px solid #CCC;
+}
+
+.workBar-table-float span {
+	display:inline-block;
+	padding:2px 5px 2px 5px;
+	cursor:pointer;
+}
+
+.workBar-table-float span:hover {
+	background:#CBE3EE;
+}
+
+/* 浮动工具栏 结束 */
+
+/* 内容行样式 开始 */
+
+.workBar-table-content {
+	overflow:auto;
+	height:100%;
+	/*position:relative;*/
+}
+
+.workBar-table-content ul {
+  	width: 100%;
+  	height: 30px;
+  	font-size: 12px;
+  	margin-left: 0px;
+ 	line-height: 30px;
+  	border-bottom: 1px solid #cecece;
+}
+
+.workBar-table-content ul.hide {
+	opacity: 0; 
+	filter:Alpha(opacity=0);
+}
+
+/* 内容行样式 结束 */
+
+/* 单元格样式 开始 */
+
+li.workBar-table-progress .length {
+	display:inline-block;
+	width:50%;
+	height:5px;
+	background:#D6D6D6;
+	vertical-align:middle;
+	text-align:left;
+	margin-right:5px;
+}
+
+li.workBar-table-progress .length .progress {
+	height:100%;
+	background:#009943;
+}
+
+
+li.workBar-table-progress span.status, li.workBar-table-status span.status {
+	color:#009943;
+}
+
+li.workBar-table-check {
+	text-align:center;
+	width: 2%;
+	min-width: 20px;
+}
+
+li.workBar-table-check span {
+	background: url(../images/checkbox.png) no-repeat;
+}
+
+li.workBar-table-check span.active {
+	  background-position: 0 -27px;
+}
+
+li.workBar-table-check span input {
+	opacity: 0;
+	width: 16px;	
+}
+
+li.workBar-table-number {
+	text-align:center;
+	width: 40px;
+}
+
+li.workBar-table-name {
+	width: 145px;
+}
+
+li.workBar-table-provider {
+    width: 60px;
+}
+
+li.workBar-table-time {
+    width: 130px;
+}
+
+li.workBar-table-amount {
+    width: 60px;
+}
+
+li.workBar-table-operate {
+    width: 185px;
+}
+
+/* 操作栏样式 开始 */
+
+li.workBar-table-operate a {
+	background-image: url(../images/mtools.png);
+    background-repeat: no-repeat;
+	width:30px;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+	/*margin-right:1px;*/
+}
+
+li.workBar-table-operate a.detail {
+	background-position:-227px -57px;
+}
+
+li.workBar-table-operate a.detail:hover, 
+li.workBar-table-operate a.detail.active {
+    background-position:-227px -92px;
+}
+
+li.workBar-table-operate a.detail.disable {
+    background-position:-227px -126px;
+}
+
+li.workBar-table-operate a.delete {
+	background-position:-126px -58px;
+}
+
+li.workBar-table-operate a.delete:hover, 
+li.workBar-table-operate a.delete.active {
+    background-position:-126px -93px;
+}
+
+li.workBar-table-operate a.delete.disable {
+    background-position:-126px -127px;
+}
+
+li.workBar-table-operate a.submit {
+    background-position:-176px -59px;
+}
+
+li.workBar-table-operate a.submit:hover, 
+li.workBar-table-operate a.submit.active {
+    background-position:-175px -94px;
+}
+
+li.workBar-table-operate a.submit.disable {
+    background-position:-176px -128px;
+}
+
+li.workBar-table-operate a.remove {
+    background-position:-329px -160px;
+}
+
+li.workBar-table-operate a.remove:hover, 
+li.workBar-table-operate a.remove.active {
+    background-position:-329px -195px;
+}
+
+li.workBar-table-operate a.remove.disable {
+    background-position:-329px -229px;
+}
+
+li.workBar-table-operate a.release {
+    background-position:-329px -59px;
+}
+
+li.workBar-table-operate a.release:hover, 
+li.workBar-table-operate a.release.active {
+    background-position:-329px -94px;
+}
+
+li.workBar-table-operate a.release.disable {
+    background-position:-329px -128px;
+}
+
+li.workBar-table-operate a.label {
+    background-position:-432px -58px;
+}
+
+li.workBar-table-operate a.label:hover, 
+li.workBar-table-operate a.label.active {
+    background-position:-432px -93px;
+}
+
+li.workBar-table-operate a.label.disable {
+    background-position:-432px -127px;
+}
+
+li.workBar-table-operate a.time {
+    background-position:-175px -162px;
+}
+
+li.workBar-table-operate a.time:hover, 
+li.workBar-table-operate a.time.active {
+    background-position:-175px -197px;
+}
+
+li.workBar-table-operate a.time.isset {
+    background-position:-175px -233px;
+}
+
+li.workBar-table-operate a.copyright {
+    background-position:-29px -161px;
+}
+
+li.workBar-table-operate a.copyright:hover, 
+li.workBar-table-operate a.copyright.active {
+    background-position:-29px -196px;
+}
+
+li.workBar-table-operate a.copyright.disable {
+    background-position:-29px -232px;
+}
+
+li.workBar-table-operate a:hover, 
+li.workBar-table-operate a.active {
+	background-color:#2F6FAD;
+}
+
+li.workBar-table-operate a.disable {
+	background-color:transparent;
+}
+
+/* 操作栏样式 结束 */
+
+/* 类型筛选样式 开始 */
+
+.table-filter {
+	position:absolute;
+	border:1px solid #ebebeb;
+	padding-right:5px;
+}
+
+.table-filter > span {
+	display:inline-block;
+	height:5px;
+	width:7px;
+	margin-left:3px;
+	background:url(../images/drop-down.png) no-repeat 0 -6px;
+}
+
+.table-filter > ul {
+	display:block;
+	position:absolute;
+	z-index:1000;
+	/*background:#FFF;*/
+    padding:5px;
+	/*border:1px solid #cecece;*/
+	margin:-4px 0 0 -5px;
+}
+
+.table-filter > ul > li {
+	display:block;
+    background:#FFF;
+    border-left:1px solid #cecece;
+    border-right:1px solid #cecece;
+}
+
+.table-filter > ul > li:first-child {
+    border-top:1px solid #cecece;
+}
+
+.table-filter > ul > li:last-child {
+    border-bottom:1px solid #cecece;
+}
+
+.table-filter > ul > li > span {
+	background:url(../images/checkbox.png) no-repeat -24px 0;
+	margin-right:5px;
+}
+
+.table-filter > ul > li > span input {
+	opacity:0;
+	width:16px;
+}
+
+.table-filter > ul > li:hover {
+	background:#CBE3EF;
+}
+
+.table-filter > ul > li.active > span {
+	background-position:-24px -27px;
+}
+
+li.table-filter-wrapper:hover {
+	overflow:inherit;
+}
+
+li.table-filter-wrapper:hover .table-filter {
+	border-color:#1781FB;
+}
+
+li.table-filter-wrapper:hover .table-filter > span {
+	background-position:0 0;
+}
+
+/* 类型筛选样式 结束 */
+
+/* 排序样式 开始 */
+
+li.sortby span {
+    display: none;
+    color:red;
+    position: absolute;
+    /*right: 10px;*/
+    top: -1px;
+}
+
+li.sortby:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+li.sortby:not(.active):hover span:not(.select), li.sortby.active span.select {
+    display: inline-block;
+}
+
+/* 排序样式 结束 */
+
+.clear {
+	clear:both;
+}
+
+/* 单元格样式 结束 */
+
+/* 表格样式 结束 */
+
+/* 列表样式 结束 */
+
+/* 宫格样式 开始 */
+
+.workBar-grid {
+	padding: 10px 0 0 10px;
+  	overflow-y: auto;
+  	overflow-x: hidden;
+  	/*display: none;*/
+  	position: relative;
+	display:none;
+}
+
+.workBar-grid .grid-video {
+	position: relative;
+	margin:0 5px 10px 0;
+	width:160px;
+	height: 150px;
+	float: left;
+}
+
+.workBar-grid .grid-video div.grid-icon {
+	position: relative;
+	margin: 5px 0 0 5px;
+	z-index: 2;
+}
+
+.workBar-grid .grid-video div.grid-icon img {
+	 width: 150px;
+	 height: 100px;
+}
+
+.workBar-grid .grid-video div.grid-name {
+	position: relative;
+	margin-left: 7px;
+	height: 16px;
+	line-height: 16px;
+	color: #000000;
+	font-size: 14px;
+	z-index: 2;
+	text-overflow:ellipsis;
+  	overflow:hidden;
+  	white-space:nowrap;
+}
+
+.workBar-grid .grid-video div.grid-time {
+	position: relative;
+	margin-left: 7px;
+	height: 15px;
+	line-height: 15px;
+	color: #999;
+	font-size: 14px;
+	z-index: 2;
+}
+
+.workBar-grid .grid-video div.grid-focus {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 140px;
+	width: 156px;
+	border: #c3d8f0 solid 2px;
+	background: #eaf5ff;
+	display: none;
+	z-index: 1;
+}
+
+
+
+.grid-video.select div.grid-focus {
+	border: #3091f2 solid 2px !important;
+}
+
+.workBar-grid .grid-video div.grid-inputchecked {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 20px;
+	height: 20px;
+	z-index: 3;
+	overflow: hidden;
+	display: none;
+}
+
+.workBar-grid .grid-video div.grid-inputchecked span {
+	background: url(../images/postercheckbox.png) -18px 0;
+	width: 18px;
+	height: 18px;
+	display: block;
+}
+
+.grid-video div.grid-inputchecked input {
+	-moz-opacity:0;
+	opacity: 0;
+}
+
+.grid-video.select div.grid-inputchecked span {
+	background-position: 0 0 !important;
+}
+
+.grid-video.select div.grid-focus, .grid-video.select div.grid-inputchecked, .grid-video:hover div.grid-focus, .grid-video:hover div.grid-inputchecked {
+	display: block;
+}
+
+/* 宫格样式 结束 */
+
+/* 定时发布操作栏样式 开始 */
+
+.timedFrame {
+    position:absolute;
+    top:95px;
+    left:300px;
+    border:#cecece solid 1px;
+    height:22px;
+    padding-left:10px;
+    font-size:12px;
+    background-color:#ffffff;
+    z-index: 5;
+    color: #000000;
+    display:none;
+}
+
+.timedFrame > div {
+    display: inline-block;
+    height: 100%;
+    text-align:center;
+    line-height:22px;
+    cursor:pointer;
+    color:#000;
+    font-size:12px;
+    padding: 0 5px;
+}
+
+.timedFrame > div:hover {
+    background-color: #3d6991;
+    color:#ffffff;
+}
+
+.timedFrame input {
+    width: 106px;
+    margin-top: 1px;
+}
+
+/* 定时发布操作栏样式 结束 */
+
+/* 页码条 开始 */
+
+.workBar-pageNav {
+    position: absolute;
+	background:#FFF;
+    bottom: 0px;
+    left: 1px;
+    width: 99%;
+    height: 29px;
+    border-top: 1px solid #DCDCDC;
+    text-align: center;
+	z-index:101;
+	display:none;
+}
+
+/* 页码条 结束 */
+
+/* 右侧可隐藏区 开始 */
+
+.hiddenBar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: auto;
+    font-size: 14px;
+}
+
+.hiddenBar > div {
+    border-left: 1px solid #DCDCDC;
+}
+
+.hiddenBar-module {
+    height: auto;
+    border-bottom: 1px solid #DCDCDC;
+    overflow: hidden;
+    line-height: 34px;
+}
+
+.hiddenBar-module > span {
+    padding: 20px;
+    margin-left: -4px;
+    cursor: pointer;
+}
+
+.hiddenBar-module > span:hover {
+    background-color: #CBE3EE;
+}
+
+.hiddenBar-module > span.active {
+    background-color: #018FD1;
+    color: #FFF;
+}
+
+.hiddenBar-title {
+    line-height: 50px;
+    font-weight: bold;
+    padding: 0 20px;
+}
+
+.hiddenBar-media-wraper {
+    height:60px;
+}
+
+.hiddenBar-content-wraper {
+    height: 20%;
+    overflow-x: hidden; 
+    overflow-y: auto;
+    margin-right: 20px;
+    padding-left: 20px;
+    /*white-space: normal;*/
+}
+
+.hiddenBar-content-wraper p {
+    display: block;
+    /*margin-left: 20px;*/
+    padding: 5px 10px;
+    word-break:break-all;
+    text-indent: 2em;
+    background: #F7F7F7;
+}
+
+.hiddenBar-content-wraper textarea {
+    padding: 5px 10px;
+    width: calc( 100% - 5px );
+    margin-bottom: -5px;
+    background: #F7F7F7;
+    border: 0;
+    font-size: 14px;
+    line-height: 20px;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.hiddenBar-content-wraper .content-note {
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #666;
+    background: #F7F7F7;
+    word-break: break-all;
+}
+
+.hiddenBar-content-wraper .content-img-title {
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #666;
+}
+
+.hiddenBar-content-wraper .content-img {
+    display: inline-block;
+    width: 180px;
+    height: 120px;
+    line-height: 120px;
+    margin: 7px 0 7px 15px;
+    border: 1px solid #DBDBDB;
+    text-align: center;
+}
+
+.hiddenBar-content-wraper .content-img img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+
+.hiddenBar-operate-wraper {
+    padding:20px 0 0 20px;
+}
+
+.hiddenBar-selection {
+    position: relative;
+    border-top: 1px solid #DCDCDC;
+    padding: 15px 0;
+}
+
+.selection-title {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    font-size: 16px;
+    font-weight: bold;
+    padding-right: 5px;
+    background-color: #FFF;
+}
+
+.selection-box {
+    margin-top: 5px;
+}
+
+.selection-box > span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(../images/checkbox.png) no-repeat;
+    vertical-align: middle;
+}
+
+.selection-box > font {
+    /*font-weight: bold;*/
+    font-size: 12px;
+}
+
+.selection-box.active > span {
+    background-position: 0 -27px;
+}
+
+.hiddenBar-textarea {
+    margin-right: 20px;
+    height: 50px;
+}
+
+.hiddenBar-textarea textarea {
+    width: 100%;
+    height: 100%;
+}
+
+.hiddenBar-buttons {
+    padding-top: 10px;
+    line-height: 33px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.hiddenBar-buttons > span {
+    display: inline-block;
+    padding: 0 28px;
+    cursor: pointer; 
+}
+
+.hiddenBar-buttons > span:hover {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+.hiddenBar-buttons > span.disable {
+    background-color: #FFF;
+    color: #999;
+}
+
+/* 右侧可隐藏区 结束 */
+
+/* 右侧编辑区 开始 */
+
+.editBar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: auto;
+    font-size: 14px;
+    background: #FFF;
+}
+
+.editBar > div {
+    border-left: 1px solid #DCDCDC;
+}
+
+/* 标题行样式 开始 */
+
+.editBar-module {
+    height: auto;
+    border-bottom: 1px solid #DCDCDC;
+    overflow: hidden;
+    line-height: 34px;
+}
+
+.editBar-module > span {
+    display: none;
+    padding: 0 20px;
+    margin-left: -4px;
+    cursor: pointer;
+}
+
+.editBar-module > span.active {
+    display: inline-block;
+    background-color: #018FD1;
+    color: #FFF;
+}
+
+/* 标题行样式 结束 */
+
+/* 编辑区内容容器 开始 */
+
+.editBar-wraper {
+    width:100%;
+    height: calc( 100% - 35px - 33px );
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.edit-title {
+    padding: 0 10px;
+    background-color: #99CCFF;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFF;
+    line-height: 24px;
+    border-top: 1px solid #FFF;
+}
+
+.edit-title .title-btn {
+    display: none;
+    float: right;
+    font-family: "courier";
+    font-size: 18px;
+    margin-top: 3px;
+    padding: 0 5px;
+    line-height: 18px;
+    background-color: #2D7ED9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-title .title-btn[data-action="hide"],
+.edit-title.hide .title-btn {
+    display: block;
+}
+
+.edit-title.hide .title-btn[data-action="hide"] {
+    display: none;
+}
+
+/* 属性行样式 开始 */
+
+.edit-attr {
+    background-color: #EBEBEB;
+    font-size: 12px;
+    padding: 5px 0;
+    height: 55%;
+    min-height: 290px;
+    overflow: hidden;
+}
+
+.edit-attr ul {
+    display: block;
+    width: calc( 100% - 5px );
+    margin-left: 5px;
+}
+
+.edit-attr li {
+    display: inline-block;
+    padding: 0 5px;
+    line-height: 35px;
+    width: calc( 32% - 10px );
+}
+
+.edit-attr li.col1_5 {
+    width: calc( 49% - 14px );
+}
+
+.edit-attr li.col2 {
+    width: calc( 64% - 10px );
+}
+
+.edit-attr li.col3 {
+    width: calc( 97% - 10px );
+}
+
+.edit-attr li label {
+    display: inline-block;
+    width: 61px;
+    vertical-align: top;
+}
+
+.edit-attr li > input,
+.edit-attr li > div {
+    width: calc( 100% - 71px );
+    padding: 3px 0;
+    vertical-align: middle;
+}
+
+.edit-attr li.col2 > input {
+    width: calc( 100% - 70px );
+}
+
+.edit-attr li.col3 > input {
+    width: calc( 100% - 70px );
+}
+
+.edit-attr li > select {
+    width: calc( 100% - 67px );
+    padding: 3px 0;
+}
+
+.edit-attr li > input[readonly] {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+/* 下拉多选框样式 开始 */
+
+.edit-attr li > .muti-select {
+    display: inline-block;
+    position: relative;
+}
+
+.muti-select select {
+    position: absolute;
+    height: 27px;
+    margin-top: 3px;
+    padding: 3px 0;
+    width: 102%;
+    /* top: 0; */
+    border: 0;
+    background: transparent;
+    color: transparent;
+}
+
+.muti-select input {
+    width: 100%;
+    padding: 3px 0;
+}
+
+.muti-select select option {
+    color: #000;
+}
+
+.muti-select select option.active {
+    background: #CBE3EF;
+}
+
+/* 下拉多选框样式 结束 */
+
+/* 标签输入框 开始 */
+
+.edit-attr li label.edit-tag {
+    display: inline-block;
+    width: calc( 100% - 73px );
+    height: auto;
+    margin-top: 5px;
+    border: 1px solid #A9A9A9;
+    padding-left: 5px;
+    overflow: hidden;
+    background-color: #FFF;
+    line-height: 25px;
+}
+
+.tag-contains {
+    float: left;
+    border: none;
+    min-height: 24px;
+}
+
+.tag-contains span {
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 5px;
+    float: left;
+    margin-right: 3px;
+    margin-top: 2px;
+    background-color: #DFDFDF;
+    word-break: break-all;
+}
+
+.delete-tag {
+    position: static;
+    float: right;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    background: url(../images/delete_tag.png) no-repeat 0px -18px;
+    margin: 2px 5px 0 5px;
+    cursor: pointer;
+}
+
+.delete-tag:hover {
+    background-position: 0px 1px;
+}
+
+.tag-contains span .tag-name {
+    font-weight: normal;
+}
+
+.add-tag {
+    max-width: 100%;
+    border: none;
+}
+
+/* 标签输入框 结束 */
+
+/* 正文编辑区 开始 */
+
+.edit-text {
+    height: calc( 100% - 216px );
+}
+
+#edit-content {
+    margin: 5px;
+    padding: 5px;
+    width: calc( 100% - 20px );
+    height: calc( 100% - 20px );
+    resize: none;
+}
+
+/* 正文编辑区 结束 */
+
+/* 海报编辑区 开始 */
+
+.edit-poster {
+    overflow: hidden;
+    /*max-height: 30%;*/
+    margin-right: 5px;
+}
+
+.edit-poster .edit-img-title {
+    padding: 5px 10px;
+    font-weight: bold;
+    /*font-size: 10px;*/
+    color: #666;
+}
+
+.edit-poster .edit-img {
+    display: inline-block;
+    width: 180px;
+    height: 120px;
+    line-height: 120px;
+    margin: 7px 0 7px 11px;
+    padding-bottom: 24px;
+    border: 2px solid #DBDBDB;
+    text-align: center;
+}
+
+.edit-poster .edit-img p {
+    line-height: 24px;
+}
+
+.edit-poster .edit-img img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+
+.edit-poster .edit-img:hover {
+    border-color: #CBE3EF;
+}
+
+.edit-poster .edit-img.active {
+    border-color: #3091F2;
+}
+
+.edit-btns {
+    padding: 5px;
+}
+
+.edit-btns button {
+    display: inline-block;
+    /*position: relative;*/
+    padding: 0 15px;
+    cursor: pointer;
+    background: #CECECE;
+    border: 0;
+    line-height: 28px;
+}
+
+.edit-btns button span {
+    display: inline-block;
+    /*position: absolute;*/
+    left: 5px;
+    color: #FFF;
+    font-family: "courier";
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 3px;
+    padding: 0 5px;
+    line-height: 18px;
+    background-color: #2D7ED9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btns button:hover {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+.edit-btns button:hover span {
+    background-color: #FFF;
+    color: #2F6FAC;
+}
+
+.edit-btns button.disable {
+    color: #AAA;
+    background-color: #FFF;
+}
+
+.edit-poster .edit-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc( 100% - 38px );
+}
+
+.size-list {
+    border-top: 1px solid #DDD;
+}
+
+.size-list .size-td {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc( 100% - 83px );
+    word-break: break-all;
+}
+
+.size-list-first {
+    background-color: #DDD;
+}
+
+.size-list .size-td.size-title {
+    text-align: center;
+    font-weight: bold;
+    line-height: 30px;
+    color: #666;
+}
+
+
+.size-list .size-td:first-child {
+    width: 80px;
+}
+
+.size-list .size-td:nth-child(2) {
+    border-left: 1px solid #DDD;
+}
+
+/* 海报编辑区 结束 */
+
+/* 操作按钮区 开始 */
+
+.editBar-buttons {
+    /*padding-top: 10px;*/
+    line-height: 33px;
+    font-size: 16px;
+    font-weight: bold;
+    overflow-x: hidden;
+    border-top: 1px solid #DCDCDC;
+}
+
+.editBar-buttons > span {
+    display: inline-block;
+    padding: 0 25px;
+    cursor: pointer; 
+}
+
+.editBar-buttons > span:hover {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+.editBar-buttons > span.disable {
+    background-color: #FFF;
+    color: #999;
+}
+
+/* 操作按钮区 结束 */

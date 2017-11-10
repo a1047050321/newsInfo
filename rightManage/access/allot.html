@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<!--[if IE 6]>
+<script src="images/DD_belatedPNG.js" type="text/javascript"></script>
+<script type="text/javascript">
+    DD_belatedPNG.fix('*');
+</script>
+<![endif]-->
+
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript">
+
+var delList = [];
+var right_list = [
+	{right_id:"10001",right_name:"查看部门"},
+	{right_id:"10001",right_name:"编辑部门"},
+	{right_id:"10001",right_name:"删除部门"},
+	{right_id:"10001",right_name:"添加部门"},
+	{right_id:"10001",right_name:"移动部门"}
+];
+
+var rightfile_list = [
+	{"rightfile_id": 50,"rightfile_name": "查看节目权限包","right_list" : [{"right_id" : 20003,"right_name" : "测试1"},{"right_id" : 20004,"right_name" : "测试2"}]},
+	{"rightfile_id": 51,"rightfile_name": "编辑节目权限包","right_list" : [{"right_id" : 20003,"right_name" : "测试1"},{"right_id" : 20004,"right_name" : "测试2"}]},
+	{"rightfile_id": 52,"rightfile_name": "设置节目权限包","right_list" : [{"right_id" : 20003,"right_name" : "测试1"},{"right_id" : 20004,"right_name" : "测试2"}]}
+];
+
+var user_list = [
+	{"icon_url" : "http://test","right_list" : [{"right_id" : 10000,"right_name" : "分配权限"}],"user_id" : 1000001,"user_name" : "徐佳宏"},
+	{"icon_url" : "http://test","right_list" : [{"right_id" : 10000,"right_name" : "分配权限"}],"user_id" : 1000002,"user_name" : "李威青"},
+	{"icon_url" : "http://test","right_list" : [{"right_id" : 10000,"right_name" : "分配权限"}],"user_id" : 1000005,"user_name" : "曾柯"},
+	{"icon_url" : "http://test","right_list" : [{"right_id" : 10001,"right_name" : "增加分类权限"},{"right_id" : 10002,"right_name" : "编辑分类权限"},{"right_id" : 10003,"right_name" : "删除分类权限"}],"user_id" : 1000022,"user_name" : "郭晶"},
+	{"icon_url" : "http://test","right_list" : [{"right_id" : 10000,"right_name" : "分配权限"}],"user_id" : 1000029,"user_name" : "刘文"}
+];
+
+var department_list = [
+	{"department_id" : 10016,"department_name" : "应用开发一组","icon_url" : "http://test","right_list" : [{"right_id" : 20003,"right_name" : "新建视频权限"},{"right_id" : 20004,"right_name" : "查看视频上传状态权限"}]},
+	{"department_id" : 10017,"department_name" : "应用开发2组","icon_url" : "http://test","right_list" : [{"right_id" : 20005,"right_name" : "重置视频上传权限"},{"right_id" : 20006,"right_name" : "上传视频权限"}]}
+];
+
+var job_list = [
+/*	{"icon_url" : "","job_id" : 20001,"job_name" : "","right_list" : [{"right_id" : 20005,"right_name" : "重置视频上传权限"},{"right_id" : 20006,"right_name" : "上传视频权限"}]},
+	{"icon_url" : "","job_id" : 20002,"job_name" : "","right_list" : [{"right_id" : 20007,"right_name" : "搜索权限"},{"right_id" : 20008,"right_name" : "编辑视频详情权限"}]}
+*/
+];
+
+var system_admin_list = [];
+function getRightFrameData(_str){
+	switch(_str){
+		case "right_list":
+			return right_list;
+			break;
+		case "rightfile_list":
+			return rightfile_list;
+			break;
+	}	
+}
+
+//系统权限、系统管理员
+function initAccess(){
+	var htm = "";
+	for(var i=0; i<right_list.length; i++){
+		htm +='<span style="float:left; width:120px;">';
+		htm +='<a href="javascript:viewAccess('+right_list[i].right_id+');">'+right_list[i].right_name+'</a>';
+		htm +='</span>';
+	}
+	$("#access").html(htm);
+}
+function initAdmin(){
+	var div = "<ul>";
+	for(var i=0; i<system_admin_list.length; i++){
+		div += "<li>";
+		var imgSrc = "";
+		if(system_admin_list[i].icon_url&&system_admin_list[i].icon_url["100x100"]){
+			imgSrc = system_admin_list[i].icon_url["100x100"];
+		}else{//默认头像
+			if(system_admin_list[i].gender&&system_admin_list[i].gender==2){//女
+				imgSrc = top.homePageUrl+"/pubFile/img/avatar0.jpg";
+			}else{//男
+				imgSrc = top.homePageUrl+"/pubFile/img/avatar1.jpg";
+			}
+		}
+		div += '<a href="javascript:details('+system_admin_list[i].id+',-1)"><img src="'+imgSrc+'" width="50" height="50"><br />'+system_admin_list[i].name+'</a>';
+		div += '</li>';
+	}
+	div += '</ul>';
+	$("#admin").append(div);
+}
+function getList(){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			for(var i=0; i<data.right_list.length; i++){
+				if(data.right_list[i].type==1){
+					if(data.right_list[i].list==null) right_list=[];
+					else right_list = data.right_list[i].list;
+					break;
+				}
+			}
+			if(data.system_admin_list==null) system_admin_list = [];
+			else system_admin_list = data.system_admin_list;
+			initAccess();
+			initAdmin();
+		}else{
+			top.openPopupTips("获取系统权限列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/get_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.rightReqUrl);
+}
+
+//系统权限包
+function initAccessFile(){
+	var htm = "";
+	for(var i=0; i<rightfile_list.length; i++){
+		htm +='<span style="float:left; width:120px;">';
+		htm +='<a href="javascript:viewAccessFile('+rightfile_list[i].rightfile_id+',\''+rightfile_list[i].rightfile_name+'\')">'+rightfile_list[i].rightfile_name+'</a>';
+		htm +='</span>';
+	}
+	$("#accessFile").html(htm);
+}
+function getFileList(){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			for(var i=0; i<data.rightfile_list.length; i++){
+				if(data.rightfile_list[i].type==1){
+					if(data.rightfile_list[i].list==null) rightfile_list=[];
+					else rightfile_list = data.rightfile_list[i].list;
+					break;
+				}
+			}
+			initAccessFile();
+		}else{
+			top.openPopupTips("获取系统权限包列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/get_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.rightReqUrl);
+}
+
+
+//针对用户分配权限
+function initUser(){
+	if(user_list.length>0){
+		$(".box0 fieldset").show();
+		$(".edit0").show();
+	}else{
+		$(".box0 fieldset").hide();
+		$(".edit0").hide();
+	}
+	var div = "";
+	for(var i=0; i<user_list.length; i++){
+		div += "<li>";
+		var imgSrc = "";
+		if(user_list[i].icon_url&&user_list[i].icon_url["100x100"]){
+			imgSrc = user_list[i].icon_url["100x100"];
+		}else{//默认头像
+			if(user_list[i].gender==2){//女
+				imgSrc = top.homePageUrl+"/pubFile/img/avatar0.jpg";
+			}else{//男
+				imgSrc = top.homePageUrl+"/pubFile/img/avatar1.jpg";
+			}
+		}
+		div += '<a class="iconDel del0" href="javascript:void(0)"></a><a href="javascript:details('+user_list[i].user_id+',0)"><img src="'+imgSrc+'" width="50" height="50"><br />'+user_list[i].user_name+'</a>';
+		div += '</li>';
+	}
+	$("#user").html(div);
+}
+
+function addNewUser(_list){
+	var div = "";
+	for(var i=0; i<_list.length; i++){
+		div += "<li>";
+		div += '<a class="iconDel del0" href="javascript:void(0)"></a><a href="javascript:details('+_list[i].user_id+',0)"><img src="'+_list[i].icon_url["100x100"]+'" width="50" height="50"><br />'+_list[i].user_name+'</a>';
+		div += '</li>';
+	}
+	$("#user").append(div);
+}
+function getUser( pageidx, pagenum ){
+	pageidx = pageidx || 1;
+	pagenum = pagenum || 20;
+	if ( pageidx == 1 ) {
+		user_list = [];
+	}
+	$(".box0 fieldset").hide();
+	$(".edit0").hide();
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			if (data.list==null) { 
+				user_list=[];
+			} else {
+				user_list = (user_list || []).concat(data.list);
+
+				if ( data.total > pageidx * pagenum ) {
+					getUser( ++pageidx, pagenum );
+					return;
+				}
+
+			}
+			
+			initUser();
+		}else{
+			top.openPopupTips("获取系统权限的用户列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/homed/system/get_user_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:pageidx,pagenum:pagenum},"get","JSON",top.rightReqUrl);
+}
+
+
+//针对部门分配权限
+function initDepartment(){
+	if(department_list.length>0){
+		$(".box1 fieldset").show();
+		$(".edit1").show();
+	}else{
+		$(".box1 fieldset").hide();
+		$(".edit1").hide();
+	}
+	var div = "";
+	for(var i=0; i<department_list.length; i++){
+		div += "<li>";
+		div += '<a class="iconDel del1" href="javascript:void(0)"></a><a href="javascript:details('+department_list[i].department_id+',1)"><img src="../rightImg/avatar2.jpg" width="50" height="50"><br />'+department_list[i].department_name+'</a>';
+		div += '</li>';
+	}
+	$("#department").html(div);
+}
+function addNewDepartment(_list){
+	var div = "";
+	for(var i=0; i<_list.length; i++){
+		div += "<li>";
+		div += '<a class="iconDel del1" href="javascript:void(0)"><a href="javascript:details('+_list[i].department_id+',1)"><img src="../rightImg/avatar2.jpg" width="50" height="50"><br />'+_list[i].department_name+'</a>';
+		div += '</li>';
+	}
+	$("#department").append(div);
+}
+function getDepartment(){
+	$(".box1 fieldset").hide();
+	$(".edit1").hide();
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			if(data.list==null) department_list=[];
+			else department_list = data.list;
+			initDepartment();
+		}else{
+			top.openPopupTips("获取系统权限的部门列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/homed/system/get_department_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.rightReqUrl);
+}
+
+
+//针对职务分配权限
+function initJob(){
+	if(job_list.length>0){
+		$(".box2 fieldset").show();
+		$(".edit2").show();
+	}else{
+		$(".box2 fieldset").hide();
+		$(".edit2").hide();
+	}
+	var div = "";
+	for(var i=0; i<job_list.length; i++){
+		div += "<li>";
+		div += '<a class="iconDel del2" href="javascript:void(0)"></a><a href="javascript:details('+job_list[i].job_id+',2)"><img src="../rightImg/avatar3.jpg" width="50" height="50"><br />'+job_list[i].job_id+'</a>';
+		div += '</li>';
+	}
+	$("#job").html(div);
+}
+function addNewJob(_list){
+	var div = "";
+	for(var i=0; i<_list.length; i++){
+		div += "<li>";
+		div += '<a class="iconDel del2" href="javascript:void(0)"><a href="javascript:details('+job_list[i].job_id+',2)"><img src="../rightImg/avatar3.jpg" width="50" height="50"><br />'+_list[i].job_id+'</a>';
+		div += '</li>';
+	}
+	$("#job").append(div);
+}
+function getJob(){
+	$(".box2 fieldset").hide();
+	$(".edit2").hide();
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			if(data.list==null) job_list = [];
+			else job_list = data.list;
+			initJob();
+		}else{
+			top.openPopupTips("获取系统权限的职务列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/homed/system/get_job_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.rightReqUrl);
+}
+
+
+//打开编辑状态
+function editAllot(_num){
+	delList = [];
+	$('.editBtn'+_num).show();
+	$('.del'+_num).show();
+	$('.edit'+_num).hide();
+	$('.add'+_num).hide();
+	$("#onlyready"+_num).show();
+	
+	$(".userList .del0").off("click");
+	$(".userList .del1").off("click");
+	$(".userList .del2").off("click");
+	
+	$(".userList .del"+_num).on("click",function(){
+		var idx = $(".userList .del"+_num).index(this);
+		if(_num==0){
+			delList.push(user_list[idx]);//保存需要删除的系统管理员
+		}else if(_num==1){
+			delList.push(department_list[idx]);
+		}else if(_num==2){
+			delList.push(job_list[idx]);
+		}
+		$(this).parent(this).hide();
+	})
+}
+
+function cancelEdit(_num){
+	$('.editBtn'+_num).hide();
+	$('.del'+_num).hide();
+	$('.edit'+_num).show();
+	$('.add'+_num).show();
+	$("#onlyready"+_num).hide();
+	delList = [];
+	if(_num==0){
+		initUser();
+	}else if(_num==1){
+		initDepartment();
+	}else if(_num==2){
+		initJob();
+	}
+}
+function saveEdit(_num){
+	top.openPopupWindow("access/tips.html?optFlag=3");
+	if(_num==0){
+		rightFrameCallback = function(){
+			delUserData(delList,0);
+		}
+	}else if(_num==1){
+		rightFrameCallback = function(){
+			delDepartmentData(delList,0);
+		}
+	}else if(_num==2){
+		rightFrameCallback = function(){
+			delJobData(delList,0);
+		}
+	}
+}
+function delUserData(_list,_num){
+	if(console) console.log("delUserData---_list.legnth="+_list.length+",_num="+_num);
+	if(_list.length==0){//未做任何修改时，直接关闭窗口
+		cancelEdit(0);
+		top.closePopupWindow();
+		return;
+	}
+	var tempList = [];
+	for(var i=0; i<_list.length; i++){
+		if(_list[i].right_list&&_list[i].right_list.length>0){
+			var rightids = "";
+			for(var n=0; n<_list[i].right_list.length; n++){
+				if(rightids){
+					rightids += "|"+_list[i].right_list[n].right_id;
+				}else{
+					rightids += _list[i].right_list[n].right_id;
+				}
+			}
+			if(console) console.log("delUserData---rightids="+rightids);
+			tempList.push({user_id:_list[i].user_id,rightids:rightids,flag:0});//权限
+		}
+		if(_list[i].rightfile_list&&_list[i].rightfile_list.length>0){
+			var rightfileids = "";
+			for(var n=0; n<_list[i].rightfile_list.length; n++){
+				if(rightfileids){
+					rightfileids += "|"+_list[i].rightfile_list[n].rightfile_id;
+				}else{
+					rightfileids += _list[i].rightfile_list[n].rightfile_id;
+				}
+			}
+			if(console) console.log("delUserData---rightids="+rightids);
+			tempList.push({user_id:_list[i].user_id,rightids:rightfileids,flag:1});//权限包
+		}else{//确保在先取消权限后再取消权限包时，完成某个用户的删除
+			if(console) console.log("delUserData---rightids=null strting");
+			tempList.push({user_id:_list[i].user_id,rightids:"",flag:1});//权限包
+		}
+	}
+	if(tempList.length>0){//用户没有权限和权限包时
+		cancelUserRightAndRightfile(tempList,_num);
+	}else{
+		cancelEdit(0);
+		top.closePopupWindow();
+	}
+}
+function cancelUserRightAndRightfile(_list,_num){
+	if(console) console.log("cancelUserRightAndRightfile---_list.legnth="+_list.length+",_list["+_num+"].flag="+_list[_num].flag);
+	if(_list[_num].flag==0){//取消权限
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				_num ++;
+				cancelUserRightAndRightfile(_list,_num);
+			}else {
+				top.openPopupTips("取消用户权限失败！");
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightids:_list[_num].rightids,userid:_list[_num].user_id},"post","JSON",top.rightReqUrl);
+	}else{//取消权限包
+		if(_list[_num].rightids){
+			top.ajaxReqAction(function(data){
+				if(data.ret==0){
+					for(var i=0; i<user_list.length; i++)	{
+						if(_list[_num].user_id == user_list[i].user_id){//保证只删除部分用户时，需同步到user_list列表
+							user_list.splice(i,1);
+							break;
+						}	
+					}
+				}else {
+					top.openPopupTips("取消用户权限包失败！");
+				}
+				_num ++;
+				if(_num<_list.length){//循环递归调用
+					cancelUserRightAndRightfile(_list,_num);
+				}else{
+					$(".editBtn0").hide();
+					$('.edit0').show();
+					$('.add0').show();
+					$("#onlyready0").hide();
+					initUser();
+					delList = [];//清空当前删除数据
+					top.closePopupWindow();
+				}
+			},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:_list[_num].rightids,userid:_list[_num].user_id},"post","JSON",top.rightReqUrl);
+		}else{
+			for(var i=0; i<user_list.length; i++)	{
+				if(_list[_num].user_id == user_list[i].user_id){//保证只删除部分用户时，需同步到user_list列表
+					user_list.splice(i,1);
+					break;
+				}	
+			}
+			_num ++;
+			if(_num<_list.length){//循环递归调用
+				cancelUserRightAndRightfile(_list,_num);
+			}else{
+				$(".editBtn0").hide();
+				$('.edit0').show();
+				$('.add0').show();
+				$("#onlyready0").hide();
+				initUser();
+				delList = [];//清空当前删除数据
+				top.closePopupWindow();
+			}
+		}
+	}
+}
+function delDepartmentData(_list,_num){
+	if(console) console.log("delDepartmentData---_list.legnth="+_list.length+",_num="+_num);
+	if(_list.length==0){//未做任何修改时，直接关闭窗口
+		cancelEdit(1);
+		top.closePopupWindow();
+		return;
+	}
+	var tempList = [];
+	for(var i=0; i<_list.length; i++){
+		if(_list[i].right_list&&_list[i].right_list.length>0){
+			var rightids = "";
+			for(var n=0; n<_list[i].right_list.length; n++){
+				if(rightids){
+					rightids += "|"+_list[i].right_list[n].right_id;
+				}else{
+					rightids += _list[i].right_list[n].right_id;
+				}
+			}
+			tempList.push({department_id:_list[i].department_id,rightids:rightids,flag:0});//权限
+		}
+		if(_list[i].rightfile_list&&_list[i].rightfile_list.length>0){
+			var rightfileids = "";
+			for(var n=0; n<_list[i].rightfile_list.length; n++){
+				if(rightfileids){
+					rightfileids += "|"+_list[i].rightfile_list[n].rightfile_id;
+				}else{
+					rightfileids += _list[i].rightfile_list[n].rightfile_id;
+				}
+			}
+			tempList.push({department_id:_list[i].department_id,rightids:rightfileids,flag:1});//权限包
+		}else{//确保在先取消权限后再取消权限包时，完成某个用户的删除
+			tempList.push({department_id:_list[i].department_id,rightids:"",flag:1});//权限包
+		}
+	}
+	if(tempList.length>0){//用户没有权限和权限包时
+		cancelDepartRightAndRightfile(tempList,_num);
+	}else{
+		cancelEdit(1);
+		top.closePopupWindow();
+	}
+}
+function cancelDepartRightAndRightfile(_list,_num){
+	if(console) console.log("cancelDepartRightAndRightfile---_list.legnth="+_list.length+",_list["+_num+"].flag="+_list[_num].flag+",_list[_num].rightids="+_list[_num].rightids);
+	if(_list[_num].flag==0){//取消权限
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				_num ++;
+				cancelDepartRightAndRightfile(_list,_num);
+			}else {
+				top.openPopupTips("取消部门权限失败！");
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightids:_list[_num].rightids,departmentid:_list[_num].department_id},"post","JSON",top.rightReqUrl);
+	}else{//取消权限包
+		if(_list[_num].rightids){
+			top.ajaxReqAction(function(data){
+				if(data.ret==0){
+					for(var i=0; i<department_list.length; i++)	{
+						if(_list[_num].department_id == department_list[i].department_id){//保证只删除部分部门时，需同步到department_list列表
+							department_list.splice(i,1);
+							break;
+						}	
+					}
+				}else {
+					top.openPopupTips("取消部门权限包失败！");
+				}
+				_num ++;
+				if(_num<_list.length){//循环递归调用
+					cancelDepartRightAndRightfile(_list,_num);
+				}else{
+					$(".editBtn1").hide();
+					$('.edit1').show();
+					$('.add1').show();
+					$("#onlyready1").hide();
+					initDepartment();
+					delList = [];//清空当前删除数据
+					top.closePopupWindow();
+				}
+			},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:_list[_num].rightids,departmentid:_list[_num].department_id},"post","JSON",top.rightReqUrl);
+		}else{
+			for(var i=0; i<department_list.length; i++)	{
+				if(_list[_num].department_id == department_list[i].department_id){//保证只删除部分部门时，需同步到department_list列表
+					department_list.splice(i,1);
+					break;
+				}	
+			}
+			_num ++;
+			if(_num<_list.length){//循环递归调用
+				cancelDepartRightAndRightfile(_list,_num);
+			}else{
+				$(".editBtn1").hide();
+				$('.edit1').show();
+				$('.add1').show();
+				$("#onlyready1").hide();
+				initDepartment();
+				delList = [];//清空当前删除数据
+				top.closePopupWindow();
+			}
+		}
+	}
+}
+function delJobData(_list,_num){
+	if(console) console.log("delJobData---_list.legnth="+_list.length+",_num="+_num);
+	if(_list.length==0){//未做任何修改时，直接关闭窗口
+		cancelEdit(2);
+		top.closePopupWindow();
+		return;
+	}
+		var tempList = [];
+	for(var i=0; i<_list.length; i++){
+		if(_list[i].right_list&&_list[i].right_list.length>0){
+			var rightids = "";
+			for(var n=0; n<_list[i].right_list.length; n++){
+				if(rightids){
+					rightids += "|"+_list[i].right_list[n].right_id;
+				}else{
+					rightids += _list[i].right_list[n].right_id;
+				}
+			}
+			tempList.push({job_id:_list[i].job_id,rightids:rightids,flag:0});//权限
+		}
+		if(_list[i].rightfile_list&&_list[i].rightfile_list.length>0){
+			var rightfileids = "";
+			for(var n=0; n<_list[i].rightfile_list.length; n++){
+				if(rightfileids){
+					rightfileids += "|"+_list[i].rightfile_list[n].rightfile_id;
+				}else{
+					rightfileids += _list[i].rightfile_list[n].rightfile_id;
+				}
+			}
+			tempList.push({job_id:_list[i].job_id,rightids:rightfileids,flag:1});//权限包
+		}else{//确保在先取消权限后再取消权限包时，完成某个职务的删除
+			tempList.push({job_id:_list[i].job_id,rightids:"",flag:1});//权限包
+		}
+	}
+	if(tempList.length>0){//用户没有权限和权限包时
+		cancelJobRightAndRightfile(tempList,_num);
+	}else{
+		cancelEdit(2);
+		top.closePopupWindow();
+	}
+}
+function cancelJobRightAndRightfile(_list,_num){
+	if(console) console.log("cancelJobRightAndRightfile---_list.legnth="+_list.length+",_list["+_num+"].flag="+_list[_num].flag);
+	if(_list[_num].flag==0){//取消权限
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				_num ++;
+				cancelJobRightAndRightfile(_list,_num);
+			}else {
+				top.openPopupTips("取消职务权限失败！");
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightids:_list[_num].rightids,jobid:_list[_num].job_id},"post","JSON",top.rightReqUrl);
+	}else{//取消权限包
+		if(_list[_num].rightids){
+			top.ajaxReqAction(function(data){
+				if(data.ret==0){
+					for(var i=0; i<job_list.length; i++)	{
+						if(_list[_num].job_id == job_list[i].job_id){//保证只删除部分部门时，需同步到job_list列表
+							job_list.splice(i,1);
+							break;
+						}	
+					}
+				}else {
+					top.openPopupTips("取消职务权限包失败！");
+				}
+				_num ++;
+				if(_num<_list.length){//循环递归调用
+					cancelJobRightAndRightfile(_list,_num);
+				}else{
+					$(".editBtn2").hide();
+					$('.edit2').show();
+					$('.add2').show();
+					$("#onlyready2").hide();
+					initJob();
+					delList = [];//清空当前删除数据
+					top.closePopupWindow();
+				}
+			},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/cancel_assign",{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:_list[_num].rightids,jobid:_list[_num].job_id},"post","JSON",top.rightReqUrl);
+		}else{
+			for(var i=0; i<job_list.length; i++)	{
+				if(_list[_num].job_id == job_list[i].job_id){//保证只删除部分部门时，需同步到job_list列表
+					job_list.splice(i,1);
+					break;
+				}	
+			}
+			_num ++;
+			if(_num<_list.length){//循环递归调用
+				cancelJobRightAndRightfile(_list,_num);
+			}else{
+				$(".editBtn2").hide();
+				$('.edit2').show();
+				$('.add2').show();
+				$("#onlyready2").hide();
+				initJob();
+				delList = [];//清空当前删除数据
+				top.closePopupWindow();
+			}
+		}
+	}
+}
+function emptyUser(){
+	if(user_list.length>0){
+		top.openPopupWindow("access/tips.html?optFlag=0");
+		delList = [];
+		for(var i=0; i<user_list.length; i++)
+			delList.push(user_list[i]);
+		rightFrameCallback = function(){
+			delUserData(delList,0);
+		}
+	}
+}
+function emptyDepartment(){
+	if(department_list.length>0){
+		top.openPopupWindow("access/tips.html?optFlag=1");
+		delList = [];
+		for(var i=0; i<department_list.length; i++)
+			delList.push(department_list[i]);
+		rightFrameCallback = function(){
+			delDepartmentData(delList,0);
+		}
+	}
+}
+function emptyJob(){
+	if(job_list.length>0){
+		top.openPopupWindow("access/tips.html?optFlag=2");
+		delList = [];
+		for(var i=0; i<job_list.length; i++)
+			delList.push(job_list[i]);
+		rightFrameCallback = function(){
+			delJobData(delList,0);
+		}
+	}
+}
+
+
+function viewAccess(_id){ //查看系统权限
+	top.openPopupWindow("access/view_access.html?rightid="+_id);
+}
+function viewAccessFile(_id,_name){ //查看系统权限包
+	top.openPopupWindow("access/view_accessfile.html?rightfileId="+_id+"&rightfileName="+encodeURI(_name));
+}
+function details(_id,_flag){ //针对用户分配权限
+	if(_flag==-1){//管理员权限查询
+		top.openPopupWindow("access/details.html?targetuserid="+_id+"&optFlag=0");
+		rightFrameCallback = function(_obj){
+			window.location.reload();
+		}
+	}else{
+		if($('.edit'+_flag).is(":visible")){//非编辑状态才可查询详情
+			top.openPopupWindow("access/details.html?targetuserid="+_id+"&optFlag="+_flag);
+			rightFrameCallback = function(_obj){
+				window.location.reload();	
+			}
+		}
+	}
+}
+
+function addUser(){ //添加用户
+	top.openPopupWindow("access/add_user.html");
+	rightFrameCallback = function(_obj){
+		window.location.reload();
+		/*if(user_list.length>0){
+			var ret = -1;
+			for(var i=0; i<user_list.length;i++){
+				if(user_list[i].user_id==_obj[0].user_id){
+					ret = i;
+					break;
+				}
+			}
+			if(ret==-1){//新增用户
+				window.location.reload();//添加管理员导致用户列表中出现了管理员
+				//Array.prototype.push.apply(user_list,_obj);
+				//addNewUser(_obj);
+			}else{//已有权限用户，排除不同子权限和权限包进行合并
+				var currList = user_list[ret].right_list;
+				for(var n=0; n<_obj[0].right_list.length; n++){
+					if(!searchUserRight(currList,_obj[0].right_list[n].right_id)){
+						currList.push(_obj[0].right_list[n]);
+					}
+				}
+				user_list[ret].right_list = currList;
+				
+				var currfileList = user_list[ret].rightfile_list;
+				for(var n=0; n<_obj[0].rightfile_list.length; n++){
+					if(!searchUserfileRight(currfileList,_obj[0].rightfile_list[n].rightfile_id)){
+						currfileList.push(_obj[0].rightfile_list[n]);
+					}
+				}
+				user_list[ret].rightfile_list = currfileList;
+			}
+		}else{
+			window.location.reload();//添加管理员导致用户列表中出现了管理员
+			//Array.prototype.push.apply(user_list,_obj);
+			//initUser();
+		}*/
+	}
+}
+function searchUserRight(_list,_id){
+	var ret = false;
+	for(var k=0; k<_list.length; k++){
+		if(_list[k].right_id==_id){
+			var ret = true;
+			break;	
+		}
+	}
+	return ret;
+}
+function searchUserfileRight(_list,_id){
+	var ret = false;
+	for(var k=0; k<_list.length; k++){
+		if(_list[k].rightfile_id==_id){
+			var ret = true;
+			break;	
+		}
+	}
+	return ret;
+}
+function addDepartment(){ //添加部门
+	top.openPopupWindow("access/add_department.html");
+	rightFrameCallback = function(_obj){ 
+		if(department_list.length>0){
+			var ret = -1;
+			for(var i=0; i<department_list.length;i++){
+				if(department_list[i].department_id==_obj[0].department_id){
+					ret = i;
+					break;
+				}
+			}
+			if(ret==-1){//新增部门
+				Array.prototype.push.apply(department_list,_obj);
+				addNewDepartment(_obj);
+			}else{//已有权限部门，排除不同子权限和权限包进行合并
+				var currList = department_list[ret].right_list;
+				for(var n=0; n<_obj[0].right_list.length; n++){
+					if(!searchUserRight(currList,_obj[0].right_list[n].right_id)){
+						currList.push(_obj[0].right_list[n]);
+					}
+				}
+				department_list[ret].right_list = currList;
+				
+				var currfileList = department_list[ret].rightfile_list;
+				for(var n=0; n<_obj[0].rightfile_list.length; n++){
+					if(!searchUserfileRight(currfileList,_obj[0].rightfile_list[n].rightfile_id)){
+						currfileList.push(_obj[0].rightfile_list[n]);
+					}
+				}
+				department_list[ret].rightfile_list = currfileList;
+			}
+		}else{
+			Array.prototype.push.apply(department_list,_obj);
+			initDepartment();
+		}
+	}
+}
+function addJob(){ //添加职务
+	top.openPopupWindow("access/add_job.html");
+	rightFrameCallback = function(_obj){ 
+		if(job_list.length>0){
+			Array.prototype.push.apply(job_list,_obj);
+			addNewJob(_obj);
+		}else{
+			Array.prototype.push.apply(job_list,_obj);
+			initJob();
+		}
+	}
+}
+
+window.onload = init;
+function init(){
+	$("#systemName").html(top.system_name);
+	getList();
+	getFileList()
+	getUser();
+	getDepartment();
+	//getJob();
+}
+</script>
+</head>
+
+<body>
+<div class="content">
+	<h1 id="systemName">后台用户管理系统权限</h1>
+
+	<div class="box">
+		<fieldset>
+			<legend>系统权限</legend>
+			<p id="access"></p>
+		</fieldset>
+	</div>
+
+	<div class="box">
+		<fieldset>
+			<legend>系统权限包</legend>
+			<p id="accessFile"></p>
+		</fieldset>
+	</div>
+
+	<div class="box">
+		<fieldset>
+			<legend>系统管理员</legend>
+       		<ul class="userList" id="admin"></ul>
+		</fieldset>
+	</div>
+
+	<div class="box box0">
+		<h2><span class="title">针对用户分配权限</span><span class="btn"><a class="edit edit0" href="javascript:editAllot(0)">编辑</a><a class="add add0" href="javascript:addUser()">添加用户</a></span><span class="btn" id="onlyready0" style="display:none;"><p class="edit">编辑</p><p class="add">添加用户</p></span></h2>
+		<fieldset class="userList">
+			<legend>用户列表</legend>
+       		<ul id="user"></ul>
+		</fieldset>
+		<div class="editBtn editBtn0" style="display:none;">
+        	<div class="floatL"><a class="save" href="javascript:saveEdit(0)">保　存</a><a class="save cancel0" href="javascript:cancelEdit(0)">取　消</a></div>
+       		<div class="floatR"><a class="empty" href="javascript:emptyUser()">清空用户</a></div>
+		</div>
+	</div>
+
+	<div class="box box1">
+		<h2><span class="title">针对部门分配权限</span><span class="btn"><a class="edit edit1" href="javascript:editAllot(1)">编辑</a><a class="add add1" href="javascript:addDepartment()">添加部门</a></span><span class="btn" id="onlyready1" style="display:none;"><p class="edit">编辑</p><p class="add">添加用户</p></span></h2>
+		<fieldset class="userList">
+			<legend>部门列表</legend>
+       		<ul id="department"></ul>
+		</fieldset>
+		<div class="editBtn editBtn1" style="display:none;">
+        	<div class="floatL"><a class="save" href="javascript:saveEdit(1)">保　存</a><a class="save cancel1" href="javascript:cancelEdit(1)">取　消</a></div>
+       		<div class="floatR"><a class="empty" href="javascript:emptyDepartment()">清空部门</a></div>
+		</div>
+	</div>
+
+	<!--<div class="box box2">
+		<h2><span class="title">针对职务分配权限</span><span class="btn"><a class="edit edit2" href="javascript:editAllot(2)">编辑</a><a class="add add2" href="javascript:addJob()">添加职务</a></span><span class="btn" id="onlyready2" style="display:none;"><p class="edit">编辑</p><p class="add">添加用户</p></span></h2>
+		<fieldset class="userList">
+			<legend>职务列表</legend>
+       		<ul id="job"></ul>
+		</fieldset>
+		<div class="editBtn editBtn2" style="display:none;">
+        	<div class="floatL"><a class="save" href="javascript:saveEdit(2)">保　存</a><a class="save cancel2" href="javascript:cancelEdit(2)">取　消</a></div>
+       		<div class="floatR"><a class="empty" href="javascript:emptyJob(2)">清空职务</a></div>
+		</div>
+	</div>-->
+</div>
+</body>
+</html>

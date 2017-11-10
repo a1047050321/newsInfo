@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script>
+var rightid = 0;
+window.onload = init;
+function init(){
+	if(top.getUrlParams("rightid",window)) rightid = parseInt(top.getUrlParams("rightid",window),10);
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			$("#title").html(data.right_name);
+			if(data.desc){
+				$("#content").html(data.desc);
+			}else{
+				$("#content").html("无");	
+			}
+		}else{
+			top.openPopupTips("获取权限详情失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/get_info",{accesstoken:top.accesstoken,rightid:rightid},"get","JSON",top.accessAddr);
+}
+
+function cancelReq(){
+	top.closePopupWindow();
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:640px;">
+<div class="tck_title" style="border:none;"><span id="title"></span><span class="tck_close"><a href="javascript:cancelReq()" title="关闭"></a></span></div>
+
+<div class="tck_info">
+    <p class="paddingB" id="content" style="min-height:50px;"></p>
+</div>
+
+<div class="tck_btn1"><a href="javascript:cancelReq()">关　闭</a></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

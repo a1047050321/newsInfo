@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* CSS Document */
+.pageblock {
+	margin:0 auto;
+	width:auto;
+	float:left;
+	height:29px;
+	text-align:center;
+	display:none;
+}
+
+.pageblock a {
+	display:block;
+	text-decoration: none;
+	text-align:center;
+	width: 29px;
+	height: 29px;
+	line-height: 29px;
+}
+
+.pageblock a,
+.pageblock span {
+	float:left;
+	font-size:12px;
+	color:#444444;
+	margin-left:5px;
+}
+
+
+.pageblock span.input {
+	outline:none;
+	height:10px;
+	line-height:10px;
+	text-align:center;
+	
+}
+
+.pageblock span.input input {
+	outline:none; 
+	text-align:center;
+	font-size:8px;
+	width:35px;
+	height:20px;
+	margin-top: 4px;
+	padding-top:0px;
+	color:#000000;
+	border:#b0b0b0 solid 1px;
+}
+
+.pageblock span.input input.focus {
+	border:#1780fb solid 1px;
+}
+
+.pageblock span.totalpage {
+	margin-top:8px;
+	color: #000000;
+}
+
+.pageblock a.current {
+	background-color:#6286aa;
+	color:#ffffff;
+}
+
+.pagedisplay {
+	display:none !important;
+}
+
+.pageblock a.next {
+	width: 40px;
+	color: #000000;
+}
+
+.pageblock a.pre {
+	width: 40px;
+	color: #000000;
+}
+
+.pageblock a.first,
+.pageblock a.last {
+	color: #000000;
+}
+
+
+.pageblock a.nodis {
+	color: #969696;
+}

@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script>
+var listStr = "";
+var currLiObj = null;
+var selectUserList = [];
+var selectFlag = true; //true为多选
+var ajaxFlag = 0;//请求ajax中
+var ulStr = "";
+var departmentid = "";
+var $this = "";
+var gd = "";
+var inputStr = "";
+var searchTempVal = "";
+var inputStrTree = "";
+var inputRepeatArr = ""; //用于过滤重复用户
+var dataJson = [];
+var right_list = top.getRightFrameData("right_list");
+var rightfile_list = top.getRightFrameData("rightfile_list");
+
+//遍历树形结构
+function initDataFormat(){
+	var n=arguments[0];
+	for(var i=0; i<n.length; i++){
+		if(departmentid != n[i].department_id){
+			listStr += "<li id="+n[i].department_id+" class='dpart closed'><a class='dpart_a'><span class='dpart_icon_close'></span><span class='dpart_name name'>"+n[i].department_name+"</span></a>";
+		}
+		if(n[i].user_list&&n[i].user_list.length>0){
+			listStr += "<ul class='chrilren_close'>";	
+			for(var j=0; j<n[i].user_list.length; j++){
+				if(n[i].user_list[j].gender==1){//男
+					listStr += "<li id="+n[i].user_list[j].user_id+" class='user_icon'><a class='user_a' id='only_"+n[i].user_list[j].user_id+"'><span class='checkbox'><input type='checkbox' id='input_"+n[i].user_list[j].user_id+"' value='"+n[i].user_list[j].user_id+"_"+n[i].user_list[j].user_name+"' \></span><span class='user_name name'>"+n[i].user_list[j].user_name+"</span></a></li>";
+				}else{
+					listStr += "<li id="+n[i].user_list[j].user_id+" class='user_icon1'><a class='user_a' id='only_"+n[i].user_list[j].user_id+"'><span class='checkbox'><input type='checkbox' id='input_"+n[i].user_list[j].user_id+"' value='"+n[i].user_list[j].user_id+"_"+n[i].user_list[j].user_name+"' \></span><span class='user_name name'>"+n[i].user_list[j].user_name+"</span></a></li>";
+				}
+			}
+			if(n[i].children&&n[i].children.length>0){//递归遍历子部门
+				initDataFormat(n[i].children,1);	
+			}
+			listStr += "</ul>";
+		}else{
+			listStr += "<ul class='chrilren_close'>";
+			if(n[i].children&&n[i].children.length>0){
+				initDataFormat(n[i].children,1);	
+			}
+			listStr += "</ul>";
+		}
+		listStr += "</li>";
+	}
+
+	//拼接完毕。添加到页面上
+	if(!arguments[1]){
+		if(gd != ""){
+			$this.parent().find("ul").remove();
+			$this.parent().append(listStr);
+			$this.click();
+			/*$this.find("span:first").addClass("dpart_icon_open");
+			if($this.parent().children("ul:first")){
+				$this.parent(this).children("ul:first").toggleClass("chrilren_close");	
+			}*/
+		}else{
+			$("#treeDemo").html(listStr);
+			if(selectFlag){
+				$("#treeDemo .chrilren_close .checkbox").show();
+			}
+		}
+	}
+	$("#treeDemo .dpart a.dpart_a").unbind("click").on("click",function(){//点击展开/隐藏下一级列表,点击部门
+		if($(this).find("span:first").hasClass("dpart_icon_close")){
+			if($(this).siblings("ul").children("li").length==0){
+				$this = $(this);
+				departmentid = parseInt($(this).parent().attr('id'));
+				top.ajaxReqAction(function(data){
+					if(data.ret==0){
+						if(data.list != null && (data.list[0].children || data.list[0].user_list) ){
+							listStr = "";
+							gd = "2";
+							initDataFormat(data.list);
+						}else{
+							$this.find("span:first").toggleClass("dpart_icon_open");
+						}
+					}else{
+						top.openPopupTips("获取组织结构列表失败！"+top.errorCodeTips(data.ret));
+					}
+					},function(){top.openPopupTips("服务器异常！")},"/usermanager/user/get_list_by_department",{accesstoken:top.accesstoken,depth :2,departmentid:departmentid},"get",'json',top.accessAddr);
+			}else{
+				$(this).find("span:first").toggleClass("dpart_icon_open");
+				if($(this).parent(this).children("ul:first")){
+					$(this).parent(this).children("ul:first").toggleClass("chrilren_open");	
+				}
+			}
+		}else{
+			$(this).find("span:first").toggleClass("dpart_icon_close");
+			if($(this).parent(this).children("ul:first")){
+				$(this).parent(this).children("ul:first").toggleClass("chrilren_close");	
+			}	
+		}
+	});
+
+	$("#treeDemo .dpart a.user_a").unbind("click").on("click",function(){//点击选中用户
+		if(!selectFlag){//单选
+			$("#citySel").val($(this).find("span:last").html()+";");
+			if(currLiObj){
+				currLiObj.toggleClass("clickBg");
+			}
+			$(this).parent(this).toggleClass("clickBg");
+			currLiObj = $(this).parent(this);
+		}
+	});
+	$("#treeDemo .dpart .user_a input").unbind("click").on("click",function(){//点击选中用户
+		if(selectFlag){//多选
+			inputRepeatArr = $("#citySel").val().split(";");
+			inputRepeatArr.pop();
+			if(inputRepeatArr.length>0){ //选择的用户不为空时要判断是不有重复
+				var user_name = $(this).parent().siblings(".user_name").html();
+				for(var i = 0;i<inputRepeatArr.length;i++){
+					if(inputRepeatArr[i] == user_name){
+						$(this).prop("checked",false);
+					}
+				}
+			}
+			inputStrTree = "";
+			var check = $("#treeDemo .dpart .user_a input:checked");
+			check.each(function(i){//循环拼装被选中项的值
+				var tempVal = $(this).val();
+				inputStrTree += tempVal.split("_")[1] +";";
+			});
+			$("#citySel").val(inputStr+inputStrTree);
+		}
+	});
+}
+/**
+ * [显示搜索相关的数据以及选中用户时的操作]
+ * @return {[type]} [description]
+ */
+
+function initSearchList(){
+	var str = "";
+	//过滤已选择的用户，并整合数据start
+	inputRepeatArr = $("#citySel").val().split(";");
+	inputRepeatArr.pop();
+	for(var i = 0;i<inputRepeatArr.length;i++){
+		for(var j = 0;j<searchList.length;j++){
+			 if(inputRepeatArr[i] == searchList[j].user_name){
+			 	searchList[j] = "";
+			 }
+		}
+	}
+	for(var i=0; i<searchList.length; i++){
+		if(searchList[i] != ""){
+			str += "<li class='search' id='"+searchList[i].user_id+"'><span class='search_name'>"+searchList[i].user_name+"</span><span>"+searchList[i].department_name+"</span><span>"+searchList[i].user_id+"</span></li>"
+		}
+	}
+	//过滤已选择的用户并整合数据end
+	$("#searchDemo").html(str);
+	/*inputStr = "";*/
+	$("#searchDemo li.search").on("click",function(){//点击选中用户
+		if(selectFlag){//多选
+			//以前的做法是搜索树中的用户，因现在树是分级加载，改用搜索接口来搜索用户
+			hideSearch();
+			inputStr += $(this).children(".search_name").html() + ";";
+			searchTempVal += $(this).attr("id") + "_" + $(this).children(".search_name").html() + ";";
+			$("#citySel").val(inputStr+inputStrTree);
+			/*var check = $("#treeDemo .dpart .user_a input:checked");
+			var inputStr = "";
+			hideSearch();
+			$("#input_"+$(this).attr("id")).prop("checked",true);
+			check = $("#treeDemo .dpart .user_a input:checked");
+			check.each(function(i){//循环拼装被选中项的值
+				var tempVal = $(this).val();
+				inputStr += tempVal.split("_")[1] +";";
+			});
+			$("#citySel").val(inputStr);*/
+		}else{//单选
+			hideSearch();
+			$("#only_"+$(this).attr("id")).click();
+		}
+	}).on("mouseover",function(){//点击选中用户
+		$(this).toggleClass("clickBg");
+	}).on("mouseout",function(){//点击选中用户
+		$(this).toggleClass("clickBg");
+	})
+}
+
+function searchUserList(){
+	var currVal = $("#citySel").val();
+	var lastStr = currVal.substring(currVal.length-1);
+	/*if(lastStr==";"){//限制用户输入“;”
+		$("#citySel").val( currVal.substring(0,currVal.length-1))
+		return;
+	}*/
+	var searStr = currVal.substring(currVal.lastIndexOf(";")+1);
+	var data = {
+		accesstoken:top.accesstoken,
+		keyword:searStr
+	}
+	if(searStr){
+		$.ajax({
+			url:top.accessAddr+"/usermanager/user/search",
+			type:"get",
+			data:data,
+			success:function(dataJson){
+				searchData(dataJson.list,searStr);
+			},
+			error:function(){
+				console.log("搜索异常!");
+			}
+		})
+		;
+	}else{//为空时，判断是否删除过数据
+		hideSearch(1);
+		delSelectedUser(currVal);
+	}
+	/*searchList = [];*/
+	/*if(searStr){
+		searchData(dataJson,searStr);
+		//searchList应该是搜索结果
+		if(searchList.length>0){
+			initSearchList();
+			showSearch();
+			if(searchList.length<=10){
+				$("#searchDemo").css({"height":"auto","overflow-y":"auto"});
+			}else{
+				$("#searchDemo").css({"height":"250px","overflow-y":"scroll"});
+			}
+		}else{
+			hideSearch(1);
+			$("body").bind("mousedown", onBodyDown1);
+		}
+	}else{//为空时，判断是否删除过数据
+		hideSearch(1);
+		delSelectedUser(currVal);
+	}*/
+}
+
+//搜索用户数据
+function searchData(data,_searStr){
+	searchList = [];
+	for(var i=0; i<data.length; i++){
+		if(data[i].user_name.indexOf(_searStr)>=0||data[i].user_englishname.indexOf(_searStr)>=0||data[i].user_id.toString().indexOf(_searStr)>=0){
+			searchList.push({"user_id": data[i].user_id, "user_name": data[i].user_name, "department_id": data[i].department_id, "department_name": data[i].department_name});
+		}
+	}
+	if(searchList.length>0){
+		initSearchList();
+		showSearch();
+		if(searchList.length<=10){
+				$("#searchDemo").css({"height":"auto","overflow-y":"auto"});
+			}else{
+				$("#searchDemo").css({"height":"250px","overflow-y":"scroll"});
+			}
+	}else{
+		hideSearch(1);
+		$("body").bind("mousedown", onBodyDown1);
+	}
+	/*for(var i=0; i<data.length; i++){
+		if(data[i].ulist&&data[i].ulist.length>0){
+			for(var j=0; j<data[i].ulist.length; j++){
+				if(data[i].ulist[j].name.indexOf(_searStr)>=0||data[i].ulist[j].enm.indexOf(_searStr)>=0||data[i].ulist[j].id.toString().indexOf(_searStr)>=0){
+					searchList.push({"user_id": data[i].ulist[j].id, "user_name": data[i].ulist[j].name, "department_id": data[i].id, "department_name": data[i].name});
+				}
+			}
+		}
+		if(data[i].children&&data[i].children.length>0){
+			searchData(data[i].children,_searStr);	
+		}
+	}*/
+}
+function delSelectedUser(){
+	var currVal = $("#citySel").val();
+	$("#treeDemo .dpart .user_a input:checked").each(function(i){//循环拼装被选中项的值
+		var tempVal = $(this).val();
+		var checkVal = tempVal.split("_")[1] +";";
+		if(currVal.indexOf(checkVal)<0){
+			$("#input_"+tempVal.split("_")[0]).prop("checked",false);
+		}
+	});	
+
+	//删除用户时，更新树选中的用户
+	var check = $("#treeDemo .dpart .user_a input:checked");
+	inputStrTree = "";
+	check.each(function(i){//循环拼装被选中项的值
+		var tempVal = $(this).val();
+		inputStrTree += tempVal.split("_")[1] +";";
+	});
+		
+	if(inputStr.length>0){
+		var inputStrArr = [];
+		//把搜索出来并选择了的用户（inputStr)变成数组。
+		inputStrArr = inputStr.split(";");
+		//把删除了的用户在该数组中改为""
+		for(var i = 0;i < inputStrArr.length;i++){
+			if(currVal.indexOf(inputStrArr[i])<0 || currVal.indexOf(inputStrArr[i]+";")<0){
+				inputStrArr[i] = "";
+			}
+		}
+		//把该数组重新变成字符串
+		inputStr = "";
+		for(var i = 0;i < inputStrArr.length;i++){
+			if(inputStrArr[i] != ""){
+				inputStr += inputStrArr[i] +";";
+			}
+		}
+	}
+}
+function clearSearchInput(){
+	/*var inputStr = "";
+	$("#treeDemo .dpart .user_a input:checked").each(function(i){//循环拼装被选中项的值
+		var tempVal = $(this).val();
+		inputStr += tempVal.split("_")[1] +";";
+	});
+	$("#citySel").val(inputStr);*/
+	var currVal = $("#citySel").val();
+	var selectVal = currVal.substring(0,currVal.lastIndexOf(";")+1);
+	$("#citySel").val(selectVal);
+	delSelectedUser(selectVal);
+}
+
+function showMenu(){
+	if($("#menuContent").is(":hidden")){
+		var cityObj = $("#citySel");
+		var cityOffset = $("#citySel").offset();
+		//$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+		$("#menuContent").slideDown("fast");
+	
+		$("body").bind("mousedown", onBodyDown);
+		hideSearch();
+	}else {
+		hideMenu();
+	}
+}
+function hideMenu(){
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event){
+	if (!(event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+
+function showSearch() {
+	var cityObj = $("#citySel");
+	var cityOffset = $("#citySel").offset();
+	$("#searchContent").slideDown("fast");
+	//$("#searchContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+	hideMenu();
+	$("body").bind("mousedown", onBodyDown1);
+}
+function hideSearch(flag) {
+	if(!flag){ 
+		$('#citySel').unbind('input propertychange');
+		clearSearchInput();
+	}
+	$("#searchContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown1);
+}
+function onBodyDown1(event) {
+	if (!(event.target.id == "citySel" || event.target.id == "searchContent" || $(event.target).parents("#searchContent").length>0)) {
+		hideSearch();
+	}
+}
+
+//系统权限
+function getPermissions(){
+	for(var i=0; i<right_list.length; i++){
+		var htm = "";
+		htm +='<span style="float:left; width:180px;">';
+		htm +='<input type="checkbox" name="right_list" id="right_'+right_list[i].right_id+'" value="'+right_list[i].right_name+'">'+right_list[i].right_name+'';
+		htm +='</span>';
+		$("#access").append(htm);
+	}
+	$("#access input").on("click",function(){
+		var check = $("#access input:checked");
+		if(check.length==right_list.length){
+			if(!$(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",true);
+			}
+		}else{
+			if($(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",false);
+			}
+		}
+	})
+}
+
+//系统权限包
+function getPackage(){
+	for(var i=0; i<rightfile_list.length; i++){
+		var htm = "";
+		htm +='<span style="float:left; width:180px;">';
+		htm +='<input type="checkbox" name="rightfile_list" id="rightfile_'+rightfile_list[i].rightfile_id+'" value="'+rightfile_list[i].rightfile_name+'">'+rightfile_list[i].rightfile_name+'';
+		htm +='</span>';
+		$("#accessPackage").append(htm);
+	}
+	$("#accessPackage input").on("click",function(){
+		var check = $("#accessPackage input:checked");
+		if(check.length==rightfile_list.length){
+			if(!$(".rightfileAll").prop("checked")){
+				$(".rightfileAll").prop("checked",true);
+			}
+		}else{
+			if($(".rightfileAll").prop("checked")){
+				$(".rightfileAll").prop("checked",false);
+			}
+		}
+	})
+}
+
+function submitReq(){
+	if(ajaxFlag) return;
+	var rightList = [];
+	var rightStr = "";
+	var currVal = $("#citySel").val();
+
+	$("#access input:checked").each(function(i) {
+    	var id= $(this).attr("id").substring(6);
+		var name = $(this).val();
+		if(rightStr){
+			rightStr += "|"+id;
+		}else{
+			rightStr += id;
+		}
+		rightList.push({right_id:id,right_name:name});
+    });
+	var rightFileList = [];
+	var rightfileStr = "";
+	$("#accessPackage input:checked").each(function(i) {
+    	var id= $(this).attr("id").substring(10);
+		var name = $(this).val();
+		if(rightfileStr){
+			rightfileStr += "|"+id;
+		}else{
+			rightfileStr += id;
+		}
+		rightFileList.push({rightfile_id:id,rightfile_name:name});
+    });
+	if((rightList.length>0||rightFileList.length>0)&&currVal){
+		selectUserList=[];
+		if(selectFlag){ //多选
+			
+			//循环拼装搜索选中的用户
+			if(searchTempVal.length > 0 && inputStr.length > 0 ){
+				var searchTempValArr = [];
+				var inputStrArrSub = [];
+				var searchTempValArrNew = [];
+				searchTempValArr = searchTempVal.split(";");
+				inputStrArrSub = inputStr.split(";");
+				
+				//把搜索选择的用户留下要添加的。
+				for(var i = 0;i < searchTempValArr.length;i++){
+					for(var j = 0;j < inputStrArrSub.length;j++){
+						if(searchTempValArr[i].split("_")[1] == inputStrArrSub[j]){
+							searchTempValArrNew.push(searchTempValArr[i]);
+						}
+					}
+				}
+				//把搜索选择的用户留下要添加的。
+				searchTempValArr = searchTempValArrNew;
+				
+				//数据封装
+				for(var k = 0;k < searchTempValArr.length;k++){
+					var tempVal = searchTempValArr[k];
+					if(rightList.length>0)selectUserList.push({"id":tempVal.split("_")[0],"name":tempVal.split("_")[1],rightids:rightStr,rightList:rightList,flag:0});
+					if(rightFileList.length>0)selectUserList.push({"id":tempVal.split("_")[0],"name":tempVal.split("_")[1],rightfileids:rightfileStr,rightFileList:rightFileList,flag:1});
+				}
+			}
+			//树形图勾选的用户
+			$("#treeDemo .dpart .user_a input:checked").each(function(i){ //循环拼装被选中项的值
+				var tempVal = $(this).val();
+				if(rightList.length>0)selectUserList.push({"id":tempVal.split("_")[0],"name":tempVal.split("_")[1],rightids:rightStr,rightList:rightList,flag:0});
+				if(rightFileList.length>0)selectUserList.push({"id":tempVal.split("_")[0],"name":tempVal.split("_")[1],rightfileids:rightfileStr,rightFileList:rightFileList,flag:1});
+			});
+
+		}else { //单选
+			var userId = currLiObj.attr("id");
+			if(rightList.length>0)selectUserList.push({"id":userId,"name":currVal.substring(0,currVal.length-1),rightids:rightStr,rightList:rightList,flag:0});
+			if(rightFileList.length>0)selectUserList.push({"id":userId,"name":currVal.substring(0,currVal.length-1),rightfileids:rightfileStr,rightFileList:rightFileList,flag:1});
+		}
+		ajaxFlag = true;
+		assignUserRight(selectUserList,0);
+		cancelReq();
+	}else {
+		top.openPopupTips("用户和权限不能为空！")	
+	}
+}
+
+function assignUserRight(_list,_num){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			/*var iconUrl=null;
+			for(var i=0; i<selectUserList.length; i++){
+				if(_list[_num].id==selectUserList[i].id&&selectUserList[i].icon_url&&selectUserList[i].icon_url["100x100"]){
+					iconUrl = selectUserList[i].icon_url["100x100"];
+					break;
+				}
+			}
+			if(iconUrl){
+				if(_list[_num].flag==0){//权限
+					top.popupCallback([{"icon_url" : {"100x100":iconUrl},"right_list" :_list[_num].rightList ,"rightfile_list":[],"user_id" : _list[_num].id,"user_name" : _list[_num].name}]);//回调当前rightFrame中函数
+				}else{//权限包
+					top.popupCallback([{"icon_url" : {"100x100":iconUrl},"right_list" :[] ,"rightfile_list":_list[_num].rightFileList,"user_id" : _list[_num].id,"user_name" : _list[_num].name}]);//回调当前rightFrame中函数
+				}
+			}else{
+				getUserHeadImage(_list[_num]);
+			}*/
+		}else{
+			top.openPopupTips("分配用户权限失败！");
+		}
+		_num ++;
+		if(_num<_list.length){//循环递归调用
+			assignUserRight(_list,_num);
+		}else {
+			top.popupCallback();//分配权限完成后刷新用户列表
+			/*cancelReq();*/
+			ajaxFlag=false;
+		}
+	},function(){top.openPopupTips("服务器异常！");ajaxFlag=false;},_list[_num].flag==0?"/usermanager/right/assign":"/usermanager/rightfile/assign",_list[_num].flag==0?{accesstoken:top.accesstoken,rightids:_list[_num].rightids,systemid:top.system_id,userid:_list[_num].id}:{accesstoken:top.accesstoken,rightfileids:_list[_num].rightfileids,systemid:top.system_id,userid:_list[_num].id},"post",'json',top.accessAddr);
+}
+function getUserHeadImage(_currList){
+	top.ajaxReqAction(function(data){
+		var iconUrl = top.homePageUrl+"/pubFile/img/avatar1.jpg";//默认男头像
+		if(data.ret==0){
+			if(data.icon_url&&data.icon_url["100x100"]){
+				iconUrl=data.icon_url["100x100"];
+			}else if(data.gender==2){//女头像
+				iconUrl=top.homePageUrl+"/pubFile/img/avatar0.jpg";
+			}
+		}else{
+			//top.openPopupTips("获取用户信息失败！");	
+		}
+		if(_currList.flag==0){//权限
+			top.popupCallback([{"icon_url" : {"100x100":iconUrl},"right_list" :_currList.rightList ,"rightfile_list":[],"user_id" : _currList.id,"user_name" : _currList.name}]);//回调当前rightFrame中函数
+		}else{//权限包
+			top.popupCallback([{"icon_url" : {"100x100":iconUrl},"right_list" :[] ,"rightfile_list":_currList.rightFileList,"user_id" : _currList.id,"user_name" : _currList.name}]);//回调当前rightFrame中函数
+		}
+	},function(){
+		//top.openPopupTips("服务器异常！");
+		if(_currList.flag==0){//权限
+			top.popupCallback([{"icon_url" : {"100x100":top.homePageUrl+"/pubFile/img/avatar1.jpg"},"right_list" :_currList.rightList ,"rightfile_list":[],"user_id" : _currList.id,"user_name" : _currList.name}]);//回调当前rightFrame中函数
+		}else{//权限包
+			top.popupCallback([{"icon_url" : {"100x100":top.homePageUrl+"/pubFile/img/avatar1.jpg"},"right_list" :[] ,"rightfile_list":_currList.rightFileList,"user_id" : _currList.id,"user_name" : _currList.name}]);//回调当前rightFrame中函数
+		}
+	},"/usermanager/user/get_info",{accesstoken:top.accesstoken,targetuserid:_currList.id});
+}
+function cancelReq(){
+	top.closePopupWindow();
+}
+
+function getUrlParams(_key, _url){
+	if (typeof(_url) == "object"){
+		_url = _url.location.href;
+	}else {
+		_url = (typeof(_url) == "undefined" || _url == null || _url == "") ? window.location.href : _url;
+	}
+	if (_url.indexOf("?") == -1){
+		return "";
+	}
+	var params = [];
+	_url = _url.split("?")[1].split("&");
+	for (var i = 0, len = _url.length; i < len; i++) {
+		params = _url[i].split("=");
+		if (params[0] == _key){
+			return params[1];
+		}
+	}
+	return "";
+}
+
+window.onload = init;
+function init(){
+	$(".rightAll").on("click",function(){
+		if($(this).prop("checked")){
+			$("#access input").each(function(i){
+				$(this).prop("checked",true);
+			})
+		}else{
+			$("#access input").each(function(i){
+				$(this).prop("checked",false);
+			})
+		}
+	})
+	$(".rightfileAll").on("click",function(){
+		if($(this).prop("checked")){
+			$("#accessPackage input").each(function(i){
+				$(this).prop("checked",true);
+			});
+		}else{
+			$("#accessPackage input").each(function(i){
+				$(this).prop("checked",false);
+			})
+		}
+	})
+	getPermissions();
+	getPackage();
+	
+	$("#citySel").on("click",function(){
+		showMenu();
+		$('#citySel').bind('input propertychange', function(e) {
+			e.preventDefault();
+			searchUserList();
+		});
+		return false;
+	});	
+	$("#citySel").keydown(function(event){ 
+		var keycode = event.which?event.which:event.keyCode;
+		if(keycode==186) return false;//屏蔽用户输入";"
+	}); 
+
+	//获取用户组织结构列表
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			dataJson = data.list;
+			initDataFormat(dataJson);
+		}else{
+			top.openPopupTips("获取组织结构失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/user/get_list_by_department",{accesstoken:top.accesstoken,departmentid:0,depth:2},"get",'json',top.accessAddr);
+	
+	//initDataFormat(dataJson);
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:640px;">
+<div class="tck_title" style="border:none;">添加用户<span class="tck_close"><a href="javascript:top.closePopupWindow()" title="关闭"></a></span></div>
+
+<div class="tck_info">
+	<div class="addInput"><input id="citySel" type="text"><!--<a href="#" class="icon" id="menuBtn" onclick="showMenu(); return false;"><img src="../images/icon_user.png" width="25" height="17"></a>--></div>
+
+	<div id="menuContent" class="menuContent">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+
+	<div id="searchContent" class="searchContent">
+		<ul id="searchDemo" class="ztree"></ul>
+	</div>
+
+	<fieldset class="userList" style="margin-top:10px;">
+		<legend><input type="checkbox" name="checkbox" class="rightAll">系统子权限</legend>
+		<p id="access"><p>
+	</fieldset>
+
+	<fieldset class="userList">
+		<legend><input type="checkbox" name="checkbox" class="rightfileAll">系统权限包</legend>
+		<p id="accessPackage"><p>
+	</fieldset>
+</div>
+
+<div class="tck_btn1"><a href="javascript:submitReq()">确　定</a><a href="javascript:cancelReq()">取　消</a></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

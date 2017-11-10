@@ -1,0 +1,627 @@
+body {
+    min-width: 1041px;
+    /*overflow: hidden;*/
+    overflow: auto;
+}
+
+/* initData 样式 开始 */
+
+.initData {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    margin-top: -12px;
+    width: 100%;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: url(../../images/layer_loading.gif) no-repeat 35% center;
+}
+
+.initData.onerror {
+    color: #E0262A;
+    font-weight: bold;
+    background: none;
+}
+
+.initData.onerror a {
+    color: #2F6FAC;
+    text-decoration: underline;
+}
+
+.initData.onerror a:hover {
+    color: #245586;
+}
+
+/* initData 样式 结束 */
+
+#header div.logo {
+    position: absolute;
+    width: 240px;
+    height: 40px;
+}
+
+#header div.logo a {
+    padding-left: 40px;
+    background:#008fd0;
+    width: 200px;
+    height: 40px;
+    display: block;
+}
+
+#header div.logo a.hover {
+    background:#1a9ad5;
+}
+
+#header div.logo a.logohover img,
+#header div.logo a.logohover span {
+    float: left;
+}
+
+#header div.logo a.logohover img {
+    margin-top: 8px;
+}
+
+#header div.logo a.logohover span {
+    background: url(../systems/img/navele.png) 0 0;
+    width: 10px;
+    height: 5px;
+    margin: 16px 0 0 6px;
+}
+
+#header div.logo a.logohover span.open,
+#header div.userInfo div.userexit span.open {
+    background-position: 0 -8px;
+}
+
+#header ul.syslist {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 238px;
+    border-left: #1a9ad5 solid 1px;
+    border-right: #1a9ad5 solid 1px;
+    border-bottom: #1a9ad5 solid 1px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    max-height: 320px; 
+    display: none;
+    z-index: 1002;
+}
+
+#header ul.syslist li {
+    width: 238px;
+    height: 40px;
+}
+
+#header ul.syslist li a {
+    background: #ffffff;
+    padding-left: 0px;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#header ul.syslist li a:hover {
+    background: #cde3ee;
+}
+
+#header ul.syslist li a span,
+#header ul.syslist li a font {
+    float: left;
+}
+
+#header ul.syslist li a span {
+    margin:5px 0 0 38px;
+    width:30px;
+    height: 30px;
+}
+
+#header ul.syslist li a font {
+    margin-left: 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #000000;
+}
+
+#header .avater { position:absolute; right:40px;}
+#header .user { font-size:12px;line-height:40px; position:absolute; width:200px; right:40px; top:0; color:#b9deef;}
+
+.user ul li { float:right; padding-left:15px; line-height:40px; color:#b9deef;}
+.user ul li a { font-size:12px; color:#b9deef;}
+.user ul li a:hover { color:#fff;}
+.user .mail { font-size: 12px; background:url(../images/icon_mail.png) no-repeat left center;}
+.user .mail span { padding-left:3px;}
+.user .name { background:url(../images/icon_down.png) no-repeat right center;}
+.user .name:hover > div { display: block; }
+.user .name span { padding-right:12px;}
+.user .nameHover { background:url(../images/icon_up.png) no-repeat right center;}
+.user .nameHover a { color:#fff;}
+
+.exit { position:absolute; right:20px; top:29px; width:120px; height:auto; padding-top:11px; display:none; background:url(../images/exit_bg1.png) no-repeat 0 0; overflow:hidden; z-index:1001;}
+.exit ul { width:100%; height:auto; padding-bottom:10px; background:url(../images/exit_bg2.png) no-repeat 0 bottom; overflow:hidden;}
+.exit ul li { width:100%; height:30px; line-height:30px; overflow:hidden;}
+.exit ul li a { width:94px; margin:0 0 0 6px;  font-size:13px; font-weight:normal; color:#444 !important; text-align:center; text-shadow:#fff 1px 1px; display:block; overflow:hidden;background-color:#FFF;}
+.exit ul li a:hover { color:#008fd0; background:#eee;}
+
+#toolbar .search {
+    position: absolute;
+    right: 40px;
+    width: 170px;
+    height: 25px;
+    padding-top: 2px;
+    display: none;
+}
+#toolbar .search_icon {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 21px;
+    background: url(../images/search.png) #D7E4F1 no-repeat center;
+}
+#toolbar .search_input {
+    float: left;
+    width: 135px; 
+    height: 21px;
+    padding-left: 5px;
+    background: #fff;
+    border: none;
+}
+
+.foot {
+    height:40px;
+    border-top:#cccccc solid 1px;
+    background-color:#ffffff;
+    color:#646464;
+    font-size:12px;
+    text-align:center;
+    line-height:16px;
+}
+
+.foot p.first {
+    margin-top:3px;
+}
+
+/* 海报上传弹窗样式 开始 */
+
+#layer-upload-poster .poster-tip {
+    background: #F9EED0;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    color: #B09A5A;
+    padding-left: 20px;
+}
+
+#layer-upload-poster .initData {
+    background-position: 41% center;
+}
+
+#layer-upload-poster #poster-edit.disabled,
+#layer-upload-poster #poster-edit.disabled:hover,
+#layer-upload-poster #poster-edit.disabled:active {
+    color: #DCDCDC!important;
+    background-color: transparent!important;
+}
+
+#poster-upload {
+    position: relative;
+}
+
+#layer-upload-poster .uploadBtn {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 90px;
+    overflow: hidden;
+}
+
+#poster-queue {
+    height: 410px;
+    overflow-y: auto;
+    padding: 10px 0 10px 20px;
+}
+
+.poster-lists li {
+    position: relative;
+    width: 150px;
+    height: 120px;
+    padding: 3px;
+    border: 2px solid transparent;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    float: left;
+    margin: 0px 5px 10px 0;
+}
+
+.poster-lists li .poster-progress,
+.poster-progress .poster-mask {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.poster-progress .poster-mask {
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.poster-progress .progress-tip {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    z-index: 2;
+    color: #FFF;
+    font-size: 20px;
+    font-family: "微软雅黑";
+    padding: 6px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.progress-tip.poster-success {
+    text-indent: 25px;
+    background: url(../images/postersuccess.png) no-repeat 20px center;
+}
+
+.progress-tip.poster-failed {
+    text-indent: 25px;
+    text-decoration: underline;
+    background: url(../images/posterfailed.png) no-repeat 20px center;
+}
+
+.poster-progress .uploadfive-progress-bar,
+.poster-progress .poster-mask:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 6px;
+    width: 1px;
+    background-color: #F6A20E;
+}
+
+.poster-progress .poster-mask:after {
+    width: 100%;
+    background-color: #D2D2D2;
+}
+
+.poster-lists .poster-title {
+    height: 20px;
+    line-height: 23px;
+}
+
+.poster-lists .has-poster:hover,
+.poster-lists .has-poster.hover {
+    background-color: #EAF5FF;
+    border-color: #ADD3FF;
+}
+
+.poster-lists .has-poster:active,
+.poster-lists .has-poster.active {
+    background-color: #E2F2FF;
+    border-color: #3091F2;
+}
+
+.poster-lists .poster-thumb {
+    font-size: 0px;
+    background-color: #FFF;
+}
+
+.upload-poster .poster-thumb, 
+.has-poster .poster-thumb {
+    width: 148px;
+    height: 98px;
+    border: 1px solid #DBDBDB;
+    line-height: 98px;
+}
+
+.no-poster .poster-thumb {
+    width: 150px;
+    height: 100px;
+    line-height: 100px;
+}
+
+.no-poster .poster-thumb img {
+    width: 150px!important;
+    height: 100px!important;
+}
+
+.poster-thumb img {
+    vertical-align: middle;
+}
+
+/* 海报上传弹窗样式 结束 */
+
+/* 操作进度框 开始 */
+
+#data-operating .layer-box-html {
+    width: 100%;
+    height: 80%;
+}
+
+#data-operating p {
+    text-align: center;
+}
+
+#data-operating .oper-bar {
+    position: relative;
+    top: 22px;
+    width: 100%;
+    height: 4px;
+    background-color: #E2E1E1;
+}
+
+#data-operating .oper-progress {
+    width: 1px;
+    height: 100%;
+    background-color: #2F6FAC;
+}
+
+#data-operating .oper-data {
+    position: relative;
+    top: 25px;
+    font-size: 12px;
+}
+
+#data-operating .oper-counting {
+    float: right;
+}
+
+/* 操作进度框 结束 */
+
+/* templateattr 属性编辑框样式 开始 */
+
+#serverattr-sure.saving,
+#templateattr-sure.saving,
+#mosaicadd-sure.saving,
+#channeladd-sure.saving,
+#addarea-sure.saving {
+    background-image: url(../images/layer-loading.gif);
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+
+/* templateattr 属性编辑框样式 结束 */
+
+/* fieldset-table样式 开始 */
+
+.fieldset-table table {
+    width: 100%;
+}
+
+.fieldset-table tr {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.fieldset-table td {
+    position: relative;
+    width: 50%;
+    padding-left: 15px;
+}
+
+.fieldset-table td label {
+    position: absolute;
+    left: 15px;
+    height: 24px;
+    line-height: 24px;
+    top: 2px;
+    vertical-align: middle;
+}
+
+.fieldset-table td input,
+.fieldset-table td select {
+    height: 22px;
+    line-height: 22px;
+    margin-left: 70px;
+    border: 1px solid #C0C0C0;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    /*margin-top: 8px;*/
+}
+
+.fieldset-table td input {
+    width: 274px;
+    padding: 0 4px;
+}
+
+.fieldset-table td select {
+    width: 284px;
+    height: 24px;
+}
+
+/* fieldset-table样式 结束 */
+
+/* layer-add-area弹窗样式 开始 */
+
+#mosaicadd-sure.disabled,
+#mosaicadd-sure.disabled:hover,
+#mosaicadd-sure.disabled:active {
+    color: #DCDCDC!important;
+    background-color: transparent!important;
+}
+
+#layer-add-area table {
+    width: 100%;
+    font-size: 12px;
+    color: #505050;
+}
+
+#layer-add-area tr {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+#layer-add-area td {
+    position: relative;
+}
+
+#layer-add-area .initData {
+    position: static;
+}
+
+#layer-add-area td > label {
+    position: absolute;
+    left: 15px;
+    height: 24px;
+    line-height: 24px;
+    top: 3px;
+    vertical-align: middle;
+}
+
+#layer-add-area .nbsp {
+    width: 26px;
+    display: inline-block;
+}
+
+#layer-add-area td p {
+    position: relative;
+    margin-left: 80px;
+    color: #000;
+    vertical-align: middle;
+}
+
+#layer-add-area td input,
+#layer-add-area td select,
+#layer-add-area td textarea {
+    height: 22px;
+    line-height: 22px;
+    border: 1px solid #C0C0C0;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+}
+
+#layer-add-area td select {
+    width: 94%;
+}
+
+#layer-add-area td textarea {
+    width: 90%;
+    height: 80px;
+    padding: 0 4px;
+    margin-top: 4px;
+}
+
+#layer-add-area td input[type=text] {
+    width: 90%;
+    padding: 0 4px;
+}
+
+#layer-add-area p label {
+    margin: 0 20px 0 5px;
+}
+
+#layer-add-area td input[type=text]:focus,
+#layer-add-area td select:focus {
+    border-color: #1780FB;
+}
+
+.red-tip {
+    color: #FF0000;
+    line-height: 24px;
+    margin-left: 2px;
+}
+
+
+/* layer-add-area弹窗样式 结束 */
+
+/* layer-moveTo-area弹窗样式 开始 */
+
+#layer-moveTo-area {
+    font-size: 12px;
+}
+
+#layer-moveTo-area td:first-child {
+    width: 70px;
+    text-indent: 5px;
+}
+
+#layer-moveTo-area .nbsp {
+    width: 26px;
+    display: inline-block;
+}
+
+/* layer-moveTo-area弹窗样式 结束 */
+
+/* reconnect-socket 弹窗样式 开始 */
+
+#layer-socket .reconnect-socket {
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0079F5;
+}
+
+#layer-socket .reconnect-socket:hover {
+    color: #005FBD;
+}
+
+/* reconnect-socket 弹窗样式 结束 */
+
+/* upload-channellogo 弹窗样式 开始 */
+
+#close-channellogo.disabled,
+#close-channellogo.disabled:hover,
+#close-channellogo.disabled:active {
+    color: #DCDCDC!important;
+    background-color: transparent!important;
+}
+
+.channellogo-wraper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.channellogo-wraper:hover {
+    box-shadow: 0 0 8px #999;
+}
+
+.channellogo-wraper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.channellogo-wraper .uploadBtn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 120%;
+    width: 120%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border-radius: 0px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.channellogo-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: #FABE00;
+}
+
+/* upload-channellogo 弹窗样式 结束 */

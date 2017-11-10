@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tMenu 右键菜单测试</title>
+    <link rel="stylesheet" href="tmenu.css" />
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="jquery.tmenu.js"></script>
+</head>
+<body>
+    <h1 id="h1">tMenu 右键菜单测试</h1>
+    <h2 id="h2">tMenu 右键菜单测试</h1>
+    <button id="disabled">禁用第一项</button>
+    <button id="available">可用第二项</button>
+    <button id="disabled2">可用第二项</button>
+    <script type="text/javascript">
+
+        $("h1, h2").tMenu({
+            oncontextmenu: function (e, target) {
+            },
+            groups: [{
+                lists: [{
+                    text: "第一项",
+                    itemID: "diyi",
+                    icon: "mmexport1383890885120.jpg",
+                    action: function (d) {
+                        console.log(d);
+                    },
+                    groups: [{
+                        lists: [{
+                            text: "第三项",
+                            groups: [{
+                                lists: [{
+                                    text: "第五项"
+                                }, {
+                                    text: "第六项",
+                                    action: function (e, itemID5) {
+                                        console.log(itemID5);
+                                    }
+
+                                }]
+                            }]
+                        }, {
+                            text: "第其项",
+                            action: function (e, itemID1) {
+                                console.log(itemID1);
+                            }
+                        }]
+                    }]
+                }, {
+                    text: "第二项",
+                    action: function (e, itemID2) {
+                        console.log(itemID2);
+                    }
+                }]
+            }, {
+                lists: [{
+                    text: "第一项",
+                    icon: "shortcut.png",
+                    action: function (e, item) {
+                        console.log(item);
+                    },
+                    groups: [{
+                        lists: [{
+                            text: "第三项",
+                            groups: [{
+                                lists: [{
+                                    text: "第五项"
+                                }, {
+                                    text: "第六项"
+                                }]
+                            }]
+                        }, {
+                            text: "第四项",
+                            action: function (four) {
+                                console.log("four");
+                            }
+                        }]
+                    }]
+                }, {
+                    text: "第二项",
+                    icon: "111.png",
+                    action: function (e, itemID3) {
+                        console.log(itemID3);
+                    }
+                }]
+            }]
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+/* CSS Document */
+.setting {
+	margin:0 50px 0 50px;
+	padding:30px 0 30px 0;
+	width:auto;
+	border-bottom:1px solid #BBE6F9;
+}
+
+.setting > label {
+	background:#EFF0F4;
+	display:inline-block;
+	padding:5px 9px 5px 9px;
+	border-radius:8px;
+	margin-right:50px;
+}
+
+.setting > span {
+	margin-right:10px;
+}
+
+.setting > input[type="number"] {
+	width:30px;
+}
+
+.operate {
+	margin:0 50px 0 50px;
+}
+
+.operate > div {
+	display:inline-block;
+	margin:2px;
+	padding:5px 10px 5px 10px;
+	border:1px solid #3E6C99;
+}
+
+.operate > div:hover {
+	background:#3E6C99;
+	color:#FFF;
+}

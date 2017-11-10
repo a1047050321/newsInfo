@@ -1,0 +1,904 @@
+.user-select-none,
+.user-select-none * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+/**
+ * 版式与配色样式
+ */
+
+/* 模板列表 开始 */
+
+.template-item {
+    width: 152px;
+    height: 156px;
+    border: 2px solid #FFF;
+    float: left;
+    margin: 0px 5px 10px 15px;
+}
+
+.template-item:hover {
+    border-color: #ADD3FF;
+    background-color: #EAF5FF;
+}
+
+.template-item:active {
+    border-color: #3091F2;
+}
+
+.template-item img {
+    margin: 3px;
+}
+
+.template-item .template-name {
+    height: 19px;
+    line-height: 19px;
+    text-align: center;
+    font-size: 14px;
+    font-family: "宋体";
+}
+
+/* 模板列表 结束 */
+
+/* 配色列表 开始 */
+
+.color-item {
+    border: 1px solid #FFF;
+    float: left;
+    font-size: 0px;
+}
+
+.color-item:hover, .color-item.hover {
+    border-color: #97B7D5;
+    background-color: #C0DDEA;
+}
+
+.color-item:active, .color-item.active,
+.color-item.current {
+    border-color: #2F6FAC;
+    background-color: #C0DDEA;
+}
+
+.color-item img {
+    font-size: 0px;
+    width: 83px;
+    height: 46px;
+    margin: 2px;
+    border: 1px solid #959595;
+}
+
+/* 配色列表 结束 */
+
+
+/**
+ * 工具按钮样式
+ */
+
+.appedit-tools-wraper,
+.appedti-tools-wraper * {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+.appedit-tools-wraper {
+    vertical-align: middle;
+}
+
+/* button类的样式 开始 */
+
+.appedit-tool-button {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.tool-button {
+    position: relative;
+    height: 34px;
+    line-height: 34px;
+    color: #000;
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+.tool-button:hover {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+.tool-button .tool-icon {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 30px;
+    height: 100%;
+}
+
+.tool-button .tool-text {
+    margin-left: 20px;
+}
+
+/* button类的样式 结束 */
+
+/* image类的样式 开始 */
+
+.appedit-tool-image {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    font-size: 12px;
+    color: #000;
+}
+
+.tool-image {
+    position: relative;
+    width: 44px;
+    height: 57px;
+    margin-right: 1px;
+}
+
+.tool-image:hover,
+.tool-image.hover {
+    background-color: #E2EFF5;
+}
+
+.tool-image:active,
+.tool-image.active {
+    background-color: #C0DDEA;
+}
+
+.tool-image .tool-icon {
+    display: block;
+    width: 100%;
+    height: 38px;
+}
+
+.tool-image .tool-text {
+    display: block;
+    position: absolute;
+    left: 0px;
+    bottom: 7px;
+    width: 100%;
+    text-align: center;
+}
+
+/* image类的样式 结束 */
+
+/* select类的样式 开始 */
+
+.appedit-tool-select {
+    position: relative;
+    z-index: 10;
+    font-size: 12px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.appedit-tool-select.active {
+    z-index: 11;
+}
+
+.appedit-tool-select .tool-quicker-wraper * {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.tool-quicker-wraper {
+    border: 1px solid transparent;
+    *border-color: #FFF;
+}
+
+
+.tool-quicker-wraper:hover {
+    border-color: #E2EFF5;
+}
+
+.tool-quicker-wraper:hover * {
+    background-color: #E2EFF5;
+}
+
+.tool-quicker-wraper.open,
+.tool-quicker-wraper:active {
+    border-color: #C0DDEA;
+}
+
+.tool-quicker-wraper:active * {
+    background-color: #C0DDEA;
+}
+
+.tool-quicker-wraper:hover .tool-select-btn {
+    background-color: #FFF;
+}
+
+.tool-select-btn {
+    background: url(../images/selecticon.png) no-repeat;
+}
+
+.tool-quicker-wraper .tool-select-btn:hover {
+    background-color: #E2EFF5;
+}
+
+.tool-quicker-wraper .tool-select-btn.hover ~ span,
+.tool-quicker-wraper .tool-select-btn:hover ~ span {
+    background-color: #FFF;
+}
+
+.tool-quicker-wraper.open .tool-select-btn,
+.tool-quicker-wraper .tool-select-btn:active {
+    background-color: #C0DDEA;
+}
+
+.tool-quicker-wraper .tool-select-btn.active ~ span,
+.tool-quicker-wraper .tool-select-btn:active ~ span {
+    background-color: #FFF;
+}
+
+.tool-quicker-wraper.open span {
+    background-color: #FFF;
+}
+
+.tool-quicker-wraper.quick-disabled:hover,
+.tool-quicker-wraper.quick-disabled:hover span {
+    border-color: #E2EFF5;
+    background-color: #E2EFF5;
+}
+
+.tool-quicker-wraper.quick-disabled:active,
+.tool-quicker-wraper.quick-disabled:active span,
+.tool-quicker-wraper.quick-disabled.open,
+.tool-quicker-wraper.quick-disabled.open span {
+    border-color: #C0DDEA;
+    background-color: #C0DDEA;
+}
+
+/* 横向select样式 开始 */
+
+.appedit-tool-horizontal {
+    
+}
+
+.appedit-tool-horizontal .tool-quicker-wraper {
+    position: relative;
+    height: 23px;
+    line-height: 25px;
+}
+
+.tool-icon-horizontal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 23px;
+    height: 100%;
+}
+
+.tool-text-horizontal {
+    margin: 0 10px 0 23px;
+}
+
+.tool-select-btn-horizontal {
+    position: absolute;
+    text-indent: -9999px;
+    top: 0px;
+    right: 0px;
+    width: 10px;
+    height: 100%;
+    background-position: center 11px;
+}
+
+.appedit-tools-wraper.select-disabled .tool-select-btn-horizontal {
+    background-position: center -39px;
+}
+
+/* 横向select样式 结束 */
+
+/* 纵向select样式 开始 */
+
+.appedit-tool-vertical {
+    margin-right: 1px;
+}
+
+.appedit-tool-vertical .tool-quicker-wraper {
+    position: relative;
+    width: 42px;
+    height: 55px;
+}
+
+.tool-icon-vertical {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 34px;
+}
+
+.tool-text-vertical {
+    display: none;
+    position: absolute;
+    left: 0px;
+    bottom: 7px;
+    width: 100%;
+    height: 0px;
+    text-indent: -9999px;
+    text-align: center;
+}
+
+.tool-select-btn-vertical {
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    width: 100%;
+    padding-left: 2px;
+    height: 22px;
+    text-align: center;
+    background-position: center 16px;
+}
+
+.appedit-tools-wraper.select-disabled .tool-select-btn-vertical {
+    background-position: center -34px;
+}
+
+
+/* 纵向select样式 结束 */
+
+/* tool-options的样式 开始 */
+
+.tool-options {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    margin-top: 1px;
+    border: 1px solid #969696;
+    background-color: #FFF;
+    text-align: left;
+}
+
+.tool-select-option {
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+}
+
+.tool-select-option:hover {
+    background-color: #E2EFF5;
+}
+
+.tool-select-option:active,
+.tool-select-option.active {
+    background-color: #C0DDEA;
+}
+
+.tool-select-option .tool-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 32px;
+}
+
+.tool-select-option .tool-text {
+    display: block;
+    margin-left: 32px;
+    margin-right: 20px;
+    white-space: nowrap;
+}
+
+/* tool-options的样式 结束 */
+
+/* select类的样式 结束 */
+
+/* scroller类的样式 开始 */
+
+.appedit-tool-scroller {
+    position: relative;
+    display: inline-block;
+    *display: inline;
+    *zoom: inline;
+    overflow: hidden;
+}
+
+.appedit-tool-scroller.open {
+    overflow: visible;
+}
+
+.tool-scroller-frame {
+    position: relative;
+    border: 1px solid #C8C8C8;
+    width: 91px;
+    height: 55px;
+    z-index: 2;
+    padding-right: 15px;
+}
+
+.scroller-frame-btn {
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    width: 16px;
+    height: 100%;
+    padding-top: 2px;
+}
+
+.scroller-frame-btn div {
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    width: 14px;
+    border: 1px solid #C8C8C8;
+    height: 17px;
+    z-index: 1;
+    background: url(../images/scrollericon.png) no-repeat;
+}
+
+.scroller-frame-btn div:hover {
+    border-color: #97B7D5;
+    background-color: #E2EFF5;
+    z-index: 2;
+}
+
+.scroller-frame-btn div:active {
+    border-color: #2F6FAC;
+    background-color: #C0DDEA;
+}
+
+.scroller-frame-btn .scrollU {
+    top: 0px;
+    background-position: -23px 6px;
+}
+
+.scroll-disabled .scrollU {
+    background-position: 4px 6px;
+}
+
+.scroller-frame-btn .scrollD {
+    top: 18px;
+    background-position: -23px -18px;
+}
+
+.scroll-disabled .scrollD {
+    background-position: 4px -18px;
+}
+
+.scroller-frame-btn .scrollA {
+    height: 19px;
+    bottom: 0px;
+    background-position: -23px -41px;
+}
+
+.scroll-disabled .scrollA {
+    background-position: -23px -64px;
+}
+
+.scroller-container {
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    top: 1px;
+    z-index: 2;
+    margin-right: 15px;
+    padding: 0 1px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.appedit-tool-scroller.open .scroller-container {
+    z-index: 10;
+    min-width: 383px;
+    /*height: 328px;*/
+    border: 1px solid #646464;
+    padding: 0px;
+    margin-right: 0px;
+    background-color: #FFF;
+}
+
+.scroller-title-box {
+    text-align: left;
+    width: 100%;
+}
+
+.scroller-title-box h4 {
+    height: 20px;
+    line-height: 20px;
+    background: #F0F0F0;
+    color: #646464;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.scroller-title-box > div > div {
+    overflow: hidden;
+    zoom: 1;
+}
+
+.scroller-use-item {
+    display: none;
+}
+
+.appedit-tool-scroller.open .scroller-use-item {
+    display: block;
+}
+
+.appedit-tool-scroller .scroller-all-item h4 {
+    display: none;
+}
+
+.appedit-tool-scroller.open .scroller-all-item h4 {
+    display: block;
+}
+
+.scroll-item-wraper {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    font-size: 0px;
+    width: 91px;
+    height: 55px;
+    overflow: hidden;
+    float: left;
+}
+
+.scroller-all-item .scroll-item-wraper:hover {
+    background-color: #E2EFF5;
+}
+
+.scroller-all-item .scroll-item-wraper:active,
+.scroller-all-item .scroll-item-wraper.active {
+    background-color: #C0DDEA;
+}
+
+.scroll-item-thumb {
+    font-size: 0px;
+    border: 1px solid #969696;
+    width: 83px;
+    height: 46px;
+    margin: 3px 3px 4px 3px;
+}
+
+.scroll-item-name {
+    display: none;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+}
+
+.appedit-tool-scroller.open .scroll-item-name {
+    display: block;
+}
+
+.scroller-all-item > div {
+    width: 100%;
+}
+
+.appedit-tool-scroller.open .scroller-all-item > div {
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 5px 0;
+}
+
+.appedit-tools-wraper.appedit-tool-scroller.scroll-disabled,
+.appedit-tools-wraper.appedit-tool-scroller.scroll-disabled * {
+    border-color: #F0F0F0;
+    background-color: transparent;
+}
+
+.scroll-disabled .scroller-container {
+    z-index: 1;
+}
+
+.scroll-disabled .scroller-container img {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+    filter: gray alpha(opacity=80); /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+    opacity: .8;
+}
+
+/* scroller类的样式 结束 */
+
+.appedit-tools-wraper.appedit-tool-select.select-disabled .tool-quicker-wraper,
+.appedit-tools-wraper.appedit-tool-select.select-disabled .tool-quicker-wraper *,
+.appedit-tools-wraper .tool-disabled,
+.appedit-tools-wraper .tool-disabled * {
+    /*color: #969696;*/
+    color: #C8C8C8;
+    border-color: transparent;
+    background-color: transparent;
+    *border-color: #FFF;
+    *background-color: #FFF;
+}
+
+
+/**
+ * 分页导航样式
+ */
+.tpage-nav {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    font-size: 12px;
+}
+
+.tpage-nav span, .tpage-nav a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    height: 29px;
+    font-size: 12px;
+    color: #000;
+    padding: 0 12px;
+    line-height: 29px;
+    margin-left: 2px;
+    text-decoration: none;
+}
+
+.tpage-nav a {
+    cursor: pointer;
+}
+
+.tpage-nav a:hover,
+.tpage-nav span.current {
+    background-color: #2F6FAC;
+    color: #FFF;
+}
+
+.tpage-nav span {
+    color: #969696;
+}
+
+.tpage-nav input, .tpage-nav select {
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #B0B0B0;
+    margin-left: 5px;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.tpage-nav input {
+    width: 33px;
+}
+
+.tpage-nav select {
+    margin-left: 20px;
+}
+
+.tpage-nav em {
+    font-style: normal;
+}
+
+/* 节目导航 开始 */
+
+.program-nav-wraper {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.program-nav-wraper .list-header {
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid transparent;
+}
+
+.column-list li {
+    position: relative;
+    padding: 2px 0;
+    display: list-item!important;
+}
+
+.column-list li.ui-draggable-dragging {
+    width: 100%;
+}
+
+/* 一级导航 */
+.column-list .list-header {
+    padding-left: 16px;
+}
+
+/* 二级导航 */
+.column-list li li .list-header {
+    padding-left: 32px;
+}
+
+/* 三级导航 */
+.column-list li li li .list-header {
+    padding-left: 48px;
+}
+
+.list-header .nav-name {
+    position: relative;
+    margin-left: 70px;
+    top: -24px;
+    text-indent: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list-header .nav-name.nav-rename {
+    height: 22px;
+    border: 1px solid #1780FB;
+}
+
+.list-header .nav-name.nav-rename input {
+    border: none;
+    width: 96%;
+    vertical-align: top;
+    height: 22px;
+    padding: 0 2%;
+}
+
+.nav-program-name {
+    font-weight: bold;  
+}
+
+.nav-program-name .nav-name {
+    margin-left: 53px;
+}
+
+.program-nav-wraper .list-header:hover {
+    background-color: #E4EBEE;
+    border-color: #8FAFCE;
+}
+
+.program-nav-wraper .list-header:active {
+    background-color: #C0DDEA;
+    border-color: #2F6FAC;
+}
+
+.column-list li li {
+    font-size: 12px;
+}
+
+.column-list .list-header:hover {
+    /*background-color: */
+}
+
+.list-header .nav-sign {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 13px;
+    height: 100%;
+}
+
+.list-header.has-children .nav-sign {
+    background: url(../images/listicon.png) no-repeat 0px 5px;
+}
+
+.list-header.has-children .nav-sign:hover {
+    background-position: 0px -24px;
+}
+
+.list-header.has-children.open .nav-sign {
+    background-position: 0px -52px;
+}
+
+.list-header.has-children.open .nav-sign:hover {
+    background-position: 0px -52px;
+}
+
+.list-header .list-icon {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 14px;
+    height: 100%;
+    margin-right: 3px;
+    background: url(../images/programnav.png) no-repeat 0px 0px;
+}
+
+.list-header .icon-column {
+    background-position: 0px 5px;
+}
+
+.column-list li li .icon-column {
+    background-position: 0px -26px;
+}
+
+.list-header .icon-image {
+    background-position: 0px -58px;
+}
+
+.program-list {
+    text-indent: 40px;
+}
+
+.nav-program-name, .column-list > li > .list-header{
+    font-size: 14px;
+}
+
+.list-header + ul {
+    width: 100%;
+    display: none;
+}
+
+.list-header.has-children.open + ul {
+    display: block;
+    position: static!important;
+    height: auto!important;
+    background: none!important;
+}
+
+.column-list .list-header.new-list-header {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+.column-list .list-header.new-list-header:hover {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.column-list .list-header.new-list-header .nav-sign:hover {
+    background-position: 0px 5px;
+}
+
+.column-list .list-header.disabled {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+
+.column-list .list-header.disabled:hover {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.column-list .list-header.disabled .nav-sign:hover {
+    background-position: 0px 5px;
+}
+
+/* 节目导航 结束 */
+
+/* 单一焦点控制样式 开始 */
+
+/* 获得焦点 */
+
+/**
+ * sFocus代表真实焦点
+ * xFocus代表虚假焦点
+ * 
+ * bFocus代表副焦点，用于操作图片的时候，
+ * 栏目获取该焦点，代表正在操作该栏目下的图片
+ */
+.bFocus {
+    background-color: #C0DDEA!important;
+    border-color: #C0DDEA!important;
+}
+
+.sFocus, .xFocus {
+    background-color: #C0DDEA!important;
+    border-color: #2F6FAC!important;
+}
+
+/* 单一焦点控制样式 结束 */
+
+/* 无权限操作样式 开始 */
+
+.no-access {
+    margin-left: 30px!important;
+    font-weight: bold!important;
+    font-size: 15px!important;
+    color: #DF0404!important;
+}
+
+/* 无权限操作样式 结束 */

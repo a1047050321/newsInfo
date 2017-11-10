@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路径管理模块</title>
+    <link rel="stylesheet" href="app/css/homed.base.css" />
+    <link rel="stylesheet" href="http://boss.homed.me/pubFile/plugins/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="http://boss.homed.me/pubFile/plugins/tlayer/tlayer.css" />
+    <link rel="stylesheet" href="http://boss.homed.me/pubFile/plugins/kernel/homed.kernel.css" />
+    <link rel="stylesheet" href="plugins/datetimepicker/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="css/contentManager.css" />
+</head>
+
+<body>
+    
+    <!-- contentWraper 开始 -->
+
+    <div id="contentWraper">
+
+        <div class="sideBar border-box">
+            <ul class="topNav user-select-none">
+                <li class="right_2013"><span data-action="auditingNews">新闻编审</span></li>
+                <li class="right_2013"><span data-action="rejectedNews">已驳回</span></li>
+                <li class="right_2013"><span data-action="timedNews">定时发布</span></li>
+                <li class="right_2013"><span data-action="releasedNews">已发布</span></li>
+                <li class="right_2013"><span data-action="removedNews">已下架</span></li>
+            </ul>
+        </div>
+
+        <div class="workBar">
+            <div class="workBar-tools">
+                <div class="workBar-tools-left"></div>
+                <div class="workBar-tools-right"></div>
+                <div class="workBar-tools-filter">
+                    <div class="provider filterlist" data-type="providerid">
+                        <label>提供商</label>
+                        <ul class="filterchild">
+                            <li>
+                                <span data-value=""></span>
+                                <font>全部</font>
+                            </li>
+                            <li>
+                                <span data-value="zaker0"></span>
+                                <font>zaker0</font>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="labellist filterlist" data-type="label">
+                        <label>栏目</label>
+                        <ul class="filterchild">
+                            <li>
+                                <span data-value="0"></span>
+                                <font>全部</font>
+                            </li>
+                            <li>
+                                <span data-value="165"></span>
+                                <font>热点</font>
+                            </li>
+                            <li>
+                                <span data-value="166"></span>
+                                <font>娱乐</font>
+                            </li>
+                            <li>
+                                <span data-value="167"></span>
+                                <font>国内</font>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sortlist">
+                        <label>时间</label>
+                        <div class="sortchild active" data-sortby=1 data-asc=1>
+                            <input type="radio" name="sortchild" checked=true>
+                            <label>按时间升序</label>
+                        </div>
+                        <div class="sortchild" data-sortby=1 data-asc=0>
+                            <input type="radio" name="sortchild">
+                            <label>按时间降序</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="workBar-items-wraper">
+                <div class="workBar-items user-select-none">
+                    <div class="workBar-table">
+                        <div class="workBar-table-title"></div>
+                        <div class="workBar-table-content"></div>
+                        <div class="timedFrame">
+                            <input class="datetime" type="text" />
+                            <div data-action="release">确定</div>
+                            <div data-action="cancel">取消发布</div>
+                        </div>
+                    </div>
+                    <div class="workBar-grid"></div>
+                </div>
+                <!-- <div class="workBar-items-loading">&nbsp;</div> -->
+            </div>
+            <div class="workBar-pageNav" id="pageNav-wraper"></div>
+
+            
+        </div>
+
+        <div class="hiddenBar">
+            <div class="hiddenBar-module user-select-none">
+                <span data-module="all">审核内容</span>
+                <!-- <span data-module="text">文字审核</span>
+                <span data-module="poster">海报审核</span>
+                <span data-module="tts">tts审核</span> -->
+            </div>
+            <div class="hiddenBar-title">新闻标题</div>
+            <div class="hiddenBar-media-wraper">
+                <iframe id="audioPlayer" name="audioPlayer" frameborder="0" width="100%" height="100%" style="background-color:transparent;" scrolling="no" src=""></iframe>
+            </div>
+            <div class="hiddenBar-content-wraper">
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <p>123123asa测试测试测试测试参数传上传测试</p>
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+                <img src="images/default_img.png" />
+            </div>
+            <div class="hiddenBar-operate-wraper">
+                <div class="hiddenBar-selection">
+                    <div class="selection-title">审核意见</div>
+                    <div class="selection-box">
+                        <span></span>
+                        <font>含敏感词</font>
+                    </div>
+                    <div class="selection-box">
+                        <span></span>
+                        <font>图文不符</font>
+                    </div>
+                    <div class="selection-box">
+                        <span></span>
+                        <font>内容不健康</font>
+                    </div>
+                    <div class="selection-box">
+                        <span></span>
+                        <font>报道严重失实</font>
+                    </div>
+                </div>
+                <div class="hiddenBar-textarea">
+                    <textarea></textarea>
+                </div>
+                <div class="hiddenBar-buttons">
+                    <span class="release" data-action="release">发&nbsp;布</span>
+                    <span class="reject disable" data-action="reject">驳&nbsp;回</span>
+                </div>
+            </div>
+            <div class="hiddenBar-footer" style="height:1000px;">
+                <!-- 目前的作用是拿来凑高度的 -->
+            </div>
+        </div>
+
+        <div class="editBar">
+            <div class="editBar-module user-select-none">
+                <span class="active" data-mode="add">新建新闻</span>
+                <span data-mode="edit">编辑新闻</span>
+            </div>
+            <div class="editBar-wraper">
+                <div class="edit-title">
+                    <font>新闻详情</font>
+                    <div class="title-btn">+</div>
+                    <div class="title-btn" data-action="hide">-</div>
+                </div>
+                <div class="edit-attr">
+                    <ul class="attr-row">
+                        <li>
+                            <label for="edit-id">新闻ID</label>
+                            <input id="edit-id" type="text" readonly />
+                        </li>
+                        <li class="col2">
+                            <label for="edit-name">新闻标题</label>
+                            <input id="edit-name" type="text" />
+                        </li>
+                    </ul>
+                    <ul class="attr-row">
+                        <li class="col1_5">
+                            <label for="edit-provider">内容提供商</label>
+                            <select id="edit-provider"></select>
+                        </li>
+                        <li class="col1_5">
+                            <label for="edit-author">来源</label>
+                            <input id="edit-author" type="text" />
+                        </li>
+                    </ul>
+                    <ul class="attr-row">
+                        <li class="col1_5">
+                            <label for="edit-subtype">子类型</label>
+                            <div class="muti-select">
+                                <select id="edit-subtype"></select>
+                                <input type="text" value="" placeholder="">
+                            </div>
+                        </li>
+                        <li class="col1_5">
+                            <label for="edit-release-time">发布时间</label>
+                            <input id="edit-release-time" type="text" />
+                        </li>
+                    </ul>
+                    <ul class="attr-row">
+                        <li class="col3">
+                            <label for="edit-link-url">链接地址</label>
+                            <input id="edit-link-url" type="url" />
+                        </li>
+                    </ul>
+                    <ul class="attr-row">
+                        <li class="col3">
+                            <label for="edit-keyword">关键字</label>
+                            <label class="edit-tag" for="add-keyword" id="edit-keyword">
+                                <div class="tag-contains"></div>
+                                <input type="text" class="add-tag" id="add-keyword" placeholder="按空格或enter键隔开">
+                            </label>
+                        </li>
+                    </ul>
+                    <ul class="attr-row">
+                        <li class="col3">
+                            <label for="edit-synopsis">新闻简介</label>
+                            <input id="edit-synopsis" type="text" />
+                        </li>
+                    </ul>
+                    <div class="edit-text">
+                        <textarea id="edit-content"></textarea>
+                    </div>
+                </div>
+                <div class="edit-title">
+                    <font>海报信息</font>
+                    <div class="title-btn">+</div>
+                    <div class="title-btn" data-action="hide">-</div>
+                </div>
+                <div class="edit-poster">
+                    <div class="edit-btns">
+                        <button data-action="add"><span>+</span>上传图片</button>
+                        <button data-action="edit">编辑</button>
+                    </div> 
+                    <div class="edit-list"></div> 
+                </div>
+            </div>
+            <div class="editBar-buttons">
+                <!-- <span data-action="poster">编辑图片</span> -->
+                <span data-action="confirm">确&nbsp;定</span>
+                <span data-action="reset">重&nbsp;置</span>
+                <span data-action="cancel">取&nbsp;消</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- contentWraper 结束 -->
+
+</body>
+<script type="text/javascript" src="http://boss.homed.me/pubFile/commjs/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="http://boss.homed.me/pubFile/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://boss.homed.me/pubFile/commjs/json2.js"></script>
+<script type="text/javascript" src="http://boss.homed.me/pubFile/plugins/tlayer/jquery.tlayer.js"></script>
+<script type="text/javascript" src="http://boss.homed.me/pubFile/plugins/kernel/homed.kernel.js"></script>
+<script type="text/javascript" src="plugins/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript" src="js/contentManager.js"></script>
+
+</html>

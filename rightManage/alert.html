@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提示信息</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script>
+
+window.onload = init;
+function init(){
+	document.getElementById("tipsContent").innerHTML = top.getTipsInfo();
+}
+
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:270px; line-height:25px;">
+	<div class="tck_tips center"><span id="tipsContent">提示信息</span></div>
+    <div class="tck_btn4"><a href="javascript:top.closePopupTips()">确　定</a></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

@@ -1,0 +1,430 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    overflow: hidden;
+    height: 370px;
+    font-family: "宋体";
+}
+
+.user-select-none,
+.user-select-none * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+/* initAudio样式 开始 */
+
+.initAudio {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    margin-top: -12px;
+    width: 100%;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: url(../../images/layer_loading.gif) no-repeat 38% center;
+}
+
+.initAudio.onerror {
+    color: #E0262A;
+    font-weight: bold;
+    background: none;
+}
+
+/* initAudio样式 结束 */
+
+/* audio-wraper样式 开始 */
+
+.audio-wraper {
+    cursor: pointer;
+    position: relative;
+    display: none;
+    width: 80%;
+}
+
+.audio-wraper .audio-track,
+.audio-track .audio-field {
+    position: relative;
+    height: 15px;
+    background-color: #C8C8C8;
+    margin: 0 55px;
+}
+
+.audio-track .audio-bar,
+.audio-track .audio-left-limit,
+.audio-track .audio-right-limit,
+.tools-wraper .tool-icon {
+    background-image: url(../images/audiotools3.png);
+    background-repeat: no-repeat;
+}
+
+.audio-track .audio-bar,
+.audio-track .audio-left-limit,
+.audio-track .audio-right-limit {
+    position: absolute;
+}
+
+.audio-track .audio-bar p,
+.audio-track .audio-left-limit p,
+.audio-track .audio-right-limit p {
+    position: absolute;
+}
+
+.audio-track .audio-bar {
+    bottom: 0px;
+    left: 0px;
+    z-index: 4;
+    width: 9px;
+    height: 31px;
+    margin-left: -4px;
+    background-position: 0px 0px;
+}
+
+.audio-track .audio-bar p {
+    top: -17px;
+    left: -20px;
+}
+
+.audio-track .audio-field {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0px;
+    background-color: #3C89E4;
+}
+
+.audio-track .audio-limit p {
+    top: 22px;
+}
+
+.audio-track .audio-left-limit,
+.audio-track .audio-right-limit {
+    width: 9px;
+    height: 20px;
+    top: 15px;
+}
+
+.audio-track .audio-left-limit {
+    left: 0px;
+    margin-left: -9px;
+    background-position: -14px -11px;
+}
+
+.audio-left-limit p {
+    left: -70px;
+}
+
+.audio-track .audio-right-limit {
+    right: -9px;
+    background-position: -24px -11px;
+}
+
+.audio-right-limit p {
+    left: 3px;
+}
+
+.audio-wraper .time {
+    position: absolute;
+    color: #646464;
+    width: 50px;
+    height: 15px;
+    top: 0px;
+    line-height: 15px;
+    font-size: 12px;
+    font-family: "宋体";
+    text-align: center;
+}
+
+.audio-wraper .starttime {
+    left: 0px;
+}
+
+.audio-wraper .endtime {
+    right: 0px;
+}
+
+/* audio-wraper样式 结束 */
+
+/* tools-wraper样式 开始 */
+
+.tools-wraper {
+    position: relative;
+    width: 100%;
+    height: 130px;
+    padding-top: 22px;
+}
+
+.tools-wraper audio {
+    display: none;
+}
+
+.tools-wraper .audio-wraper {
+    position: absolute;
+    top: 30px;
+    left: 95px;
+    height: 60px;
+}
+
+/* 音频编辑工具按钮样式 开始 */
+
+.tools-wraper .appedit-tool-button {
+    margin-left: 2px;
+    float: left;
+}
+
+.tools-wraper .tool-button {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    color: #008FD0;
+}
+
+.tools-wraper .tool-button:hover {
+    color: #FFF;
+}
+
+.tools-wraper .tool-icon {
+    width: 14px;
+    height: 14px;
+    top: 8px;
+}
+
+.tool-button.tool-disabled .tool-text {
+    color: #969696;
+}
+
+/* 播放按钮 开始 */
+
+#audio-play .tool-text {
+    margin-left: 38px;
+}
+
+#audio-play .tool-icon {
+    left: 20px;
+}
+
+.playNormal {
+    background-position: -2px -69px;
+}
+
+.playHover {
+    background-position: -34px -69px;
+}
+
+/* 播放按钮 结束 */
+
+/* 暂停按钮 开始 */
+
+#audio-pause {
+    display: none;
+}
+
+#audio-pause .tool-text {
+    margin-left: 38px;
+}
+
+#audio-pause .tool-icon {
+    left: 20px;
+}
+
+.pauseNormal {
+    background-position: -2px -39px;
+}
+
+.pauseHover {
+    background-position: -34px -39px;
+}
+
+/* 暂停按钮 结束 */
+
+/* 设置起点按钮 开始 */
+
+#audio-setStart .tool-text {
+    margin-left: 23px;
+}
+
+#audio-setStart .tool-icon {
+    left: 10px;
+}
+
+.setStartNormal {
+    background-position: -2px -95px;
+}
+
+.setStartHover {
+    background-position: -34px -95px;
+}
+
+.setStartDisabled {
+    background-position: -64px -95px;
+}
+
+/* 设置起点按钮 结束 */
+
+/* 执行校准按钮 开始 */
+
+#audio-adjust .tool-text {
+    margin-left: 26px;
+}
+
+#audio-adjust .tool-icon {
+    left: 10px;
+}
+
+.adjustNormal {
+    background-position: -2px -125px;
+}
+
+.adjustHover {
+    background-position: -34px -125px;
+}
+
+.adjustDisabled {
+    background-position: -64px -125px;
+}
+
+/* 执行校准按钮 结束 */
+
+/* 设置终点按钮 开始 */
+
+#audio-setEnd .tool-text {
+    margin-left: 23px;
+}
+
+#audio-setEnd .tool-icon {
+    left: 10px;
+}
+
+.setEndNormal {
+    background-position: -2px -155px;
+}
+
+.setEndHover {
+    background-position: -34px -155px;
+}
+
+.setEndDisabled {
+    background-position: -64px -155px;
+}
+
+/* 设置终点按钮 结束 */
+
+/* 试听截取按钮 开始 */
+
+#audio-listen .tool-text {
+    margin-left: 25px;
+}
+
+#audio-listen .tool-icon {
+    left: 10px;
+}
+
+.listenNormal {
+    background-position: -2px -185px;
+}
+
+.listenHover {
+    background-position: -34px -185px;
+}
+
+/* 试听截取按钮 结束 */
+
+/* 音频编辑工具按钮样式 结束 */
+
+/* tools-wraper样式 结束 */
+
+/* caption-wraper样式 开始 */
+
+.caption-wraper {
+    overflow-y: auto;
+    max-height: 225px;
+}
+
+.caption-wraper table {
+    width: 100%;
+    border-spacing: none;
+    border-collapse: collapse;
+}
+
+.caption-wraper tr {
+    height: 32px;
+    cursor: pointer;
+}
+
+.caption-wraper td {
+    border: 1px solid #DCDCDC;
+    font-size: 12px;
+    color: #000;
+}
+
+.caption-wraper td.odd {
+    width: 190px;
+    background: url(../../images/jiantou.png) no-repeat center center;
+}
+
+.caption-wraper td.odd div {
+    width: 81px;
+    height: 18px;
+    line-height: 18px;
+    border: 1px solid transparent;
+    float: left;
+    margin-left: 4px;
+    text-align: center;
+}
+
+.caption-wraper td.odd .endtime {
+    float: right;
+    margin-right: 4px;
+}
+
+.caption-wraper td.even p {
+    margin-left: 10px;
+}
+
+
+.caption-wraper tr.reading,
+.caption-wraper tr.active {
+    background-color: #C0DDEA;
+}
+
+.caption-wraper tr.active td.odd div {
+    border-color: #1780FB;
+    background-color: #FFF;
+}
+
+.caption-wraper td.odd input {
+    border: none;
+    font-size: 12px;
+    height: 18px;
+    line-height: 20px;
+    outline: none;
+    font-family: "宋体";
+    text-align: center;
+}
+
+.caption-wraper td.odd .hour,
+.caption-wraper td.odd .min,
+.caption-wraper td.odd .sec {
+    width: 14px;
+}
+
+.caption-wraper td.odd .msec {
+    width: 21px;
+}
+
+.caption-wraper tr.reading td.even p,
+.caption-wraper tr.active td.even p {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* caption-wraper样式 结束 */

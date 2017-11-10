@@ -1,0 +1,24 @@
+@charset "utf-8";
+.masks{ width:100%; height:100%; position:fixed; _position:absolute; z-index: 9000; top:0; left:0; display:none}
+.wait{ position:fixed;_position:absolute; top:50%; left:50%; width:34px; height:34px; margin:-17px 0 0 -17px; background-image:url("img/loading.gif")}
+.popMain{ border:1px solid #ccc; position:fixed; _position:absolute; z-index: 9999; overflow:hidden; display:none; font-size:12px; }
+.popTitle{ border-bottom:1px solid #ccc; background:#2f6fac; height:28px; line-height:28px; display:none; color:#FFF; font-weight:bold}
+.popTitle .text{ float:left; margin-left:6px;}
+.popTitle .icon{ float:left; margin:6px 0 0 6px; width:16px; height:16px;}
+.popTitle .close{ float:right; margin:9px 8px 0 0; width:10px; height:10px; background:url(close.png) no-repeat; cursor:pointer}
+.popContent{ background-color:#fff;  min-width:210px; overflow:auto; margin: 0; padding: 0; }
+.popContent iframe { float: left; }
+.layer_msg{ padding:0 10px 0 10px; text-align:center;}
+.layer_msg p{ line-height:18px; padding:25px 0 25px;}
+.layer_msg p *{ vertical-align:middle;}
+
+a,a:visited{text-decoration:none; color:#ffffff}
+.but {width:100%; text-align:center;}
+.but a{height:30px; background-color:#e0e0e0; line-height:30px; color:#004a6c; text-align:center; display:block; font-size:14px; border:none; cursor:pointer;}
+.but a:hover {color:#ffffff; background-color:#2f6fac;}
+#btnSure {border-right:1px solid #d1d1d1;}
+
+/*.alert_icon{ background:#fff url(info.png) no-repeat 20px 26px}
+.right_icon{ background:#fff url(info.png) no-repeat 20px 26px}
+.error_icon{ background:#fff url(info.png) no-repeat 20px 26px}
+.confirm_icon{ background:#fff url(info.png) no-repeat 20px 26px}*/

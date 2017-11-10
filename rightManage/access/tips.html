@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script>
+var optFlag= 0; //0清空，1删除一个,2修改
+
+var tckTips = ["确定要清空所有用户吗？","确定要清空所有部门吗？","确定要清空所有职务吗？","确定要保存所做修改吗？","确定要删除所选权限包吗？"];
+
+window.onload = init;
+function init(){
+	if(getUrlParams("optFlag")) optFlag = parseInt(getUrlParams("optFlag"),10);
+	$(".tck_tips span").html(tckTips[optFlag]);
+}
+
+function submitReq(){
+	top.popupCallback(); //回调当前rightFrame中函数
+}
+
+function cancelReq(){
+	top.closePopupWindow();
+}
+
+function getUrlParams(_key, _url) {
+	if (typeof(_url) == "object") {
+		_url = _url.location.href;
+	} else {
+		_url = (typeof(_url) == "undefined" || _url == null || _url == "") ? window.location.href : _url;
+	}
+	if (_url.indexOf("?") == -1) {
+		return "";
+	}
+	var params = [];
+	_url = _url.split("?")[1].split("&");
+	for (var i = 0, len = _url.length; i < len; i++) {
+		params = _url[i].split("=");
+		if (params[0] == _key) {
+			return params[1];
+		}
+	}
+	return "";
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:280px;">
+	<div class="tck_tips center"><span>&nbsp;</span></div>
+    <div class="tck_btn2"><a href="javascript:submitReq()">确　定</a><a href="javascript:cancelReq()">取　消</a><span class="line"></span></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

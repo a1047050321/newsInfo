@@ -1,0 +1,261 @@
+body {
+    font-size: 12px;
+    height: auto;
+}
+
+.nbsp {
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 6px;
+    height: 0px;
+}
+
+.nbsp4 {
+    width: 24px;
+}
+
+.ml54 {
+    margin-left: 54px;
+}
+
+.w100p {
+    width: 100%;
+}
+
+.notice {
+    font-size: 20px;
+    position: absolute;
+    left: -10px;
+    top:3px;
+    color: red;
+}
+
+.english {
+    margin: 0 3px;
+}
+
+.hide {
+    display: none;
+}
+
+/* initData 样式 开始 */
+
+.initData {
+    position: absolute;
+    left: 0px;
+    top: 180px;
+    margin-top: -12px;
+    width: 100%;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: url(../../images/layer_loading.gif) no-repeat 35% center;
+}
+
+.initData.onerror {
+    color: #E0262A;
+    font-weight: bold;
+    background: none;
+}
+
+.initData.onerror a {
+    color: #2F6FAC;
+    text-decoration: underline;
+}
+
+.initData.onerror a:hover {
+    color: #245586;
+}
+
+/* initData 样式 结束 */
+
+/* 属性容器样式 开始 */
+
+#attr-wraper {
+    display: none;
+    width: 420px;
+    margin: 10px 0 0 15px;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+td {
+    position: relative;
+    width: 50%;
+}
+
+td label {
+    position: absolute;
+    left: 0;
+    height: 24px;
+    line-height: 24px;
+    top: 2px;
+}
+
+td input, td select, td textarea {
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    margin-left: 54px;
+    border: 1px solid #C0C0C0;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+td select:disabled {
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
+}
+
+td input:disabled {
+    background: #FFF;
+}
+
+td input[readonly],
+td select:disabled {
+    color:#666;
+}
+
+td textarea {
+    width: 452px;
+    padding: 0 5px;
+    height: 60px;
+    margin-left: 0;
+    margin-top: 30px;
+    resize: none;
+}
+
+td input {
+    width: 160px;
+    padding: 0 4px;
+}
+
+td select {
+    width: 170px;
+    height: 24px;
+}
+
+.w100p input {
+    /*width: 400px;*/
+}
+
+td button {
+    text-align: center;
+    margin-left: 12px;
+    height: 24px;
+    line-height: 22px;
+    width: 100px;
+    border: 1px solid #C0C0C0;
+    background-color: #E4E4E4;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+td button:hover {
+    background-color: #2F6FAC;
+    border-color: #2F6FAC;
+    color: #FFF;
+}
+
+button span {
+    font-size: 10px;
+    font-weight: normal;
+    font-style: italic;
+    vertical-align: sub;
+}
+
+.red-tip {
+    color: #FF0000;
+}
+
+/* 多选框样式 开始 */
+
+.muti-select {
+    display:inline-block;
+    position:relative;
+}
+
+.muti-select input[readonly] {
+    border-color: transparent;
+}
+
+.muti-select select {
+    position:absolute;
+    height:27px;
+    margin-top:7px;
+    /*top:0;*/
+    border:0;
+    background:transparent;
+    color:transparent;
+}
+
+.muti-select select.readonly {
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
+}
+
+.muti-select select option {
+    color:#000;
+}
+
+.muti-select  select option.active {
+    background:#CBE3EF;
+}
+
+.multi-input-wrapper {
+    /*margin: 0 0 1px 54px;*/
+    color: #666;
+}
+
+.multi-input-wrapper, 
+.multi-input-box {
+    position: relative;
+}
+
+.multi-input-wrapper label {
+    position: relative;
+    margin-right: 3px;
+    vertical-align: top;
+}
+
+.multi-input-wrapper input, 
+.multi-input-wrapper select, 
+.multi-input-wrapper textarea {
+    margin: 0 3px 0 0;
+}
+
+.multi-input-wrapper .multi-input-button {
+    position: absolute;
+    bottom: 38px;
+    right: 10px;
+    width: 14px;
+    height: 14px;
+}
+
+.multi-input-button.add {
+    right:30px;
+    background: url(../images/add_tag.png) no-repeat 0 0;
+}
+
+.multi-input-button.delete {
+    background: url(../images/del_tag.png) no-repeat 0 0;
+}
+
+.multi-input-wrapper .multi-input-box:hover {
+    color: #444;
+}
+
+/* 多选框样式 结束 */

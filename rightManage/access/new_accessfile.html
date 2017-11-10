@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<style>
+.r_open{float:left; width:180px; display:block;}
+.r_close{float:left; width:180px; display:none;}
+</style>
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script type="text/javascript">
+
+var right_list = top.getRightFrameData("right_list");
+
+function initAccess(){
+	var htm = "";
+	for(var i=0; i<right_list.length; i++){
+		htm +='<span class="r_open">';
+		htm +='<input type="checkbox" name="'+i+'" id="right_'+right_list[i].right_id+'" value="'+right_list[i].right_name+'">'+right_list[i].right_name+'';
+		htm +='</span>';
+	}	
+	$("#access").html(htm);
+	$("#access input").on("click",function(){
+		var check = $("#access input:checked");
+		if(check.length==right_list.length){
+			if(!$(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",true);
+			}
+		}else{
+			if($(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",false);
+			}
+		}
+	})
+}
+
+function submitReq(){
+	var rightfileName = $("#inputText").val();
+	var check = $("#access input:checked");//获取所有选中的权限
+	if(check.length<=0){
+		top.openPopupTips("权限不能为空！")
+	}else if(!rightfileName){
+		top.openPopupTips("权限包名称不能为空！")
+	}else{
+		var rightids = "";
+		var currList = [{rightfile_id:0,rightfile_name:rightfileName,right_list:[]}];
+		check.each(function(i){
+			if(rightids){
+				rightids += "|"+$(this).attr("id").substring(6);
+			}else{
+				rightids += $(this).attr("id").substring(6);
+			}
+			currList[0].right_list.push({"right_id": $(this).attr("id").substring(6),"right_name": $(this).val()});
+		});
+		top.ajaxReqAction(function(data){//先创建空权限包
+			if(data.ret==0){
+				assignRight(currList,data.right_file_id,rightids);
+			}else{
+				top.openPopupTips(top.errorCodeTips(data.ret,"新建权限包失败！"));	
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/add",{accesstoken:top.accesstoken,systemid:top.system_id,rightfilename:rightfileName},"post","JSON",top.accessAddr);
+	}
+}
+function assignRight(_list,_rightfileid,_rightid){//修改权限包权限
+	_list[0].rightfile_id = _rightfileid;//设置返回创建好的空权限包id
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			top.popupCallback(_list);//回调插入rightFrame数据中，并显示
+		}else{
+			top.openPopupTips(top.errorCodeTips(data.ret,"新建权限包失败！"));	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/adjust_info",{accesstoken:top.accesstoken,rightfileid:_rightfileid,rightids:_rightid},"post","JSON",top.accessAddr);
+	
+}
+function cancelReq(){
+	top.closePopupWindow();
+}
+
+window.onload = init;
+function init(){
+	$(".rightAll").on("click",function(){
+		if($(this).prop("checked")){
+			$("#access input").each(function(i){
+				$(this).prop("checked",true);
+			})
+		}else{
+			$("#access input").each(function(i){
+				$(this).prop("checked",false);
+			})
+		}
+	})
+	initAccess();
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:640px;">
+<div class="tck_title" style="border:none;">新建权限包<span class="tck_close"><a href="javascript:cancelReq()" title="关闭"></a></span></div>
+
+<div class="tck_info">
+<div class="addInput"><input id="inputText" type="text" placeholder="权限包名称" style="width:580px; padding:5px 9px 5px 9px;"></div>
+
+<div class="tck_box1">
+	<fieldset>
+		<legend><input type="checkbox" class="checkboxall rightAll">系统子权限</legend>
+		<p id="access"><p>
+	</fieldset>
+</div>
+</div>
+
+<div class="tck_btn1"><a href="javascript:submitReq()">确　定</a><a href="javascript:cancelReq()">取　消</a></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

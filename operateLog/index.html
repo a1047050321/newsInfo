@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>操作日志</title>
+	<link rel="stylesheet" href="http://boss.homed.me/pubFile/plugins/kernel/homed.kernel.css" />
+	<link rel="stylesheet" type="text/css" href="http://boss.homed.me/pubFile/plugins/datetimepicker/jquery.datetimepicker.min.css">   
+	<link rel="stylesheet" type="text/css" href="http://boss.homed.me/pubFile/operateLog/css/opLog.css">
+</head>
+<body>
+	<div id="main">
+		<div class="search-bar">
+			<p class="search-tip">查找条件：</p>
+			<div class="search-box">
+				<div class="field">
+					<div class="fl">
+						操作人：<input class="operator" type="text">
+					</div>
+					<div class="fl">
+						时间日期：<input class="timepicker start" type="text">
+						-
+						<input class="timepicker end" type="text">
+					</div>
+				</div>
+				<div class="btn-box">
+					<a class="active" id="searchBtn" href="javascript:void(0)">查找</a>
+					<a id="reset" href="javascript:void(0)">重置</a>
+				</div>
+			</div>
+		</div>
+		<div class="dataList">
+			<div class="listTitle">
+	            <ul>
+	                <li class="index">序号</li>
+	                <li class="eventID">操作码</li>
+	                <li class="eventName">操作名称</li>
+	                <li class="detailInfo">操作详情</li>
+	                <li class="operator">操作人</li>
+	                <li class="operateTime">操作时间</li>
+	                <li class="result">操作结果</li>
+	                <li class="note">结果备注</li>
+	            </ul>
+	        </div>
+	        <div class="listBody">
+	        	
+	        </div>
+		</div>
+		<div class="pagination" id="pagination"></div>
+	</div>
+
+	<script src="http://boss.homed.me/pubFile/commjs/jquery-1.11.1.min.js"></script>
+	<script src="http://boss.homed.me/pubFile/commjs/jquery.cookie.js"></script>
+	<script src="http://boss.homed.me/pubFile/plugins/tlayer/jquery.tlayer.js"></script>
+	<script src="http://boss.homed.me/pubFile/plugins/kernel/homed.kernel.js"></script>
+	<script src="http://boss.homed.me/pubFile/plugins/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+	<script src="http://boss.homed.me/pubFile/operateLog/js/config.js"></script>
+	<script src="http://boss.homed.me/pubFile/operateLog/js/opLog.js"></script>
+</body>
+</html>

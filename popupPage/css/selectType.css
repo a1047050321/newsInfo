@@ -1,0 +1,191 @@
+body {
+    background-color: #FFF;
+    margin: 0;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+    overflow-x: auto;
+	overflow-y: hidden;
+}
+
+#main {
+    overflow: auto;
+    height: 100%;
+}
+
+.toplevel {
+	line-height: 30px;
+	margin: 10px 0;
+	font-size: 16px;
+	text-align: center;
+}
+
+#tt {
+	/*height: 380px;*/
+    overflow: auto;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#tt li {
+	height:auto;
+}
+
+#tt li {
+	background: url(../images/treeview-gray-line.gif) 6px -2px no-repeat;
+}
+
+#tt ul li:last-child {
+	background: url(../images/treeview-gray-line-title.gif) 11px -243px no-repeat;
+}
+
+#tt > li {
+    min-width: 145px;
+	background-image: url(../images/line.gif);
+    background-position: -617px 0px;
+    background-repeat: no-repeat;
+	padding: 5px 5px 5px 0;
+}
+
+#tt > li:first-child {
+	background-position: 13px 0px;
+}
+
+#tt > li:last-child {
+	background-position: -1144px 0px;
+}
+
+#tt > li:hover {
+    background-color: #F0FAFF;
+}
+
+#tt > li > .tree-node {
+    margin-left: -5px;
+}
+
+#tt > li > ul {
+    margin-left: -5px;
+}
+
+#tt li div {
+	height: 30px;
+	line-height: 30px;
+	cursor: default;	
+}
+
+#tt li div span {
+	width: 16px;
+	height: 18px;
+	margin-top: 12px;
+	font-size: 14px;
+}
+
+/* 从第二层起向右便宜18px（一个占位符宽度） */
+#tt ul ul li {
+	margin-left: 18px;
+}
+
+#tt ul ul li > * {
+	margin-left: -18px;
+}
+
+#tt li div .tree-title {
+	width: auto;
+}
+
+#tt > li div .tree-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tree-hit {
+	background: url(../images/navicon.png) no-repeat;
+	position: relative;
+	left: 7px;
+}
+
+.tree-icon {
+	width: 16px;
+	height: 30px;
+	position: relative;
+	left: -5px
+}
+
+.tree-checkbox {
+	cursor: pointer;
+	position: relative;
+	left: 7px;
+}
+
+.tree-title {
+	margin-left: 5px;
+}
+
+.tree-title font.disable {
+    color: #666;
+}
+
+.tree-expanded {
+	background-position: center 5px;
+}
+
+.tree-collapsed {
+	background-position: center -48px;
+}
+
+.tree-checkbox0 {
+	background: url(../images/little_box.png) no-repeat 1px 2px;
+}
+
+.tree-checkbox1 {
+	background: url(../images/select.png) no-repeat 1px 2px;
+}
+
+.dalian .tree-checkbox1 {
+    background: url(../images/checkicon.png) no-repeat 1px 1px #1F74D5;
+    width: 14px!important;
+    height: 14px!important;
+    margin-top: 13px!important;
+    border: 1px solid #C8C8C8;
+}
+
+.tree-checkbox2 {
+	background: url(../images/little_box.png) no-repeat 1px 2px;
+}
+
+.tree-node-selected, .tree-node-hover {
+	background: transparent;	
+}
+
+.tree-folder-open {
+	/* background: none; */
+}
+
+
+/* ==========================================================================
+   显示平台及所属用户组
+   ========================================================================== */
+#tt li.single-tree > div.tree-node{
+	height: 80px;
+}
+
+#tt ul.tree-desc > li{
+	height: 25px;
+    line-height: 25px;
+    text-indent: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+	width: 100%;
+	background: #D7D7D7;
+}
+
+.single-tree .tree-desc{
+	height: 50px;
+    width: 90%;
+	position: relative;
+	left: 13px;
+}

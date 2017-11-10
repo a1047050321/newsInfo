@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分页代码</title>
+<link rel="stylesheet" href="page.css" />
+<script language="javascript" src="../js/jquery-1.6.4.min.js"></script>
+<script language="javascript" src="page.js"></script>
+<script type="text/javascript">
+var url = globalDnsConfigVar.accessAddr + "/media/video/get_list?type=101&pagenum=66&pageidx=";
+function init(){
+	var pageObj = new Page(".pageblock",{
+		currPage:1,
+		pagenum:66,
+		total:"total",  //总条目key，用于ajax返回总条目获取的总数
+		reqhttp:url,
+		success:function(_data,_pageidx){
+			console.log(_data);	
+			console.log("_pageidx:"+_pageidx);
+		},
+		error:function(_pageidx){
+			alert("请求数据失败");	
+		}
+	});
+}
+window.onload = init;
+</script>
+
+</head>
+
+<body>
+<div class="pageblock">
+    <!--<a class="first" href="#?page=1">1..</a>
+    <a class="pre" href="#?page=2"></a>
+    <a class="page" href="#?page=1">1</a>
+    <a class="page" href="#?page=2">2</a>
+    <a class="page" href="#?page=3">3</a>
+    <a class="page" href="#?page=4">4</a>
+    <a class="page" href="#?page=5">5</a>
+    <a class="next" href="#?page=2"></a>
+    <a class="last" href="#?page=199">..199</a>
+    <span class="input"><input type="text"  /></span><span class="totalpage">/199页</span>-->
+</div> 
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="pluginPop.css" rel="stylesheet" type="text/css" />
+<script src="../../js/jquery-1.6.4.min.js"></script> 
+<script src="pluginPop.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$(".btn0").click(function(){
+		//alertShow("编辑成功");	
+		$.error({msg:'你好',img:"info.png"});
+	});
+	$(".btn1").click(function(){
+		$.confirm({msg:'确定要删除吗？',img:"info.png",showTitle:false,width:260,callback:function(bl){
+			//console.log(bl);	
+		}});
+	});
+	
+	$(".btn2").click(function(){
+		$.custom({content:"<div class='layer_msg alert_icon'><p><img src='info.png' />&nbsp;<span>局部放大生成图片中，请稍后...</span></p></div>"})	
+		setTimeout(function(){
+			CloseLayer();	
+		},2000);
+	});
+});
+</script>
+<style type="text/css">
+.popMain{border:1px solid #ccc;}
+.popContent {background-color:transparent;}
+</style>
+</head>
+
+<body>
+<button class="btn0">不带按钮提示框</button>
+<button class="btn1">带按钮提示框</button>
+<button class="btn2">属性弹出框</button>
+</body>
+</html>

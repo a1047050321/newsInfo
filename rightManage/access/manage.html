@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+.r_open{float:left; width:160px; display:block;}
+.r_close{float:left; width:160px; display:none;}
+.fileInput{ display:none;}
+</style>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript">
+var userPos = 0;
+var all_right_list=[//当前子系统所有子权限列表
+	/*{"right_id" : 40000,"right_name" : "分配权限"},
+      {"right_id" : 40001,"right_name" : "查看部门列表"},
+      {"right_id" : 40002,"right_name" : "增加部门权限"},
+      {"right_id" : 40003,"right_name" : "编辑部门信息权限"},
+      {"right_id" : 40004,"right_name" : "删除部门权限"},
+      {"right_id" : 40005,"right_name" : "查看部门详情权限"},
+      {"right_id" : 40006,"right_name" : "移动部门权限"},
+      {"right_id" : 40007,"right_name" : "增加职务权限"},
+      {"right_id" : 40008,"right_name" : "编辑职务权限"},
+      {"right_id" : 40009,"right_name" : "删除职务权限"},
+      {"right_id" : 40010,"right_name" : "查看职务列表权限"},
+      {"right_id" : 40011,"right_name" : "查看职务详情权限"},
+      {"right_id" : 40012,"right_name" : "增加用户权限"},
+      {"right_id" : 40013,"right_name" : "编辑用户详情权限"},
+      {"right_id" : 40014,"right_name" : "修改密码权限"},
+      {"right_id" : 40015,"right_name" : "创建密码权限"},
+      {"right_id" : 40016,"right_name" : "删除用户权限"},
+      {"right_id" : 40017,"right_name" : "查看用户详情权限"},
+      {"right_id" : 40018,"right_name" : "重置密码权限"},
+      {"right_id" : 40019,"right_name" : "搜索用户权限"},
+      {"right_id" : 40020,"right_name" : "查看权限列表权限"},
+      {"right_id" : 40021,"right_name" : "分配权限的权限"},
+      {"right_id" : 40022,"right_name" : "取消分配权限的权限"},
+      {"right_id" : 40023,"right_name" : "复制权限的权限"},
+      {"right_id" : 40024,"right_name" : "新建权限包权限"},
+      {"right_id" : 40025,"right_name" : "编辑权限包权限"},
+      {"right_id" : 40026,"right_name" : "分配权限包权限"},
+      {"right_id" : 40027,"right_name" : "取消分配权限包权限"},
+      {"right_id" : 40028,"right_name" : "删除权限包权限"},
+      {"right_id" : 40029,"right_name" : "查看权限包列表权限"},
+      {"right_id" : 40030,"right_name" : "查看权限包详情权限"}*/
+];
+var rightfile_list = [//权限包列表
+	/*{rightfile_id:"2000",rightfile_name:"1111",right_list:[
+		{"right_id": 40012,"right_name": "增加用户权限"},
+		{"right_id": 40013,"right_name": "编辑用户详情权限"},
+		{"right_id": 40019,"right_name": "搜索用户权限"},
+		{"right_id": 40029,"right_name": "查看权限包列表权限"}
+	]},
+	{rightfile_id:"2001",rightfile_name:"222222",right_list:[
+		  {"right_id" : 40015,"right_name" : "创建密码权限"},
+		  {"right_id" : 40016,"right_name" : "删除用户权限"},
+		  {"right_id" : 40017,"right_name" : "查看用户详情权限"},
+		  {"right_id" : 40018,"right_name" : "重置密码权限"},
+		  {"right_id" : 40019,"right_name" : "搜索用户权限"},
+		  {"right_id" : 40020,"right_name" : "查看权限列表权限"},
+		  {"right_id" : 40021,"right_name" : "分配权限的权限"},
+		  {"right_id" : 40022,"right_name" : "取消分配权限的权限"},
+		  {"right_id" : 40023,"right_name" : "复制权限的权限"},
+		  {"right_id" : 40024,"right_name" : "新建权限包权限"},
+		  {"right_id" : 40025,"right_name" : "编辑权限包权限"},
+		  {"right_id" : 40026,"right_name" : "分配权限包权限"},
+		  {"right_id" : 40027,"right_name" : "取消分配权限包权限"},
+	]}*/
+];
+
+window.onload = init;
+function init(){
+	$("#systemName").html(top.system_name);
+	getAllRightList();
+	getAllRightFileList();
+	//initRightfileList();
+}
+function searchAccess(_id,_pos){
+	var flag = 0;
+	for(var i=0; i<rightfile_list[_pos].right_list.length; i++){
+		if(parseInt(_id)==parseInt(rightfile_list[_pos].right_list[i].right_id)){
+			flag = 1;
+			break;	
+		}
+	}
+	return flag;
+}
+function initRightfileList(){
+	var htmStr = "";
+	for(var i=0; i<rightfile_list.length; i++){
+		htmStr += '<div style="float:left; width:100%;"><fieldset id="fieldset_'+i+'"><legend><input type="checkbox" id="fileInput'+i+'" class="fileInput" value='+rightfile_list[i].rightfile_name+'><span id="rightfileName'+i+'">'+rightfile_list[i].rightfile_name+'</span><span class="legendBtn"><a class="edit edit'+i+'" href="javascript:editRightfile('+i+')">编辑</a><p id="onlyReady'+i+'" class="edit" style="margin-top:0px;display:none;">编辑</p></span></legend><p id="rightList_'+i+'">';
+		for(var j=0; j<all_right_list.length; j++){
+			if(searchAccess(all_right_list[j].right_id,i)){
+				htmStr +='<span class="r_open">';
+				htmStr +='<input type="checkbox" style="display:none;" checked name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+				htmStr +='</span>';
+			}else{
+				htmStr +='<span class="r_close">';
+				htmStr +='<input type="checkbox" style="display:none;" name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+				htmStr +='</span>';
+			}
+		}
+		/*for(var j=0; j<rightfile_list[i].right_list.length; j++){
+			htmStr +='<span style="float:left; padding-right:30px;">';
+			htmStr +='<input type="checkbox" class="fileInput" id="right_'+rightfile_list[i].right_list[j].right_id+'" value="'+rightfile_list[i].right_list[j].right_name+'">'+rightfile_list[i].right_list[j].right_name+'';
+			htmStr +='</span>';	
+		}*/
+		htmStr += '</p></fieldset>';
+		htmStr += '<div class="editBtn editBtn'+i+'" style="display:none; width:100%; "><div class="floatL" style="margin-bottom:20px;"><a class="save" href="javascript:saveEdit('+i+')">保　存</a><a class="save cancel'+i+'" href="javascript:cancelEdit('+i+')">取　消</a></div><div class="floatR"><a class="empty" href="javascript:delRightFile('+i+')">删除权限包</a></div></div></div>'
+	}
+	$(".box").html(htmStr);
+	for(var i=0; i<rightfile_list.length; i++){
+		if(all_right_list.length>0&&all_right_list.length==rightfile_list[i].right_list.length) $("#fileInput"+i).prop("checked",true);
+		else $("#fileInput"+i).prop("checked",false);
+		
+		$("#rightList_"+i+" input").on("click",function(){
+			var check = $(this).parent(this).parent(this).find("input:checked");//获取选中的数量
+			if(check.length==all_right_list.length){
+				if(!$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked")){
+					$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked",true);
+				}
+			}else{
+				if($(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked")){
+					$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked",false);
+				}
+			}
+		});
+		
+		$("#fileInput"+i).on("click",function(){
+			if($(this).prop("checked")){
+				$(this).parent(this).parent(this).find("input").each(function(n){
+					$(this).prop("checked",true);
+				})
+			}else{
+				$(this).parent(this).parent(this).find("input").each(function(n){
+					$(this).prop("checked",false);
+				})
+			}
+		});
+	}
+	
+}
+function refreshRightList(_num){
+	var htmStr = "";
+	for(var j=0; j<all_right_list.length; j++){
+		if(searchAccess(all_right_list[j].right_id,_num)){
+			htmStr +='<span class="r_open">';
+			htmStr +='<input type="checkbox" style="display:none;" checked name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+			htmStr +='</span>';
+		}else{
+			htmStr +='<span class="r_close">';
+			htmStr +='<input type="checkbox" style="display:none;" name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+			htmStr +='</span>';
+		}
+	}
+	$("#rightList_"+_num).html(htmStr);
+	
+	if(all_right_list.length>0&&all_right_list.length==rightfile_list[_num].right_list.length) $("#fileInput"+_num).prop("checked",true);
+	else $("#fileInput"+_num).prop("checked",false);
+	
+	$("#rightList_"+_num+" input").off("click");
+	$("#rightList_"+_num+" input").on("click",function(){
+			var check = $("#rightList_"+_num+" input:checked");
+			if(check.length==all_right_list[_num].length){
+				if(!$("#fileInput"+_num).prop("checked")){
+					$("#fileInput"+_num).prop("checked",true);
+				}
+			}else{
+				if($("#fileInput"+_num).prop("checked")){
+					$("#fileInput"+_num).prop("checked",false);
+				}
+			}
+	});
+}
+function getAllRightList(){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			for(var i=0; i<data.right_list.length; i++){
+				if(data.right_list[i].type==1){
+					if(data.right_list[i].list==null) all_right_list=[];
+					else all_right_list = data.right_list[i].list;
+					break;
+				}
+			}
+		}else{
+			top.openPopupTips("获取系统权限列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/right/get_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.accessAddr);
+}
+function getAllRightFileList(){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			for(var i=0; i<data.rightfile_list.length; i++){
+				if(data.rightfile_list[i].type==1){
+					if(data.rightfile_list[i].list==null) rightfile_list=[];
+					else rightfile_list = data.rightfile_list[i].list;
+					break;
+				}
+			}
+			for(var i=0; i<rightfile_list.length; i++){//获取权限包的right_list
+				rightfile_list[i].right_list = [];
+				getRightfile_right(rightfile_list[i].rightfile_id,i);
+			}
+		}else{
+			top.openPopupTips("获取系统权限包列表失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/get_list",{accesstoken:top.accesstoken,systemid:top.system_id,pageidx:1,pagenum:1000},"get","JSON",top.accessAddr);
+}
+function getRightfile_right(_rightfileid,_pos){
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			if(data.right_list==null) rightfile_list[_pos].right_list=[];
+			else rightfile_list[_pos].right_list = data.right_list;
+			initRightfileList();
+		}else{
+			top.openPopupTips("获取权限包详情失败！");	
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/get_info",{accesstoken:top.accesstoken,rightfileid:_rightfileid},"get","JSON",top.accessAddr);
+	
+}
+var openEditNum = 0;//记录当前权限包打开编辑状态的数量
+var currEditNameArr = [];//记录当前打开编辑状态权限包名称
+var currEditIDsArr = [];//记录当前打开编辑状态权限包的所有right_id字串（用户判断编辑）
+//打开编辑状态
+function editRightfile(_num){
+	currEditIDsArr[_num] = "";
+	currEditNameArr[_num] = rightfile_list[_num].rightfile_name;
+	for(var i=0; i<rightfile_list[_num].right_list.length; i++){
+		if(i>0) currEditIDsArr[_num] += "|"+rightfile_list[_num].right_list[i].right_id;
+		else currEditIDsArr[_num] += rightfile_list[_num].right_list[i].right_id;
+	}
+	openEditNum ++;
+	$("#rightfileName"+_num).html("<input type='text' value='"+$("#rightfileName"+_num).html()+"' style='width:240px;'>");
+	$("#fieldset_"+_num+" input[type=checkbox]").show();
+	$("#fieldset_"+_num+" span.r_close").show();
+	$(".edit"+_num).hide();
+	$("#onlyReady"+_num).show();
+	$(".editBtn"+_num).show();
+	$(".addBtn").hide();
+	$(".onlyRead").show();
+}
+//取消编辑状态
+function cancelEdit(_num){
+	openEditNum --;
+	$(".edit"+_num).show();
+	$("#onlyReady"+_num).hide();
+	$(".editBtn"+_num).hide();
+	$("#fieldset_"+_num+" input[type=checkbox]").hide();
+	$("#fieldset_"+_num+" span.r_close").hide();
+	
+	$("#rightfileName"+_num).html(rightfile_list[_num].rightfile_name);
+	refreshRightList(_num);
+	if(openEditNum<=0){
+		$(".addBtn").show();
+		$(".onlyRead").hide();
+	}
+}
+function saveEdit(_num){
+	var rightfilename = $("#rightfileName"+_num+" input").val();
+	if(rightfilename){
+		var rightCheck_checked = $("#rightList_"+_num+" input:checked");//获取所有选择权限
+		var rightids_checked = "";
+		rightCheck_checked.each(function(i){
+			if(rightids_checked){
+				rightids_checked += "|"+$(this).attr("id").substring(6);
+			}else{
+				rightids_checked += $(this).attr("id").substring(6);
+			}
+		});
+		if(currEditNameArr[_num]==rightfilename&&currEditIDsArr[_num]==rightids_checked){//判断是否有修改
+			cancelEdit(_num);
+		}else{
+			top.openPopupWindow("access/tips.html?optFlag=3");
+			rightFrameCallback = function(){ //回调方法
+
+				var rightCheck_open = $("#rightList_"+_num+" .r_open input").not("input:checked");//获取所有取消的当前权限
+				var rightCheck_close = $("#rightList_"+_num+" .r_close input:checked");//获取所有添加的权限
+				
+					top.ajaxReqAction(function(data){
+						if(data.ret==0){
+							$("#rightfileName"+_num).html(rightfilename);
+							$(".edit"+_num).show();
+							$("#onlyReady"+_num).hide();
+							$(".editBtn"+_num).hide();
+							$("#fieldset_"+_num+" input[type=checkbox]").hide();
+							$("#fieldset_"+_num+" span.r_close").hide();
+							
+							if(rightCheck_open.length>0||rightCheck_close.length>0){
+								rightCheck_open.each(function(i){
+									for(var j=0; j<rightfile_list[_num].right_list.length; j++){
+										if(parseInt($(this).attr("id").substring(6),10)==parseInt(rightfile_list[_num].right_list[j].right_id,10)){
+											rightfile_list[_num].right_list.splice(j,1);
+											break;
+										}
+									}
+								});
+								rightCheck_close.each(function(i){
+									rightfile_list[_num].right_list.push(all_right_list[parseInt($(this).attr("name"),10)]);
+								});
+								refreshRightList(_num);
+							}
+							top.closePopupWindow();
+							openEditNum --;
+							if(openEditNum<=0){
+								$(".addBtn").show();
+								$(".onlyRead").hide();
+							}
+						}else{
+							top.openPopupTips(top.errorCodeTips(data.ret,"修改权限包失败！"));
+						}
+					},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/adjust_info",{accesstoken:top.accesstoken,rightfileid:rightfile_list[_num].rightfile_id,rightids:rightids_checked,rightfilename:rightfilename},"post","JSON",top.accessAddr);
+			}
+		}
+	}else{
+		top.openPopupTips("权限包名称不能为空！");	
+	}
+}
+function delRightFile(_num){
+	top.openPopupWindow("access/tips.html?optFlag=4");
+	rightFrameCallback = function(){ //回调方法
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				rightfile_list.splice(_num,1);
+				initRightfileList();
+				openEditNum = 0;//刷新新建权限包是否显示
+				$(".addBtn").show();
+				$(".onlyRead").hide();
+			}else{
+				top.openPopupTips("删除权限包失败！");
+			}
+			top.closePopupWindow();
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/delete",{accesstoken:top.accesstoken,rightfileid:rightfile_list[_num].rightfile_id},"get","JSON",top.accessAddr);
+	}
+}
+function creatAccess(){
+	top.openPopupWindow("access/new_accessfile.html");
+	rightFrameCallback = function(_obj){ //回调方法
+		Array.prototype.push.apply(rightfile_list,_obj);
+		addRightfileList();
+		top.closePopupWindow();
+	}
+}
+function addRightfileList(){//每次添加最新的数据
+	var num = rightfile_list.length-1;
+	var htmStr = "";
+	htmStr += '<div style="float:left; width:100%;"><fieldset id="fieldset_'+num+'"><legend><input type="checkbox" id="fileInput'+num+'" class="fileInput" value='+rightfile_list[num].rightfile_name+'><span id="rightfileName'+num+'">'+rightfile_list[num].rightfile_name+'</span><span class="legendBtn"><a class="edit edit'+num+'" href="javascript:editRightfile('+num+')">编辑</a><p id="onlyReady'+num+'" class="edit" style="margin-top:0px;display:none;">编辑</p></span></legend><p id="rightList_'+num+'">';
+	for(var j=0; j<all_right_list.length; j++){
+		if(searchAccess(all_right_list[j].right_id,num)){
+			htmStr +='<span class="r_open">';
+			htmStr +='<input type="checkbox" style="display:none;" checked name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+			htmStr +='</span>';
+		}else{
+			htmStr +='<span class="r_close">';
+			htmStr +='<input type="checkbox" style="display:none;" name="'+j+'" id="right_'+all_right_list[j].right_id+'" value="'+all_right_list[j].right_name+'">'+all_right_list[j].right_name+'';
+			htmStr +='</span>';
+		}
+	}
+	htmStr += '</p></fieldset>';
+	htmStr += '<div class="editBtn editBtn'+num+'" style="display:none; width:100%; "><div class="floatL" style="margin-bottom:20px;"><a class="save" href="javascript:saveEdit('+num+')">保　存</a><a class="save cancel'+num+'" href="javascript:cancelEdit('+num+')">取　消</a></div><div class="floatR"><a class="empty" href="javascript:delRightFile('+num+')">删除权限包</a></div></div></div>'
+	$(".box").append(htmStr);
+	
+	if(all_right_list.length>0&&all_right_list.length==rightfile_list[num].right_list.length) $("#fileInput"+num).prop("checked",true);
+	else $("#fileInput"+num).prop("checked",false);
+		
+	$("#rightList_"+num+" input").on("click",function(){
+		var check = $(this).parent(this).parent(this).find("input:checked");//获取选中的数量
+		if(check.length==all_right_list.length){
+			if(!$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked")){
+				$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked",true);
+			}
+		}else{
+			if($(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked")){
+				$(this).parent(this).parent(this).parent(this).find(".fileInput").prop("checked",false);
+			}
+		}
+	});
+	$("#fileInput"+num).on("click",function(){
+		if($(this).prop("checked")){
+			$(this).parent(this).parent(this).find("input").each(function(n){
+				$(this).prop("checked",true);
+			})
+		}else{
+			$(this).parent(this).parent(this).find("input").each(function(n){
+				$(this).prop("checked",false);
+			})
+		}
+	});
+	
+}
+
+function getRightFrameData(_str){
+	switch(_str){
+		case "right_list":
+			return all_right_list;
+			break;
+		case "rightfile_list":
+			return rightfile_list;
+			break;
+	}	
+}
+</script>
+</head>
+
+<body>
+<div class="content">
+	<h1 id="systemName">后台用户管理系统权限</h1>
+
+	<div class="box">
+		<!--<fieldset>
+    		<legend><span id="rightfileName"></span><span class="legendBtn"><a class="edit" href="#">编辑</a></span></legend>
+			<p><span></span></p>
+		</fieldset>
+    	<div class="editBtn" style="float:left; width:100%; margin-bottom:20px; display:none;"><a class="tck_btn1">保　存</a><a class="tck_btn1">取　消</a></div>-->
+    </div>
+
+	<div class="floatL"><a class="add addBtn" href="javascript:creatAccess()">新建权限包</a><p class="add onlyRead" style="display:none;">新建权限包</p></div>
+</div>
+</body>
+</html>

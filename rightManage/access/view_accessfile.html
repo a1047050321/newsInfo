@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script>
+var rightfileId = 0;
+var rightfileName = "";
+var rightfile = {
+    "ret": 0,
+    "ret_msg": "",
+    "right_list": [
+        /*{"systemid": "","right_id": 110001,"right_name": "查询部门"},
+		{"systemid": "","right_id": 120001,"right_name": "添加部门"},
+		{"systemid": "","right_id": 130001,"right_name": "查询权限详情"},
+		{"systemid": "","right_id": 140001,"right_name": "删除权限"},
+		{"systemid": "","right_id": 150001,"right_name": "移动部门"}*/
+    ]
+};
+window.onload = init;
+function init(){
+	if(top.getUrlParams("rightfileId",window)) rightfileId = parseInt(top.getUrlParams("rightfileId",window),10);
+	if(top.getUrlParams("rightfileName",window)) rightfileName = decodeURI(top.getUrlParams("rightfileName",window));
+	$("#title").html(rightfileName);
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			if(data.right_list) rightfile.right_list = data.right_list;
+			else rightfile.right_list = [];
+			initAccessList();
+		}else{
+			top.openPopupTips("获取权限包详情失败！");
+		}
+	},function(){top.openPopupTips("服务器异常！")},"/usermanager/rightfile/get_info",{accesstoken:top.accesstoken,rightfileid:rightfileId},"get","JSON",top.accessAddr);
+
+}
+function initAccessList(){
+	var htm = "";
+	for(var i=0; i<rightfile.right_list.length; i++){
+		htm +='<span style="float:left; width:120px;">'+rightfile.right_list[i].right_name+'</span>';
+	}
+	$("#content").html(htm);
+}
+function cancelReq(){
+	top.closePopupWindow();
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:640px;">
+<div class="tck_title" style="border:none;"><span id="title"></span><span class="tck_close"><a href="javascript:cancelReq()" title="关闭"></a></span></div>
+
+<div class="tck_info">
+	<fieldset>
+		<legend>权限包权限</legend>
+		<p id="content"><p>
+	</fieldset>
+</div>
+
+<div class="tck_btn1"><a href="javascript:cancelReq()">关　闭</a></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

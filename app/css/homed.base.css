@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+html, body {
+    /*height: 100%;*/
+}
+
+body {
+    position: relative;
+    font-family: Arial, "宋体";
+    -webkit-text-size-adjust: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+iframe {
+    border: 0px;
+    display: block;
+}
+
+/**
+ * 公用样式
+ */
+.border-box {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.content-box {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -o-box-sizing: content-box;
+    -ms-box-sizing: border-box;
+}
+
+.user-select-none,
+.user-select-none * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+
+/* header 开始 */
+#header {
+    color: #FFF;
+    height: 40px;
+    line-height: 40px;
+    background: #008FD0;
+    position: relative;
+}
+
+#header h1,
+.navigator,
+.moreInfo {
+    height: 40px;
+}
+
+#header h1,
+.moreInfo {
+    position: absolute;
+    top: 0;
+}
+
+#header h1 {
+    left: 30px;
+    font-size: 25px;
+    width: 180px;
+}
+
+#header h1 a {
+    color: #FFF;
+    display: block;
+    text-indent: -9999px;
+    background: url(../images/logo.png) no-repeat left center;
+}
+
+.navigator {
+    margin: 0 200px 0 240px;
+    width: 700px;
+}
+
+.navigator span {
+    cursor: pointer;
+    float: left;
+    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    line-height: 41px;
+    color: #deebf0;
+    text-align: center;
+}
+
+.navigator span:hover {
+    color: #000;
+    background-color: #DDD;
+}
+
+.navigator span.current {
+    background-color: #FABE00;
+    color: #614000;
+    font-weight: bold;
+}
+
+.moreInfo {
+    right: 30px;
+    width: 160px;
+}
+
+.email, .userMenu,
+.avatar {
+    float: left;
+}
+
+.moreInfo p {
+    font-size: 12px;
+}
+
+p.email {
+    width: 50px;
+    background: url(../images/email.png) no-repeat 0 14px;
+}
+
+.moreInfo .emailNum { 
+    margin-left: 20px;
+    color: #FFF;
+}
+
+.moreInfo .emailNum:hover {
+    text-decoration: underline;
+}
+
+.moreInfo .userMenu {
+    width: 70px;
+    cursor: pointer;
+}
+
+.userName {
+    background: url(../images/usernamemark.png) no-repeat 47px 19px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar img {
+    border: 0;
+    float: left;
+}
+
+/* header 结束 */
+
+/* toolbar 开始 */
+#toolbar {
+    background: #3E6C99;
+    height: 25px;
+    line-height: 25px;
+    color: #9fbbd7;
+    font-size: 12px;
+}
+
+.curLocation {
+	float:left;
+    margin-left: 40px;
+}
+.toolbarNav {
+    float: right;
+}
+
+.curLocation {
+    font-size: 12px;
+}
+
+.toolbarNav a {
+    float: left;
+    width: 100px;
+    text-align: center;
+    font-size: 14px;
+    color: #c9e5f1;
+}
+
+.toolbarNav a:hover,
+.toolbarNav a:active {
+    color: #FFF;
+}
+
+.toolbarNav a.current {
+    color: #3e6c99;
+    background-color: #FFF;
+}
+
+/* toolbar 结束 */
+
+/* 页码条 开始 */
+
+.workBar-pageNav {
+    position: absolute;
+    background:#FFF;
+    bottom: 0px;
+    width: 100%;
+    height: 29px;
+    border-top: 1px solid #DCDCDC;
+    text-align: center;
+    z-index:101;
+}
+
+/* 页码条 结束 */

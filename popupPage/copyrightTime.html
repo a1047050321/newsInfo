@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>属性编辑</title>
+    <link rel="stylesheet" href="../app/css/homed.base.css" />
+    <link rel="stylesheet" href="http://boss.homed.me/pubFile/plugins/tlayer/tlayer.css" />
+    <link rel="stylesheet" href="css/copyrightTime.css" />
+</head>
+<body>
+    
+    <div class="initData">正在获取...</div>
+
+    <!-- 属性容器 开始 -->
+    
+    <div id="attr-wraper">
+
+        <table>
+            <tr class="public-attr">
+                <td class="w100p" colspan="2">
+                    <div class="multi-input-wrapper user-select-none" id="copyrighttime">
+                        <div class="multi-input-box">
+                            <label>版权平台</label>
+                            <!-- <select class="devicetype">
+                                <option value=""></option>
+                            </select> -->
+                            <div class="devicetype muti-select">
+                                <select>
+                                    <option value=""></option>
+                                </select>
+                                <input type="text" value="" placeholder="" />
+                            </div>
+                            <br />
+                            <label>有效时间</label>
+                            <input class="effectivetime" type="date" min="1880-01-01" />
+                            <label>-</label>
+                            <input class="expiretime" type="date" min="1880-01-01" />
+                            <div class="multi-input-button delete" title="移除"></div>
+                        </div>
+                        <div class="multi-input-button add" title="添加"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- 属性容器 结束 -->
+
+    <script type="text/javascript" src="http://boss.homed.me/pubFile/commjs/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="http://boss.homed.me/pubFile/plugins/kernel/homed.kernel.js"></script>
+    <script type="text/javascript" src="http://boss.homed.me/pubFile/plugins/tlayer/jquery.tlayer.js"></script>
+    <script type="text/javascript" src="js/copyrightTime.js"></script>
+</body>
+</html>

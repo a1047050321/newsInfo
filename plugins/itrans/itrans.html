@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iTrans 测试页面</title>
+    <link rel="stylesheet" href="itrans.css" />
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="itrans.js"></script>
+</head>
+<body>
+    <h1>iTrans 上传测试</h1>
+    
+    <button id="upload">点击上传</button>
+    <button onclick="$('#upload').iTrans('upload');">开始上传</button>
+    <button onclick="$('#upload').iTrans('cancel', '*');">取消全部</button>
+
+    <script type="text/javascript">
+
+        $( "#upload" ).iTrans( {
+            properties: {
+                "accesstoken": "TOKEN3736"
+            },
+            removeCompleted: false,
+            removeCancelled: false,
+            check: function ( ret, src ) {
+                
+            },
+            onInit: function () {
+                //alert( 234 );
+            },
+            onCancel: function ( file ) {
+                console.log( file );
+            },
+            onDialogOpen: function () {
+                //alert( 0 );
+            },
+            onDialogClose: function ( fileLength ) {
+                //alert( fileLength );
+            },
+            onUploadStart: function ( file ) {
+                console.log( "start" );
+                console.log( file );
+                console.log( "start" );
+            },
+            onUploadSuccess: function ( file ) {
+                console.log( "success" );
+                console.log( file );
+                console.log( "success" );
+            },
+            onUploadError: function ( file ) {
+                console.log( "error" );
+                console.log( file );
+                console.log( "error" );
+            },
+            onUploadProgress: function ( file, data ) {
+                console.log( file.id + "=====" + file.handler );
+            },
+            onTransProgress: function ( file, data ) {
+
+            },
+            onTransSuccess: function ( file, data ) {
+
+            },
+            onTransError: function ( file, data ) {
+
+            },
+            onSelect: function ( file, h ) {
+                console.log( h );
+            }
+
+        } );
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<style>
+.r_open{float:left; width:180px; display:block;}
+.r_close{float:left; width:180px; display:none;}
+</style>
+<script type="text/javascript" src="../js/jquery1.10.2.min.js"></script>
+<script>
+var ajaxList = [];//请求操作的数组队列
+var targetuserid = 0;
+var optFlag = 0; //0用户，1部门,2职务
+var right_list = top.getRightFrameData("right_list");
+var rightfile_list = top.getRightFrameData("rightfile_list");
+var get_info = {
+    "ret": 0,
+	"ret_msg": "",
+	"user_name": "刘登峰",
+	"department_id": "",
+	"department_name": "Web开发",
+	"role_list": [],
+	"job_list": [{"job_id": 0,"job_name": "员工"}],
+	"telephone": "",
+	"gender": 0,
+	"icon_url": "",
+	"email": "liudf@ipanel.cn",
+	"fax": "",
+	"code": "",
+	"create_time": "",
+	"status": "",
+	"age": "",
+	"address": "",
+	"card": 0,
+	"right_list": [{"system_id": "","system_name": "","list":[
+		/*{"right_id": 40012,"right_name": "增加用户权限"},
+		{"right_id": 40013,"right_name": "编辑用户详情权限"},
+		{"right_id": 40019,"right_name": "搜索用户权限"},
+		{"right_id": 40029,"right_name": "查看权限包列表权限"}*/
+	]}]
+}
+var department_info = {
+    "ret": 0,
+    "ret_msg": "",
+    "department_name": "未知",
+    "total": 0,
+    "inline": 0,
+    "parent_department_id": 0,
+    "parent_department_name": "iPanel",
+    "job_list": [
+    	{"job_id": 0,"job_name": ""}
+    ],
+　	"right_list": [
+    	{"system_id": "","system_name": "",list:[]}
+	]
+};
+var curr_right_list = [];
+var curr_rightfile_list = [
+/*	{"rightfile_id": 50,"rightfile_name": "查看节目权限包","right_list" : [{"right_id" : 20003,"right_name" : "测试1"},{"right_id" : 20004,"right_name" : "测试2"}]}
+*/];
+
+var tckTips = [
+	{title:"用户权限详情",cover:"../rightImg/avatar1.jpg"},
+	{title:"部门权限详情",cover:"../rightImg/avatar2.jpg"},
+	{title:"职务权限详情",cover:"../rightImg/avatar3.jpg"}
+];
+function initHeadImage(){
+	if(get_info.icon_url&&get_info.icon_url["100x100"]){
+		$("#cover").attr("src",get_info.icon_url["100x100"]);
+	}else{
+		if(get_info.gender==2) $("#cover").attr("src","../rightImg/avatar0.jpg");
+		else $("#cover").attr("src","../rightImg/avatar1.jpg");
+	}
+}
+//基本信息
+function initInfo(){
+	if(optFlag==0){
+		$("#name").html(get_info.user_name+'<span><a class="btn1" href="#">编辑</a></span>');
+		$("#department").html("部门　"+get_info.department_name);
+		if(get_info.job_list==null)$("#job").html("职务　"+"--");
+		else $("#job").html("职务　"+get_info.job_list[0].job_name);
+		initHeadImage();
+	}else if(optFlag==1){
+		$("#name").html(department_info.department_name+'<span><a class="btn1" href="#">编辑</a></span>');
+		$("#department").html("部门　"+department_info.parent_department_name+"/"+department_info.department_name);
+	}else if(optFlag==2){
+		
+	}
+
+	$(".btn1").on("click",function(){
+		$(".tck_box1 input[type=checkbox]").show();
+		$("span.r_close").show();
+		$("#begin").hide();
+		$("#before").show();
+		$(".btn1").hide();
+		
+	})
+	$(".rightAll").on("click",function(){
+		if($(this).prop("checked")){
+			$("#access input").each(function(i){
+				$(this).prop("checked",true);
+			})
+		}else{
+			$("#access input").each(function(i){
+				$(this).prop("checked",false);
+			})
+		}
+	})
+	$(".rightfileAll").on("click",function(){
+		if($(this).prop("checked")){
+			$("#accessfile input").each(function(i){
+				$(this).prop("checked",true);
+			});
+		}else{
+			$("#accessfile input").each(function(i){
+				$(this).prop("checked",false);
+			})
+		}
+	})
+	
+	
+}
+
+//初始化系统权限列表
+function searchAccess(_id){
+	var flag = 0;
+	for(var i=0; i<curr_right_list.length; i++){
+		if(parseInt(_id)==parseInt(curr_right_list[i].right_id)){
+			flag = 1;
+			break;	
+		}
+	}
+	return flag;
+}
+function initAccess(){
+	var htm = "";
+	for(var i=0; i<right_list.length; i++){
+		if(searchAccess(right_list[i].right_id)){
+			htm +='<span class="r_open">';
+			htm +='<input type="checkbox" style="display:none;" checked name="'+i+'" id="right_'+right_list[i].right_id+'" value="'+right_list[i].right_name+'">'+right_list[i].right_name+'';
+			htm +='</span>';
+		}else{
+			htm +='<span class="r_close">';
+			htm +='<input type="checkbox" style="display:none;" name="'+i+'" id="right_'+right_list[i].right_id+'" value="'+right_list[i].right_name+'">'+right_list[i].right_name+'';
+			htm +='</span>';
+		}
+	}
+	if(right_list.length>0&&right_list.length==curr_right_list.length) $(".rightAll").prop("checked",true);
+	else $(".rightAll").prop("checked",false);
+	
+	$("#access").html(htm);
+	$("#access input").on("click",function(){
+		var check = $("#access input:checked");
+		if(check.length==right_list.length){
+			if(!$(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",true);
+			}
+		}else{
+			if($(".rightAll").prop("checked")){
+				$(".rightAll").prop("checked",false);
+			}
+		}
+	})
+}
+//初始化权限包列表
+function searchAccessfile(_id){
+	var flag = 0;
+	
+	for(var i=0; i<curr_rightfile_list.length; i++){
+		if(parseInt(_id)==parseInt(curr_rightfile_list[i].rightfile_id)){
+			flag = 1;
+			break;	
+		}
+	}
+	return flag;
+}
+function initAccessfile(){
+	var htm = "";
+	for(var i=0; i<rightfile_list.length; i++){
+		if(searchAccessfile(rightfile_list[i].rightfile_id)){
+			htm +='<span class="r_open">';
+			htm +='<input type="checkbox" style="display:none;" checked name="'+i+'" id="rightfile_'+rightfile_list[i].rightfile_id+'" value="'+rightfile_list[i].rightfile_name+'">'+rightfile_list[i].rightfile_name+'';
+			htm +='</span>';
+		}else{
+			htm +='<span class="r_close">';
+			htm +='<input type="checkbox" style="display:none;" name="'+i+'" id="rightfile_'+rightfile_list[i].rightfile_id+'" value="'+rightfile_list[i].rightfile_name+'">'+rightfile_list[i].rightfile_name+'';
+			htm +='</span>';
+		}
+	}
+	if(rightfile_list.length>0&&rightfile_list.length==curr_rightfile_list.length) $(".rightfileAll").prop("checked",true);
+	else $(".rightfileAll").prop("checked",false);
+
+	$("#accessfile").html(htm);
+	$("#accessfile input").on("click",function(){
+		var check = $("#accessfile input:checked");
+		if(check.length==rightfile_list.length){
+			if(!$(".rightfileAll").prop("checked")){
+				$(".rightfileAll").prop("checked",true);
+			}
+		}else{
+			if($(".rightfileAll").prop("checked")){
+				$(".rightfileAll").prop("checked",false);
+			}
+		}
+	})
+}
+function submitReq(){
+	ajaxList = [];
+	$(".btn1").show();
+	$("#begin").show();
+	$("#before").hide();
+	$(".tck_box1 input[type=checkbox]").hide()
+	$("span.r_close").hide();
+	var rightCheck_open = $("#access .r_open input").not("input:checked");//获取所有取消的当前权限
+	var rightCheck_close = $("#access .r_close input:checked");//获取所有添加的权限
+
+	var rightids_open = "";
+	if(rightCheck_open.length>0){
+		rightCheck_open.each(function(i){
+			if(rightids_open){
+				rightids_open += "|"+$(this).attr("id").substring(6);
+			}else{
+				rightids_open += $(this).attr("id").substring(6);
+			}
+		});
+		if(optFlag==0){
+			ajaxList.push({flag:0,url:"/usermanager/right/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightids:rightids_open,userid:targetuserid},type:"post"});
+		}else if(optFlag==1){
+			ajaxList.push({flag:0,url:"/usermanager/right/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightids:rightids_open,departmentid:targetuserid},type:"post"});
+		}else if(optFlag==2){
+			ajaxList.push({flag:0,url:"/usermanager/right/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightids:rightids_open,jobid:targetuserid},type:"post"});
+		}
+	}
+	var rightids_close = "";
+	if(rightCheck_close.length>0){
+		rightCheck_close.each(function(i){
+			if(rightids_close){
+				rightids_close += "|"+$(this).attr("id").substring(6);
+			}else{
+				rightids_close += $(this).attr("id").substring(6);
+			}
+		});
+		if(optFlag==0){
+			ajaxList.push({flag:1,url:"/usermanager/right/assign",data:{accesstoken:top.accesstoken,rightids:rightids_close,systemid:top.system_id,userid:targetuserid},type:"post"});
+		}else if(optFlag==1){
+			ajaxList.push({flag:1,url:"/usermanager/right/assign",data:{accesstoken:top.accesstoken,rightids:rightids_close,systemid:top.system_id,departmentid:targetuserid},type:"post"});
+		}else if(optFlag==2){
+			ajaxList.push({flag:1,url:"/usermanager/right/assign",data:{accesstoken:top.accesstoken,rightids:rightids_close,systemid:top.system_id,jobid:targetuserid},type:"post"});
+		}
+	}
+	/*if(rightCheck_open.length>0||rightCheck_close.length>0){
+		rightCheck_open.each(function(i){
+			for(var j=0; j<curr_right_list.length; j++){
+				if(parseInt($(this).attr("id").substring(6),10)==parseInt(curr_right_list[j].right_id,10)){
+					curr_right_list.splice(j,1);
+					break;
+				}
+			}
+		});
+		rightCheck_close.each(function(i){
+			curr_right_list.push(right_list[parseInt($(this).attr("name"),10)]);
+		});
+		initAccess();
+	}*/
+	var rightfileCheck_open = $("#accessfile .r_open input").not("input:checked");
+	var rightfileCheck_close = $("#accessfile .r_close input:checked");
+	
+	var rightfileids_open = "";
+	if(rightfileCheck_open.length>0){
+		rightfileCheck_open.each(function(i){
+			if(rightfileids_open){
+				rightfileids_open += "|"+$(this).attr("id").substring(10);
+			}else{
+				rightfileids_open += $(this).attr("id").substring(10);
+			}
+		});
+		if(optFlag==0){
+			ajaxList.push({flag:2,url:"/usermanager/rightfile/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_open,userid:targetuserid},type:"post"});
+		}else if(optFlag==1){
+			ajaxList.push({flag:2,url:"/usermanager/rightfile/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_open,departmentid:targetuserid},type:"post"});
+		}else if(optFlag==2){
+			ajaxList.push({flag:2,url:"/usermanager/rightfile/cancel_assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_open,jobid:targetuserid},type:"post"});
+		}
+	}
+	var rightfileids_close = "";
+	if(rightfileCheck_close.length>0){
+		rightfileCheck_close.each(function(i){
+			if(rightfileids_close){
+				rightfileids_close += "|"+$(this).attr("id").substring(10);
+			}else{
+				rightfileids_close += $(this).attr("id").substring(10);
+			}
+		});
+		if(optFlag==0){
+			ajaxList.push({flag:3,url:"/usermanager/rightfile/assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_close,userid:targetuserid},type:"post"});
+		}else if(optFlag==1){
+			ajaxList.push({flag:3,url:"/usermanager/rightfile/assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_close,departmentid:targetuserid},type:"post"});
+		}else if(optFlag==2){
+			ajaxList.push({flag:3,url:"/usermanager/rightfile/assign",data:{accesstoken:top.accesstoken,systemid:top.system_id,rightfileids:rightfileids_close,jobid:targetuserid},type:"post"});
+		}
+	}
+	/*rightfileCheck_open.each(function(i){
+		for(var j=0; j<curr_rightfile_list.length; j++){
+			if(parseInt($(this).attr("id").substring(10),10)==parseInt(curr_rightfile_list[j].rightfile_id,10)){
+				curr_rightfile_list.splice(j,1);
+				break;
+			}
+		}
+	});
+	rightfileCheck_close.each(function(i){
+		curr_rightfile_list.push(rightfile_list[parseInt($(this).attr("name"),10)]);
+	});*/
+	updateRightData(ajaxList,0);
+}
+function updateRightData(_list,_num){
+	if(console) console.log("updateRightData---_list.legnth="+_list.length+",_num="+_num);
+	top.ajaxReqAction(function(data){
+		if(data.ret==0){
+			switch(_list[_num].flag){
+				case 0://取消用户权限
+					$("#access .r_open input").not("input:checked").each(function(i){
+						$(this).parent(this).toggleClass("r_close");
+						for(var j=0; j<curr_right_list.length; j++){
+							if(parseInt($(this).attr("id").substring(6),10)==parseInt(curr_right_list[j].right_id,10)){
+								curr_right_list.splice(j,1);
+								break;
+							}
+						}
+					});
+					break;
+				case 1://分配用户权限
+					$("#access .r_close input:checked").each(function(i){
+						$(this).parent(this).toggleClass("r_open");
+						curr_right_list.push(right_list[parseInt($(this).attr("name"),10)]);
+					});
+					break;
+				case 2://取消用户权限包
+					$("#accessfile .r_open input").not("input:checked").each(function(i){
+						$(this).parent(this).toggleClass("r_close");
+						for(var j=0; j<curr_rightfile_list.length; j++){
+							if(parseInt($(this).attr("id").substring(10),10)==parseInt(curr_rightfile_list[j].rightfile_id,10)){
+								curr_rightfile_list.splice(j,1);
+								break;
+							}
+						}
+					});
+					break;
+				case 3://分配用户权限包
+					$("#accessfile .r_close input:checked").each(function(i){
+						$(this).parent(this).toggleClass("r_open");
+						curr_rightfile_list.push(rightfile_list[parseInt($(this).attr("name"),10)]);
+					});
+					break;
+			}
+		}else{
+			switch(_list[_num].flag){
+				case 0:
+					if(optFlag==0) top.openPopupTips("取消用户权限失败！");
+					else if(optFlag==1) top.openPopupTips("取消部门权限失败！");
+					else if(optFlag==2) top.openPopupTips("取消职务权限失败！");
+					break;
+				case 1:
+					if(optFlag==0) top.openPopupTips("分配用户权限失败！");
+					else if(optFlag==1) top.openPopupTips("分配部门权限失败！");
+					else if(optFlag==2) top.openPopupTips("分配职务权限失败！");
+					break;
+				case 2:
+					if(optFlag==0) top.openPopupTips("取消用户权限包失败！");
+					else if(optFlag==1) top.openPopupTips("取消部门权限包失败！");
+					else if(optFlag==2) top.openPopupTips("取消职务权限包失败！");
+					break;
+				case 3:
+					if(optFlag==0) top.openPopupTips("分配用户权限包失败！");
+					else if(optFlag==1) top.openPopupTips("分配部门权限包失败！");
+					else if(optFlag==2) top.openPopupTips("分配职务权限包失败！");
+					break;
+			}
+		}
+		_num ++;
+		if(_num<_list.length){//循环递归调用
+			updateRightData(_list,_num);
+		}else{//请求完毕
+			top.popupCallback();
+			closeReq();
+			//cancelReq();
+		}
+	},function(){top.openPopupTips("服务器异常！")},_list[_num].url,_list[_num].data,_list[_num].type,"JSON",top.rightReqUrl);
+}
+
+function closeReq(){
+	top.closePopupWindow();
+}
+
+function cancelReq(){
+	$(".btn1").show();
+	$("#begin").show();
+	$("#before").hide();
+	$(".tck_box1 input[type=checkbox]").hide()
+	$("span.r_close").hide();
+	initAccess();
+	initAccessfile();
+}
+
+window.onload = init;
+function init(){
+	if(top.getUrlParams("targetuserid",window)) targetuserid = parseInt(top.getUrlParams("targetuserid",window),10);
+	if(top.getUrlParams("optFlag",window)) optFlag = parseInt(top.getUrlParams("optFlag",window),10);
+	$("#title").html(tckTips[optFlag].title);
+	if(optFlag>0){
+		$("#cover").attr("src",tckTips[optFlag].cover);
+	}
+
+	getInfo();
+	/*initInfo();
+	initAccess();
+	initAccessfile();*/
+}
+function getInfo(){
+	if(optFlag==0){
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				get_info = data;
+				if(get_info.right_list){
+					for(var i=0; i<get_info.right_list.length; i++){
+						if(get_info.right_list[i].system_id==top.system_id){
+							if(get_info.right_list[i].list==null) curr_right_list = [];
+							else curr_right_list = get_info.right_list[i].list;
+						}
+					}
+				}else{
+					curr_right_list = [];
+				}
+				if(get_info.rightfile_list){
+					for(var i=0; i<get_info.rightfile_list.length; i++){
+						if(get_info.rightfile_list[i].system_id==top.system_id){
+							if(get_info.rightfile_list[i].list==null) curr_rightfile_list = [];
+							else curr_rightfile_list = get_info.rightfile_list[i].list;
+						}
+					}
+				}else{
+					curr_rightfile_list = [];
+				}
+				initInfo();
+				initAccess();
+				initAccessfile();
+			}else{
+				top.openPopupTips("获取用户信息失败！");	
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/user/get_info",{accesstoken:top.accesstoken,targetuserid:targetuserid},"get","JSON",top.rightReqUrl);
+	}else if(optFlag==1){
+		top.ajaxReqAction(function(data){
+			if(data.ret==0){
+				department_info = data;
+				if(department_info.right_list){
+					for(var i=0; i<department_info.right_list.length; i++){
+						if(department_info.right_list[i].system_id==top.system_id){
+							if(department_info.right_list[i].list==null) curr_right_list = [];
+							else curr_right_list = department_info.right_list[i].list;
+						}
+					}
+				}else{
+					curr_right_list = [];
+				}
+				if(department_info.rightfile_list){
+					for(var i=0; i<department_info.rightfile_list.length; i++){
+						if(department_info.rightfile_list[i].system_id==top.system_id){
+							if(department_info.rightfile_list[i].list==null) curr_rightfile_list = [];
+							else curr_rightfile_list = department_info.rightfile_list[i].list;
+						}
+					}
+				}else{
+					curr_rightfile_list = [];
+				}
+				initInfo();
+				initAccess();
+				initAccessfile();
+			}else{
+				top.openPopupTips("获取部门信息失败！");	
+			}
+		},function(){top.openPopupTips("服务器异常！")},"/usermanager/department/get_info",{accesstoken:top.accesstoken,departmentid:targetuserid},"get","JSON",top.rightReqUrl);
+	}else if(optFlag==2){
+			
+	}
+}
+</script>
+</head>
+
+<body>
+<div class="tck">
+<div class="tckBox">
+<div class="tckMain" style="width:640px;">
+<div class="tck_title" style="border:none;"><span id="title"></span><span class="tck_close"><a href="javascript:closeReq()" title="关闭"></a></span></div>
+
+<div class="tck_info">
+<div class="tck_box1">
+	<dl>
+		<dt><img id="cover" src="../rightImg/tm.gif" width="100" height="100"></dt>
+		<dd><h1 id="name"></h1></dd>
+		<dd id="department"></dd>
+		<dd id="job"></dd>
+	</dl>
+</div>
+
+<div class="tck_box1">
+	<fieldset>
+		<legend><input type="checkbox" style="display:none;" class="checkboxall rightAll">系统子权限</legend>
+		<p id="access"><p>
+	</fieldset>
+</div>
+
+<div class="tck_box1">
+	<fieldset>
+		<legend><input type="checkbox" style="display:none;" class="checkboxall rightfileAll">系统权限包</legend>
+		<p id="accessfile"><p>
+	</fieldset>
+</div>
+</div>
+
+<div class="tck_btn1"><span id="begin"><a href="javascript:closeReq()" id="btn0">关　闭</a></span><span id="before" style="display:none;"><a href="javascript:submitReq()" id="btn0">保　存</a><a href="javascript:cancelReq()" id="btn1">取　消</a></span></div>
+</div>
+</div>
+</div>
+
+<div class="screen"></div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+.tmenu-cursor-pointer,
+.tmenu-cursor-pointer * {
+    cursor: pointer;
+}
+
+/* tmenu公用样式 结束 */
+
+/* tmenu-content-wraper 开始 */
+
+/* tmenu公用样式 开始 */
+
+.tmenu-content-wraper * {
+    margin: 0px;
+    padding: 0px;
+    font-size: 100%;
+    list-style: none;
+    font-family: Arial, "宋体";
+    color: #323232;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+.tmenu-content-wraper {
+    position: absolute;
+    z-index: 900;
+    top: -9999px;
+    left: -9999px;
+    display: none;
+}
+
+.tmenu-panels {
+    /* 设置盒模型的类型为边框盒 */
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    
+    /* 设置阴影 */
+    /* box-shadow: 1px 2px 5px rgba(0,0,0,.5);
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.5);
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.5);
+    -o-box-shadow: 1px 2px 5px rgba(0,0,0,.5);
+    -ms-box-shadow: 1px 2px 5px rgba(0,0,0,.5); */
+    
+    background-color: #FFF;
+    border: 1px solid #969696;
+}
+
+.tmenu-panels-children {
+    position: absolute;
+    left: 98%;
+    top: 3px;
+    display: none;
+}
+
+.tmenu-groups-item::after {
+    display: block;
+    content: "";
+    height: 0px;
+    border-bottom: 1px solid #DCDCDC;
+    margin-left: 34px;
+}
+
+.tmenu-groups-item.last::after {
+    border: none;
+}
+
+.tmenu-panels .tmenu-groups-item.zi999 {
+    position: relative;
+    z-index: 999;
+}
+
+dl .tmenu-lists-item {
+    position: relative;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/*dl dd:hover,*/
+dl dd.hover {
+    background-color: #E2EFF5;
+}
+
+dl .tmenu-has-child.showChildren > .tmenu-groups-wrpaer {
+    display: block;
+}
+
+/* dl dd:active, */
+dl dd.active {
+    background-color: #C0DDEA;
+}
+
+dl .tmenu-has-child {
+    position: relative;
+}
+
+.tmenu-has-child > .tmenu-lists-item {
+    background: url(tmenu-next.png) no-repeat 94% 9px;
+}
+
+.tmenu-lists-item .tmenu-item-icon {
+    display: block;
+    width: 34px;
+    line-height: 25px;
+    line-height: 22px;
+    text-align: center;
+    overflow: hidden;
+    zoom: 1;
+    font-size: 0px; /* 清除某些浏览器下img底部出现的2px空白 */
+}
+
+.tmenu-lists-item img {
+    margin-bottom: -2px;
+    vertical-align: middle;
+}
+
+.tmenu-lists-item .tmenu-item-name {
+    position: absolute;
+    left: 34px;
+    top: 0px;
+    display: block;
+}
+
+/* 菜单项不可用样式 开始 */
+
+dl dd.tmenu-has-child.tmenu-item-disabled > .tmenu-lists-item {
+    background: url(tmenu-next.png) no-repeat 94% -15px;
+}
+
+dl dd.tmenu-item-disabled > .tmenu-lists-item .tmenu-item-name {
+    color: #A5A5A5;
+}
+
+dl dd.tmenu-item-disabled > .tmenu-lists-item .tmenu-item-icon img {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+    filter: gray alpha(opacity=80); /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+    opacity: .8;
+}
+
+/* 菜单项不可用样式 结束 */
+
+
+/* tmenu-content-wraper 结束 */
